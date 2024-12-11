@@ -14,7 +14,7 @@ export default class IcancelDataStorage extends IDataStorage {
     /**
      * @returns {string[]} 
      */
-    getcancelList() {
+    getCancelList() {
         throw new Error('Method not implemented');
     }
 
