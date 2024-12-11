@@ -6,7 +6,7 @@ import ICreateLoadUseCase from './ICreateLoadUseCase';
 
 
 /** @implements {ICreateLoadUseCase} */
-export default class createLoadUseCase extends ICreateLoadUseCase {
+export default class CreateLoadUseCase extends ICreateLoadUseCase {
     constructor(createProcessor, dataTransporer) {
         super(createProcessor, dataTransporer);
     }
