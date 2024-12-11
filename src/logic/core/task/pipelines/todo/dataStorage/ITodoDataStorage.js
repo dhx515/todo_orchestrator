@@ -12,6 +12,13 @@ export default class ITodoDataStorage extends IDataStorage {
     }
 
     /**
+     * @returns {string[]} 
+     */
+    getTodoList() {
+        throw new Error('Method not implemented');
+    }
+
+    /**
      * @param {string[]} param 
      */
     setTodoList(param) {
