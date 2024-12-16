@@ -18,14 +18,25 @@ describe('TodoDataPipeline', () => {
         expect(result).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '커피챗']);
     });
 
-    it('deleteLoad', async() => {
-        const result = await todoDataPipeline.command('deleteLoad', '개인업무');
+    it('cancelLoad', async() => {
+        const result = await todoDataPipeline.command('cancelLoad', '개인업무');
         expect(result).toStrictEqual(['팀업무', '타팀자료요청']);
     });
 
-    it('createLoad and deleteLoad', async() => {
+    it('doneLoad', async() => {
+        const result = await todoDataPipeline.command('doneLoad', '개인업무');
+        expect(result).toStrictEqual(['팀업무', '타팀자료요청']);
+    });
+
+    it('createLoad and cancelLoad', async() => {
         await todoDataPipeline.command('createLoad', '커피챗');
-        const result = await todoDataPipeline.command('deleteLoad', '개인업무');
+        const result = await todoDataPipeline.command('cancelLoad', '개인업무');
+        expect(result).toStrictEqual(['팀업무', '타팀자료요청', '커피챗']);
+    });
+
+    it('createLoad and doneLoad', async() => {
+        await todoDataPipeline.command('createLoad', '커피챗');
+        const result = await todoDataPipeline.command('doneLoad', '개인업무');
         expect(result).toStrictEqual(['팀업무', '타팀자료요청', '커피챗']);
     });
 });

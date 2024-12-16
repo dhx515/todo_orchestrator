@@ -30,6 +30,7 @@ export function TodoDataPipelineConfig() {
     return new PipelineBuilderWithAutoCommand()
         .addUseCase('loadData', cacheFirstLoadUseCase)
         .addUseCase('createLoad', createLoadUseCase)
-        .addUseCase('deleteLoad', deleteLoadUseCase)
+        .addUseCase('cancelLoad', deleteLoadUseCase)
+        .addUseCase('doneLoad', deleteLoadUseCase)
         .build();
 }
