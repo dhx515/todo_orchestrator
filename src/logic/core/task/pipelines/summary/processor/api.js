@@ -4,7 +4,7 @@ export async function fetchSummaryData(param) {
     param;
     return {
         Todo: 3,
-        Cancle: 3,
+        Cancel: 3,
         Done: 3,
     };
 }
