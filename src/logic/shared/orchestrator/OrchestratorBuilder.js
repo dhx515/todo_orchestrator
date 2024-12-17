@@ -2,10 +2,10 @@
  * @file OrchestratorBuilder.js
  * @description Builder for creating Orchestrator instances.
  */
-
 import Orchestrator from './Orchestrator';
-import EventDispatcher from './EventDispatcher';
-import NoOpDispatcher from './NoOpDispatcher';
+import EventDispatcher from '../dispatcher/EventDispatcher';
+import NoOpDispatcher from '../dispatcher/NoOpDispatcher';
+
 
 export default class OrchestratorBuilder {
     #pipelines = {};
@@ -23,11 +23,21 @@ export default class OrchestratorBuilder {
     }
 
     /**
-     * Initializes the dispatcher.
+     * Initializes the basic event dispatcher.
      * @returns {OrchestratorBuilder} This builder instance.
      */
-    initializeDispatcher() {
-        this.#dispatcher = new EventDispatcher();
+    initializeAutoDispatcher() {
+        this.#dispatcher = new EventDispatcher({}, this.#pipelines);
+        return this;
+    }
+
+    /**
+     * Initializes the event dispatcher by dependency injection.
+     * @param {class} 
+     * @returns {OrchestratorBuilder} This builder instance.
+     */
+    initializeCustomDispatcher(customEventDispatcher) {
+        this.#dispatcher = new customEventDispatcher({}, this.#pipelines);
         return this;
     }
 

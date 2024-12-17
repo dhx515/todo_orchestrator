@@ -2,12 +2,14 @@
  * @file EventDispatcher.js
  * @description Dispatches events to registered handlers with priority support.
  */
+import IDispatcher from './IDispatcher';
+
 
 export default class EventDispatcher extends IDispatcher{
     #handlers = {};
     #pipelines = {};
     
-    constructor(handlers, pipelines) {
+    constructor(handlers = {}, pipelines = {}) {
         super();
         this.#handlers = handlers;
         this.#pipelines = pipelines;
@@ -20,14 +22,14 @@ export default class EventDispatcher extends IDispatcher{
      * @param {number} priority - The priority of the handler (lower numbers run first).
      */
     subscribe(eventName, handlerCommand, priority = 10) {
-        if (!this.#handlers[eventName]) {
+        if ( !this.#handlers.hasOwnProperty(eventName) ) {
             this.#handlers[eventName] = [];
         }
 
-    // Add handler to the list with its priority
-    this.#handlers[eventName].push({ command: handlerCommand, priority });
-    // Sort handlers by priority
-    this.#handlers[eventName].sort((a, b) => a.priority - b.priority);
+        // Add handler to the list with its priority
+        this.#handlers[eventName].push({ command: handlerCommand, priority });
+        // Sort handlers by priority
+        this.#handlers[eventName].sort((a, b) => a.priority - b.priority);
     }
 
     /**
@@ -44,7 +46,6 @@ export default class EventDispatcher extends IDispatcher{
             const pipeline = this.#pipelines[pipelineName];
             if (!pipeline) {
                 throw new Error(`Pipeline "${pipelineName}" not found.`);
-                continue;
             }
 
             await pipeline.command(commandName, data);

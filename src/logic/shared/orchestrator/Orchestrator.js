@@ -3,6 +3,7 @@
  * @description Manages multiple data pipelines and handles event dispatching.
  */
 
+
 export default class Orchestrator {
     #pipelines = {};
     #dispatcher = null;
@@ -26,7 +27,9 @@ export default class Orchestrator {
     }
 
     const result = await pipeline.command(commandName, ...args);
-    this.#dispatcher.dispatch(`${pipelineName}:${commandName}`, result);
+    const eventData = { pipelineName, request: args, result };
+
+    this.#dispatcher.dispatch(`${pipelineName}:${commandName}`, eventData);
     return result;
     }
 }
