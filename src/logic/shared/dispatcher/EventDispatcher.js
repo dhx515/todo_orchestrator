@@ -48,7 +48,8 @@ export default class EventDispatcher extends IDispatcher{
                 throw new Error(`Pipeline "${pipelineName}" not found.`);
             }
 
-            await pipeline.command(commandName, data);
+            // Dispatches an event using the result of the previous command as the default
+            await pipeline.command(commandName, data.result);
         }
     }
 }
