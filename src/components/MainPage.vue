@@ -20,13 +20,5 @@ import SectionJobContents from './SectionJobContents/SectionJobContents.vue';
 </script>
 
 <style scoped>
-.primary {
-  background-color: #1976d2 !important;
-}
-.red {
-  background-color: #d32f2f !important;
-}
-.green {
-  background-color: #388e3c !important;
-}
+
 </style>
