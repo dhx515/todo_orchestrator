@@ -7,6 +7,14 @@ module.exports = defineConfig({
       // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
     },
   },
+
+  configureWebpack: {
+    plugins: [
+      new (require('webpack')).DefinePlugin({
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false),
+      }),
+    ],
+  },
   
   chainWebpack: config => {
     config.plugin('eslint').tap(args => {
