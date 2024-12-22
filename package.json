@@ -5,13 +5,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "jest --selectProjects components; jest --selectProjects logic",
+    "test:unit:components": "jest --selectProjects components",
+    "test:unit:logic": "jest --selectProjects logic",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
     "core-js": "^3.8.3",
     "globals": "^15.13.0",
+    "punycode": "^2.3.1",
     "roboto-fontface": "*",
     "vue": "^3.2.13",
     "vuetify": "^3.7.5",
@@ -27,10 +30,11 @@
     "@vue/cli-service": "^5.0.8",
     "@vue/test-utils": "^2.0.0-0",
     "@vue/vue3-jest": "^27.0.0-alpha.1",
-    "babel-jest": "^27.0.6",
+    "babel-jest": "^27.5.1",
     "eslint": "^8.57.1",
     "eslint-plugin-vue": "^9.32.0",
     "eslint-webpack-plugin": "^4.2.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.5",
     "prettier": "^2.4.1",
     "vue-cli-plugin-vuetify": "~2.5.8",
@@ -53,8 +57,8 @@
     "overrides": [
       {
         "files": [
-          "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+          "**/tests/components/**/*.spec.{j,t}s?(x)",
+          "**/tests/logic/**/*.spec.{j,t}s?(x)"
         ],
         "env": {
           "jest": true
@@ -69,6 +73,42 @@
     "not ie 11"
   ],
   "jest": {
-    "preset": "@vue/cli-plugin-unit-jest"
+    "projects": [
+      {
+        "displayName": "components",
+        "preset": "@vue/cli-plugin-unit-jest",
+        "testEnvironment": "jsdom",
+        "testMatch": ["**/tests/components/**/*.spec.[jt]s?(x)"],
+        "setupFilesAfterEnv": ["<rootDir>/tests/setup/setupComponents.js"],
+        "transform": {
+          "^.+\\.m?js$": "babel-jest",
+          "^.+\\.vue$": "@vue/vue3-jest",
+          "^.+\\.mjs$": "babel-jest"
+        },
+        "transformIgnorePatterns": [
+          "node_modules/(?!vuetify)"
+        ],
+        "moduleNameMapper": {
+          "^@/(.*)$": "<rootDir>/src/$1",
+          "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+        }
+      },
+      {
+        "displayName": "logic",
+        "preset": "@vue/cli-plugin-unit-jest",
+        "testEnvironment": "jsdom",
+        "testMatch": ["**/tests/logic/**/*.spec.[jt]s?(x)"],
+        "setupFilesAfterEnv": ["<rootDir>/tests/setup/setupLogic.js"],
+        "transform": {
+          "^.+\\.m?js$": "babel-jest",
+          "^.+\\.vue$": "@vue/vue3-jest",
+          "^.+\\.mjs$": "babel-jest"
+        },
+        "moduleNameMapper": {
+          "^@/(.*)$": "<rootDir>/src/$1",
+          "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+        }
+      }
+    ]
   }
 }

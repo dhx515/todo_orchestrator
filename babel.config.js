@@ -1,4 +1,11 @@
 module.exports = {
-  presets: ['@vue/cli-plugin-babel/preset'],
-  plugins: ['@babel/plugin-transform-private-methods'], // 추가된 플러그인
+  presets: [
+    [
+      '@vue/cli-plugin-babel/preset',
+      {
+        targets: { node: 'current' },
+      },
+    ],
+  ],
+  plugins: ['@babel/plugin-transform-private-methods'], // 필요 시 추가
 };
