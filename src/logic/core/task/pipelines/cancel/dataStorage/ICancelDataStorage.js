@@ -6,7 +6,7 @@ import IDataStorage from '../../../../../shared/interfaces/IDataStorage';
 
 
 /** @interface */
-export default class IcancelDataStorage extends IDataStorage {
+export default class ICancelDataStorage extends IDataStorage {
     constructor() {
         super();
     }
