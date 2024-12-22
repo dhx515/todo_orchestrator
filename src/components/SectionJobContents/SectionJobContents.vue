@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import TodoContents from './TodoContents.vue';
+import TodoContents from './TodoContents/TodoContents.vue';
 import CanceledContents from './CanceledContents.vue';
 import DoneContents from './DoneContents.vue';
 
