@@ -24,16 +24,18 @@
                     {{ item }}
                     <div class="button-group">
                         <v-btn 
-                            icon="mdi-cancel"
-                            color="red" 
-                            class="square-btn" 
-                            @click="cancelTask(item)"
-                        />
-                        <v-btn 
                             icon="mdi-check"
                             color="green" 
-                            class="square-btn" 
+                            rounded="pill"
+                            style="width: 36px; height: 36px;"
                             @click="deleteTask(item)"
+                        />
+                        <v-btn 
+                            icon="mdi-cancel"
+                            color="red" 
+                            rounded="pill"
+                            style="width: 36px; height: 36px;"
+                            @click="cancelTask(item)"
                         />
                     </div>
                 </v-list-item-title>
@@ -93,23 +95,5 @@ onMounted(async () => {
 .button-group {
     display: flex;
     gap: 8px; /* 버튼 사이 간격 */
-}
-
-.custom-btn {
-    width: 24px;  /* 버튼의 너비 */
-    height: 24px; /* 버튼의 높이 */
-    padding: 0;   /* 내부 여백 제거 */
-    margin: 0;    /* 외부 여백 제거 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.square-btn {
-  height: 48px; /* 원하는 크기로 설정 */
-  width: 48px;  /* 정사각형이 되도록 높이와 동일하게 설정 */
-  min-width: 48px; /* Vuetify 버튼 기본 최소 너비 덮어쓰기 */
-  padding: 0; /* 내부 여백 제거 */
-  border-radius: 4px; /* 선택적으로 모서리를 둥글게 */
 }
 </style>
