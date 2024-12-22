@@ -5,11 +5,17 @@
         <v-divider/>
         <v-list>
             <v-list-item v-for="(item, index) in canceledItems" :key="index">
-                <v-list-item-title>
+                <v-list-item-title 
+                    class="d-flex justify-space-between align-center rounded-lg pa-2"
+                    style="background-color: #f9f9f9;"
+                >
                     {{ item }}
-                    <v-btn color="#F0F0F0" class="square-btn" @click="deleteTask(item)">
-                        <v-icon>mdi-delete</v-icon>
-                    </v-btn>
+                    <v-btn 
+                        icon="mdi-delete"
+                        color="#F0F0F0" 
+                        class="square-btn" 
+                        @click="deleteTask(item)"
+                    />
                 </v-list-item-title>
             </v-list-item>
         </v-list>

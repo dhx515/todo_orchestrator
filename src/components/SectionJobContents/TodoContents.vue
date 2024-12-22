@@ -7,13 +7,26 @@
         <v-divider/>
         <v-list>
             <v-list-item v-for="(item, index) in todoItems" :key="index">
-                {{ item }}
-                <v-btn color="red" class="square-btn" @click="cancelTask(item)">
-                    <v-icon>mdi-cancel</v-icon>
-                </v-btn>
-                <v-btn color="green" class="square-btn" @click="deleteTask(item)">
-                    <v-icon>mdi-check</v-icon>
-                </v-btn>
+                <v-list-item-title 
+                    class="d-flex justify-space-between align-center rounded-lg pa-2"
+                    style="background-color: #f9f9f9;"
+                >
+                    {{ item }}
+                    <div class="button-group">
+                        <v-btn 
+                            icon="mdi-cancel"
+                            color="red" 
+                            class="square-btn" 
+                            @click="cancelTask(item)"
+                        />
+                        <v-btn 
+                            icon="mdi-check"
+                            color="green" 
+                            class="square-btn" 
+                            @click="deleteTask(item)"
+                        />
+                    </div>
+                </v-list-item-title>
             </v-list-item>
         </v-list>
     </v-card>
@@ -45,6 +58,11 @@ onMounted(async () => {
 <style scoped>
 .primary {
     background-color: #1976d2 !important;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px; /* 버튼 사이 간격 */
 }
 
 .square-btn {
