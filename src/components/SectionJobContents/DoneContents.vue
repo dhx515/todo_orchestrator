@@ -4,9 +4,9 @@
         <v-card-title class="green white--text">Done</v-card-title>
         <v-divider />
         <v-list>
-            <v-list-item v-for="item in doneItems" :key="item.id">
+            <v-list-item v-for="(item, index) in doneItems" :key="index">
                 <v-list-item-title>
-                    {{ item.name }}
+                    {{ item }}
                     <v-btn color="#F0F0F0" class="square-btn" @click="deleteTask(item)">
                         <v-icon>mdi-delete</v-icon>
                     </v-btn>
@@ -18,13 +18,22 @@
 </template>
 
 <script setup>
-let doneItems = [{ id: 1, name: "apple done"}, 
-                { id: 2, name: "banana done"},
-                { id: 3, name: "orange done"}];
+import { ref, onMounted } from 'vue';
 
-const deleteTask = (item) => {
-    console.log(`Done: Delete task: ${item.name}`);
+
+const props = defineProps(['loadData', 'deleteLoad']);
+
+const doneItems = ref([]);
+
+const deleteTask = async(item) => {
+    await props.deleteLoad(item);
 };
+
+onMounted(async () => {
+    console.log("onMounted: DoneContents");
+
+    doneItems.value = await props.loadData();
+});
 </script>
 
 <style scoped>

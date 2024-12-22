@@ -4,9 +4,9 @@
         <v-card-title class="red white--text">Canceled</v-card-title>
         <v-divider/>
         <v-list>
-            <v-list-item v-for="item in canceledItems" :key="item.id">
+            <v-list-item v-for="(item, index) in canceledItems" :key="index">
                 <v-list-item-title>
-                    {{ item.name }}
+                    {{ item }}
                     <v-btn color="#F0F0F0" class="square-btn" @click="deleteTask(item)">
                         <v-icon>mdi-delete</v-icon>
                     </v-btn>
@@ -18,13 +18,22 @@
 </template>
 
 <script setup>
-let canceledItems = [{ id: 1, name: "apple cancel"}, 
-                    { id: 2, name: "banana cancel"},
-                    { id: 3, name: "orange cancel"}];
+import { ref, onMounted } from 'vue';
 
-const deleteTask = (item) => {
-    console.log(`Canceled: Delete task: ${item.name}`);
+
+const props = defineProps(['loadData', 'deleteLoad']);
+
+const canceledItems = ref([]);
+
+const deleteTask = async(item) => {
+    await props.deleteLoad(item);
 };
+
+onMounted(async () => {
+    console.log("onMounted: CanceledContents");
+
+    canceledItems.value = await props.loadData();
+});
 </script>
 
 <style scoped>

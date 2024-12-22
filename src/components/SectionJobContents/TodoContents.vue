@@ -1,11 +1,13 @@
 <template>
 <v-container>
     <v-card outlined>
-        <v-card-title class="primary white--text">Done</v-card-title>
+        <v-card-title class="primary white--text">
+            Done
+        </v-card-title>
         <v-divider/>
         <v-list>
-            <v-list-item v-for="item in todoItems" :key="item.id">
-                {{ item.name }}
+            <v-list-item v-for="(item, index) in todoItems" :key="index">
+                {{ item }}
                 <v-btn color="red" class="square-btn" @click="cancelTask(item)">
                     <v-icon>mdi-cancel</v-icon>
                 </v-btn>
@@ -19,16 +21,25 @@
 </template>
 
 <script setup>
-let todoItems = [{ id: 1, name: "apple todo"}, 
-                { id: 2, name: "banana todo"},
-                { id: 3, name: "orange todo"}];
+import { ref, onMounted } from 'vue';
 
-const cancelTask = (item) => {
-    console.log(`todo: cancelTask: ${item.name}`);
+
+const props = defineProps(['loadData', 'createLoad', 'cancelLoad', 'doneLoad']);
+
+const todoItems = ref([]);
+
+const cancelTask = async (item) => {
+    todoItems.value = await props.cancelLoad(item);
 };
-const deleteTask = (item) => {
-    console.log(`todo: deleteTask: ${item.name}`);
+const deleteTask = async (item) => {
+    todoItems.value = await props.doneLoad(item);
 };
+
+onMounted(async () => {
+    console.log("onMounted: TodoContents");
+
+    todoItems.value = await props.loadData();
+});
 </script>
 
 <style scoped>

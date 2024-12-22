@@ -6,15 +6,15 @@
             <v-row justify="space-around">
                 <v-col cols="4" class="text-center">
                     <h2>Todo</h2>
-                    <p>{{ 1 }}</p>
+                    <p>{{ tasks['Todo'] }}</p>
                 </v-col>
                 <v-col cols="4" class="text-center">
                     <h2>Done</h2>
-                    <p>{{ 2 }}</p>
+                    <p>{{ tasks['Done'] }}</p>
                 </v-col>
                 <v-col cols="4" class="text-center">
                     <h2>Canceled</h2>
-                    <p>{{ 3 }}</p>
+                    <p>{{ tasks['Cancel'] }}</p>
                 </v-col>
             </v-row>
             </v-card>
@@ -24,7 +24,17 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 
+
+const props = defineProps(['loadData']);
+const tasks = ref({});
+
+onMounted(async () => {
+    console.log("onMounted: SectionSummary");
+
+    tasks.value = await props.loadData();
+});
 </script>
 
 <style scoped>
