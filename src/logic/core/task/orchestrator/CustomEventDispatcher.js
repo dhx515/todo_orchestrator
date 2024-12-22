@@ -22,7 +22,7 @@ export default class CustomEventDispatcher extends IDispatcher{
      * @param {number} priority - The priority of the handler (lower numbers run first).
      */
     subscribe(eventName, handlerCommand, priority = 10) {
-        if ( !this.#handlers.hasOwnProperty(eventName) ) {
+        if ( !Object.prototype.hasOwnProperty.call(this.#handlers, eventName) ) {
             this.#handlers[eventName] = [];
         }
 
@@ -49,23 +49,22 @@ export default class CustomEventDispatcher extends IDispatcher{
             }
 
             switch(pipelineName) {
-                case 'Summary':
+                case 'Summary': {
                     await pipeline.command(commandName, data.pipelineName);
                     break;
-                
-                case 'Todo':
+                }
+                case 'Todo': {
                     await pipeline.command(commandName, data.result);
-                
+                    break;
+                }
                 case 'Cancel':
-                case 'Done':
-                    const requestTarget = data.request[0]
-                    
+                case 'Done': { // Cancel과 Done이 동일한 로직을 수행
+                    const requestTarget = data.request[0];
                     const result = await pipeline.command(commandName, requestTarget);
-
                     const eventData = { pipelineName, request: requestTarget, result };
                     await this.dispatch(command, eventData);
                     break;
-                
+                }
                 default:
                     break;
             }

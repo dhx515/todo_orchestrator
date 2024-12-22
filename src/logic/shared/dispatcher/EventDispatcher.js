@@ -22,7 +22,7 @@ export default class EventDispatcher extends IDispatcher{
      * @param {number} priority - The priority of the handler (lower numbers run first).
      */
     subscribe(eventName, handlerCommand, priority = 10) {
-        if ( !this.#handlers.hasOwnProperty(eventName) ) {
+        if ( !Object.prototype.hasOwnProperty.call(this.#handlers, eventName) ) {
             this.#handlers[eventName] = [];
         }
 
