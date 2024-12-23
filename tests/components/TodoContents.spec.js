@@ -39,24 +39,24 @@ describe('TodoContents.vue', () => {
         expect(wrapper.vm.isModalOpen).toBe(true);
     });
 
-    it('adds a new task', async () => {
-        await wrapper.vm.addTask('Task 3');
+    it('create a new todo', async () => {
+        await wrapper.vm.createTodo('Task 3');
         await wrapper.vm.$nextTick();
         const items = wrapper.findAll('.v-list-item-title');
         expect(items.length).toBe(3);
         expect(items[2].text()).toContain('Task 3');
     });
 
-    it('cancels a task', async () => {
-        await wrapper.vm.cancelTask('Task 2');
+    it('cancels a todo', async () => {
+        await wrapper.vm.cancelTodo('Task 2');
         await wrapper.vm.$nextTick();
         const items = wrapper.findAll('.v-list-item-title');
         expect(items.length).toBe(1);
         expect(items[0].text()).toContain('Task 1');
     });
 
-    it('deletes a task', async () => {
-        await wrapper.vm.deleteTask('Task 1');
+    it('deletes a todo', async () => {
+        await wrapper.vm.deleteTodo('Task 1');
         await wrapper.vm.$nextTick();
         const items = wrapper.findAll('.v-list-item-title');
         expect(items.length).toBe(1);
