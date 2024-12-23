@@ -24,7 +24,7 @@
 import { ref, defineProps } from 'vue';
 
 
-const props = defineProps(['isDialogOpen', 'closeDialog', 'addTask']);
+const props = defineProps(['closeDialog', 'createTodo']);
 
 const task = ref('');
 
@@ -35,7 +35,7 @@ const close = () => {
 
 const save = async () => {
     if (task.value.trim()) {
-        await props.addTask(task.value);
+        await props.createTodo(task.value);
         close();
     }
 };

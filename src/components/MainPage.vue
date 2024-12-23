@@ -1,26 +1,23 @@
 <template>
-  <v-container>
+<v-container>
+  <SectionSummary
+    :loadData = "summaryLoadData"
+    :key="updateKeySectionSummary"
+    class="pa-0 ma-0"
+  />
 
-    <SectionSummary 
-      :loadData = "async () => { return await orchestrator.command('Summary', 'loadData', {}); }"
-      :key = "updateKeySectionSummary"
-      class="pa-0 ma-0"
-    />
-
-    <SectionJobContents
-      :orchestrator = "orchestrator"
-      :callUpdateSummary = "callUpdateSummary"
-      class="pa-0 ma-0"
-    />
-
-  </v-container>
+  <SectionJobContents
+    :orchestrator = "orchestrator"
+    :callUpdateSummary = "callUpdateSummary"
+    class="pa-0 ma-0"
+  />
+</v-container>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 import SectionSummary from './SectionSummary.vue';
 import SectionJobContents from './SectionJobContents/SectionJobContents.vue';
-
-import { ref, onMounted } from 'vue';
 
 import { TaskOrchestratorConfig } from '@/logic/core/task/orchestrator/config';
 
@@ -29,14 +26,16 @@ const orchestrator = TaskOrchestratorConfig();
 
 const updateKeySectionSummary = ref(0);
 const callUpdateSummary = () => {
-  updateKeySectionSummary.value += 1;
-}
+  updateKeySectionSummary.value += 1
+};
+
+const summaryLoadData = async () => {
+  return orchestrator.command('Summary', 'loadData', {});
+};
 
 onMounted(async () => {
-  console.log("onMounted: MainPage");
+  console.log('onMounted: MainPage')
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

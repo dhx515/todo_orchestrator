@@ -28,14 +28,14 @@
                             color="green" 
                             rounded="pill"
                             style="width: 36px; height: 36px;"
-                            @click="deleteTask(item)"
+                            @click="deleteTodo(item)"
                         />
                         <v-btn 
                             icon="mdi-cancel"
                             color="red" 
                             rounded="pill"
                             style="width: 36px; height: 36px;"
-                            @click="cancelTask(item)"
+                            @click="cancelTodo(item)"
                         />
                     </div>
                 </v-list-item-title>
@@ -45,17 +45,15 @@
 
     <AddTodoModal
         v-model="isModalOpen"
-        :isDialogOpen = "isModalOpen"
         :closeDialog = "closeModal"
-        :addTask = "addTask"
+        :createTodo = "createTodo"
     />
 </v-container>
 </template>
 
 <script setup>
-import AddTodoModal from './AddTodoModal.vue';
-
 import { ref, onMounted } from 'vue';
+import AddTodoModal from './AddTodoModal.vue';
 
 
 const props = defineProps(['loadData', 'createLoad', 'cancelLoad', 'doneLoad']);
@@ -70,13 +68,13 @@ const closeModal = () => {
     isModalOpen.value = false;
 }
 
-const addTask = async (task) => {
+const createTodo = async (task) => {
     todoItems.value = await props.createLoad(task);
 };
-const cancelTask = async (item) => {
+const cancelTodo = async (item) => {
     todoItems.value = await props.cancelLoad(item);
 };
-const deleteTask = async (item) => {
+const deleteTodo = async (item) => {
     todoItems.value = await props.doneLoad(item);
 };
 

@@ -3,48 +3,25 @@
     <v-row>
         <v-col cols="4">
             <TodoContents
-                :loadData = "async () => { return orchestrator.command('Todo', 'loadData', {}); }"
-                :createLoad =   "async (param) => {
-                                    const res = await orchestrator.command('Todo', 'createLoad', param);
-                                    callUpdateSummary();
-                                    callUpdateTodo();
-                                }"
-                :cancelLoad =   "async (param) => { 
-                                    const res = await orchestrator.command('Todo', 'cancelLoad', param);
-                                    callUpdateSummary();
-                                    callUpdateCancel();
-                                    return res;
-                                }"
-                :doneLoad =     "async (param) => { 
-                                    const res = await orchestrator.command('Todo', 'doneLoad', param);
-                                    callUpdateSummary();
-                                    callUpdateDone();
-                                    return res;
-                                }"
+                :loadData = "todoLoadData"
+                :createLoad = "todoCreateLoad"
+                :cancelLoad = "todoCancelLoad"
+                :doneLoad =  "todoDoneLoad"
                 class="pa-0 ma-0"
-                :key = "updateKeySectionTodo"
             />
         </v-col>
         <v-col cols="4">
             <DoneContents
-                :loadData = "async() => { return await orchestrator.command('Done', 'loadData', {}); }"
-                :deleteLoad = " async(param) => { 
-                                    await orchestrator.command('Done', 'deleteLoad', param);
-                                    callUpdateSummary();
-                                    callUpdateDone();
-                                }"
+                :loadData = "doneLoadData"
+                :deleteLoad = "doneDeleteLoad"
                 class="pa-0 ma-0"
                 :key = "updateKeySectionDone"
             />
         </v-col>
         <v-col cols="4">
             <CanceledContents
-                :loadData = "async() => { return await orchestrator.command('Cancel', 'loadData', {}); }"
-                :deleteLoad = " async(param) => { 
-                                    await orchestrator.command('Cancel', 'deleteLoad', param);
-                                    callUpdateSummary();
-                                    callUpdateCancel();
-                                }"
+                :loadData = "cancelLoadData"
+                :deleteLoad = "cancelDeleteLoad"
                 class="pa-0 ma-0"
                 :key = "updateKeySectionCancel"
             />
@@ -54,20 +31,14 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 import TodoContents from './TodoContents/TodoContents.vue';
 import CanceledContents from './CanceledContents.vue';
 import DoneContents from './DoneContents.vue';
 
-import { ref, onMounted } from 'vue';
-
 
 const props = defineProps(['orchestrator', 'callUpdateSummary']);
 const orchestrator = props.orchestrator;
-
-const updateKeySectionTodo = ref(0);
-const callUpdateTodo = () => {
-    updateKeySectionTodo.value += 1;
-}
 
 const updateKeySectionCancel = ref(0);
 const callUpdateCancel = () => {
@@ -79,12 +50,51 @@ const callUpdateDone = () => {
     updateKeySectionDone.value += 1;
 }
 
+const todoLoadData = async () => { 
+    return orchestrator.command('Todo', 'loadData', {});
+};
+const todoCreateLoad = async (param) => {
+    const res = await orchestrator.command('Todo', 'createLoad', param);
+    props.callUpdateSummary();
+    return res;
+};
+const todoCancelLoad = async (param) => { 
+    const res = await orchestrator.command('Todo', 'cancelLoad', param);
+    props.callUpdateSummary();
+    callUpdateCancel();
+    return res;
+};
+const todoDoneLoad = async (param) => { 
+    const res = await orchestrator.command('Todo', 'doneLoad', param);
+    props.callUpdateSummary();
+    callUpdateDone();
+    return res;
+};
+
+const doneLoadData = async () => { 
+    return orchestrator.command('Done', 'loadData', {});
+};
+const doneDeleteLoad = async (param) => { 
+    const res = await orchestrator.command('Done', 'deleteLoad', param);
+    props.callUpdateSummary();
+    callUpdateDone();
+    return res;
+};
+
+const cancelLoadData = async () => { 
+    return orchestrator.command('Cancel', 'loadData', {});
+};
+const cancelDeleteLoad = async (param) => { 
+    const res = await orchestrator.command('Cancel', 'deleteLoad', param);
+    props.callUpdateSummary();
+    callUpdateCancel();
+    return res;
+};
+
 
 onMounted(async () => {
     console.log("onMounted: SectionJobContents");
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

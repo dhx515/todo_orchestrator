@@ -33,7 +33,7 @@ const props = defineProps(['loadData', 'deleteLoad']);
 const doneItems = ref([]);
 
 const deleteTask = async(item) => {
-    await props.deleteLoad(item);
+    doneItems.value = await props.deleteLoad(item);
 };
 
 onMounted(async () => {
