@@ -5,18 +5,18 @@
             <TodoContents
                 :loadData = "async () => { return orchestrator.command('Todo', 'loadData', {}); }"
                 :createLoad =   "async (param) => {
-                                    const res = await orchestartor.command('Todo', 'createLoad', param);
+                                    const res = await orchestrator.command('Todo', 'createLoad', param);
                                     callUpdateSummary();
                                     callUpdateTodo();
                                 }"
                 :cancelLoad =   "async (param) => { 
-                                    const res = await orchestartor.command('Todo', 'cancelLoad', param);
+                                    const res = await orchestrator.command('Todo', 'cancelLoad', param);
                                     callUpdateSummary();
                                     callUpdateCancel();
                                     return res;
                                 }"
                 :doneLoad =     "async (param) => { 
-                                    const res = await orchestartor.command('Todo', 'doneLoad', param);
+                                    const res = await orchestrator.command('Todo', 'doneLoad', param);
                                     callUpdateSummary();
                                     callUpdateDone();
                                     return res;
@@ -27,9 +27,9 @@
         </v-col>
         <v-col cols="4">
             <DoneContents
-                :loadData = "async() => { return await orchestartor.command('Done', 'loadData', {}); }"
+                :loadData = "async() => { return await orchestrator.command('Done', 'loadData', {}); }"
                 :deleteLoad = " async(param) => { 
-                                    await orchestartor.command('Done', 'deleteLoad', param);
+                                    await orchestrator.command('Done', 'deleteLoad', param);
                                     callUpdateSummary();
                                     callUpdateDone();
                                 }"
@@ -39,9 +39,9 @@
         </v-col>
         <v-col cols="4">
             <CanceledContents
-                :loadData = "async() => { return await orchestartor.command('Cancel', 'loadData', {}); }"
+                :loadData = "async() => { return await orchestrator.command('Cancel', 'loadData', {}); }"
                 :deleteLoad = " async(param) => { 
-                                    await orchestartor.command('Cancel', 'deleteLoad', param);
+                                    await orchestrator.command('Cancel', 'deleteLoad', param);
                                     callUpdateSummary();
                                     callUpdateCancel();
                                 }"
@@ -62,7 +62,7 @@ import { ref, onMounted } from 'vue';
 
 
 const props = defineProps(['orchestrator', 'callUpdateSummary']);
-const orchestartor = props.orchestrator;
+const orchestrator = props.orchestrator;
 
 const updateKeySectionTodo = ref(0);
 const callUpdateTodo = () => {

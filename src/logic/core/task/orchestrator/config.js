@@ -12,7 +12,7 @@ import { SummaryDataPipelineConfig } from '../pipelines/summary/config';
 
 import CustomEventDispatcher from './CustomEventDispatcher';
 
-export function TaskOrchestartorConfig() {
+export function TaskOrchestratorConfig() {
     const todoDataPipeline = TodoDataPipelineConfig();
     const doneDataPipeline = DoneDataPipelineConfig();
     const cancelDataPipeline = CancelDataPipelineConfig();

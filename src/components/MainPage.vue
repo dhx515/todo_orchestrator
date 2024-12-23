@@ -22,10 +22,10 @@ import SectionJobContents from './SectionJobContents/SectionJobContents.vue';
 
 import { ref, onMounted } from 'vue';
 
-import { TaskOrchestartorConfig } from '@/logic/core/task/orchestrator/config';
+import { TaskOrchestratorConfig } from '@/logic/core/task/orchestrator/config';
 
 
-const orchestrator = TaskOrchestartorConfig();
+const orchestrator = TaskOrchestratorConfig();
 
 const updateKeySectionSummary = ref(0);
 const callUpdateSummary = () => {

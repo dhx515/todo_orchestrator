@@ -1,10 +1,10 @@
-import { TaskOrchestartorConfig } from '@/logic/core/task/orchestrator/config';
+import { TaskOrchestratorConfig } from '@/logic/core/task/orchestrator/config';
 
 describe('TodoDataPipeline', () => {
     let orchestrator;
 
     beforeEach(async () => {
-        orchestrator = TaskOrchestartorConfig();
+        orchestrator = TaskOrchestratorConfig();
         await orchestrator.command('Todo', 'loadData', {});
         await orchestrator.command('Done', 'loadData', {});
         await orchestrator.command('Cancel', 'loadData', {});
