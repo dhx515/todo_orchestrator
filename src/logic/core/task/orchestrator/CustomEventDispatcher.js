@@ -53,10 +53,7 @@ export default class CustomEventDispatcher extends IDispatcher{
                     await pipeline.command(commandName, data.pipelineName);
                     break;
                 }
-                case 'Todo': {
-                    await pipeline.command(commandName, data.result);
-                    break;
-                }
+                case 'Todo':
                 case 'Cancel':
                 case 'Done': { // Cancel과 Done이 동일한 로직을 수행
                     const requestTarget = data.request[0];

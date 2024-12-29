@@ -35,8 +35,14 @@ export function TaskOrchestratorConfig() {
         .subscribe('Cancel:createLoad', 'Summary:increaseLoad', 5)
         .subscribe('Cancel:deleteLoad', 'Summary:decreaseLoad', 5)
 
+        .subscribe('Cancel:revertLoad', 'Summary:decreaseLoad', 5)
+        .subscribe('Cancel:revertLoad', 'Todo:createLoad', 10)
+
         .subscribe('Done:createLoad', 'Summary:increaseLoad', 5)
         .subscribe('Done:deleteLoad', 'Summary:decreaseLoad', 5)
+
+        .subscribe('Done:revertLoad', 'Summary:decreaseLoad', 5)
+        .subscribe('Done:revertLoad', 'Todo:createLoad', 10)
 
         .build();
 }
