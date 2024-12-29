@@ -77,7 +77,6 @@ const doneLoadData = async () => {
 const doneDeleteLoad = async (param) => { 
     const res = await orchestrator.command('Done', 'deleteLoad', param);
     props.callUpdateSummary();
-    callUpdateDone();
     return res;
 };
 
@@ -87,7 +86,6 @@ const cancelLoadData = async () => {
 const cancelDeleteLoad = async (param) => { 
     const res = await orchestrator.command('Cancel', 'deleteLoad', param);
     props.callUpdateSummary();
-    callUpdateCancel();
     return res;
 };
 
