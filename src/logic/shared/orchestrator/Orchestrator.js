@@ -29,7 +29,7 @@ export default class Orchestrator {
     const result = await pipeline.command(commandName, ...args);
     const eventData = { pipelineName, request: args, result };
 
-    this.#dispatcher.dispatch(`${pipelineName}:${commandName}`, eventData);
+    await this.#dispatcher.dispatch(`${pipelineName}:${commandName}`, eventData);
     return result;
     }
 }
