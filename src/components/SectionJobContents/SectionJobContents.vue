@@ -8,12 +8,14 @@
                 :cancelLoad = "todoCancelLoad"
                 :doneLoad =  "todoDoneLoad"
                 class="pa-0 ma-0"
+                :key = "updateKeySectionTodo"
             />
         </v-col>
         <v-col cols="4">
             <DoneContents
                 :loadData = "doneLoadData"
                 :deleteLoad = "doneDeleteLoad"
+                :revertLoad = "doneRevertLoad"
                 class="pa-0 ma-0"
                 :key = "updateKeySectionDone"
             />
@@ -22,6 +24,7 @@
             <CanceledContents
                 :loadData = "cancelLoadData"
                 :deleteLoad = "cancelDeleteLoad"
+                :revertLoad = "cancelRevertLoad"
                 class="pa-0 ma-0"
                 :key = "updateKeySectionCancel"
             />
@@ -39,6 +42,11 @@ import DoneContents from './DoneContents.vue';
 
 const props = defineProps(['orchestrator', 'callUpdateSummary']);
 const orchestrator = props.orchestrator;
+
+const updateKeySectionTodo = ref(0);
+const callUpdateTodo = () => {
+    updateKeySectionTodo.value += 1;
+}
 
 const updateKeySectionCancel = ref(0);
 const callUpdateCancel = () => {
@@ -79,6 +87,12 @@ const doneDeleteLoad = async (param) => {
     props.callUpdateSummary();
     return res;
 };
+const doneRevertLoad = async (param) => { 
+    const res = await orchestrator.command('Done', 'revertLoad', param);
+    props.callUpdateSummary();
+    callUpdateTodo();
+    return res;
+};
 
 const cancelLoadData = async () => { 
     return orchestrator.command('Cancel', 'loadData', {});
@@ -86,6 +100,12 @@ const cancelLoadData = async () => {
 const cancelDeleteLoad = async (param) => { 
     const res = await orchestrator.command('Cancel', 'deleteLoad', param);
     props.callUpdateSummary();
+    return res;
+};
+const cancelRevertLoad = async (param) => { 
+    const res = await orchestrator.command('Cancel', 'revertLoad', param);
+    props.callUpdateSummary();
+    callUpdateTodo();
     return res;
 };
 

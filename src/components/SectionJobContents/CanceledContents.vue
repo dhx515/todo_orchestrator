@@ -10,13 +10,22 @@
                     style="background-color: #f9f9f9;"
                 >
                     {{ item }}
-                    <v-btn 
-                        icon="mdi-delete"
-                        color="#F0F0F0" 
-                        rounded="pill"
-                        style="width: 36px; height: 36px;"
-                        @click="deleteTask(item)"
-                    />
+                    <div class="button-group">
+                        <v-btn 
+                            icon="mdi-arrow-left"
+                            color="#F0F0F0" 
+                            rounded="pill"
+                            style="width: 36px; height: 36px;"
+                            @click="revertTask(item)"
+                        />
+                        <v-btn 
+                            icon="mdi-delete"
+                            color="#F0F0F0" 
+                            rounded="pill"
+                            style="width: 36px; height: 36px;"
+                            @click="deleteTask(item)"
+                        />
+                    </div>
                 </v-list-item-title>
             </v-list-item>
         </v-list>
@@ -28,12 +37,16 @@
 import { ref, onMounted } from 'vue';
 
 
-const props = defineProps(['loadData', 'deleteLoad']);
+const props = defineProps(['loadData', 'deleteLoad', 'revertLoad']);
 
 const canceledItems = ref([]);
 
 const deleteTask = async(item) => {
     canceledItems.value = await props.deleteLoad(item);
+};
+
+const revertTask = async(item) => {
+    canceledItems.value = await props.revertLoad(item);
 };
 
 onMounted(async () => {
@@ -46,5 +59,10 @@ onMounted(async () => {
 <style scoped>
 .red {
     background-color: #d32f2f !important;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px; /* 버튼 사이 간격 */
 }
 </style>

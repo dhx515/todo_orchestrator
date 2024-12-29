@@ -4,16 +4,18 @@ import CanceledContents from '@/components/SectionJobContents/CanceledContents.v
 describe('CanceledContents.vue', () => {
     let wrapper;
 
-    let loadDataMock, deleteLoadMock;
+    let loadDataMock, deleteLoadMock, revertLoadMock;
 
     beforeEach(async () => {
         loadDataMock = jest.fn().mockResolvedValue(['Task 1', 'Task 2']);
         deleteLoadMock = jest.fn().mockResolvedValue();
+        revertLoadMock = jest.fn().mockResolvedValue();
 
         wrapper = mount(CanceledContents, {
             props: {
                 loadData: loadDataMock,
                 deleteLoad: deleteLoadMock,
+                revertLoad: revertLoadMock,
             },
         });
 
@@ -29,9 +31,16 @@ describe('CanceledContents.vue', () => {
         expect(items[1].text()).toContain('Task 2');
     });
 
+    it('reverts a task', async () => {
+        // 첫 번째 revert 버튼을 찾음
+        const button = wrapper.findAll('.v-btn').at(0);
+        await button.trigger('click');
+        expect(revertLoadMock).toHaveBeenCalledWith('Task 1');
+    });
+
     it('deletes a task', async () => {
         // wrapper.find('.v-btn')는 첫 번째 삭제 버튼을 찾음
-        const button = wrapper.find('.v-btn');
+        const button = wrapper.findAll('.v-btn').at(1);
         await button.trigger('click');
         expect(deleteLoadMock).toHaveBeenCalledWith('Task 1');
     });
