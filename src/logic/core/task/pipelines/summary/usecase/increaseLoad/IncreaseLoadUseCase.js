@@ -11,9 +11,9 @@ export default class IncreaseLoadUseCase extends IIncreaseLoadUseCase {
         super(increaseProcessor, dataTransporer);
     }
 
-    execute(param) {
-        this.increaseProcessor.process(param);
+    async execute(param) {
+        await this.increaseProcessor.process(param);
         
-        return this.dataTransporer.transport();
+        return await this.dataTransporer.transport();
     }
 }

@@ -11,9 +11,9 @@ export default class DecreaseLoadUseCase extends IDecreaseLoadUseCase {
         super(decreaseProcessor, dataTransporer);
     }
 
-    execute(param) {
-        this.decreaseProcessor.process(param);
+    async execute(param) {
+        await this.decreaseProcessor.process(param);
         
-        return this.dataTransporer.transport();
+        return await this.dataTransporer.transport();
     }
 }

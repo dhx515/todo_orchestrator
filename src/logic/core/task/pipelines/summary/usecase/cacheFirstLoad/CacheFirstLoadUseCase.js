@@ -15,6 +15,6 @@ export default class CacheFirstLoadUseCase extends ICacheFirstLoadUseCase {
         if (!this.initialInspector.inspect()) {
             await this.fetchProcessor.process(param);
         }
-        return this.dataTransporer.transport();
+        return await this.dataTransporer.transport();
     }
 }
