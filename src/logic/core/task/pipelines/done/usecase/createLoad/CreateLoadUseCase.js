@@ -11,9 +11,9 @@ export default class CreateLoadUseCase extends ICreateLoadUseCase {
         super(createProcessor, dataTransporer);
     }
 
-    execute(param) {
-        this.createProcessor.process(param);
+    async execute(param) {
+        await this.createProcessor.process(param);
         
-        return this.dataTransporer.transport();
+        return await this.dataTransporer.transport();
     }
 }

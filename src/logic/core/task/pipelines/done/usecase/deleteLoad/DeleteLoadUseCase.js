@@ -14,6 +14,6 @@ export default class DeleteLoadUseCase extends IDeleteLoadUseCase {
     async execute(param) {
         await this.deleteProcessor.process(param);
         
-        return this.dataTransporer.transport();
+        return await this.dataTransporer.transport();
     }
 }
