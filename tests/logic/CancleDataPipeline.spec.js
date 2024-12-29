@@ -23,6 +23,11 @@ describe('CancelDataPipeline', () => {
         expect(result).toStrictEqual(['독후감작성', '오전반차']);
     });
 
+    it('revertLoad', async() => {
+        const result = await cancelDataPipeline.command('revertLoad', '독후감작성');
+        expect(result).toStrictEqual(['팀행사준비', '오전반차']);
+    });
+
     it('createLoad and deleteLoad', async() => {
         await cancelDataPipeline.command('createLoad', '커피챗');
         const result = await cancelDataPipeline.command('deleteLoad', '독후감작성');
