@@ -23,6 +23,11 @@ describe('DoneDataPipeline', () => {
         expect(result).toStrictEqual(['운영인수인계', '화상회의']);
     });
 
+    it('revertLoad', async() => {
+        const result = await doneDataPipeline.command('revertLoad', '운영인수인계');
+        expect(result).toStrictEqual(['분기계획작성', '화상회의']);
+    });
+
     it('createLoad and deleteLoad', async() => {
         await doneDataPipeline.command('createLoad', '커피챗');
         const result = await doneDataPipeline.command('deleteLoad', '운영인수인계');

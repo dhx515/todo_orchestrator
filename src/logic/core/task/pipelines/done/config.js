@@ -31,5 +31,6 @@ export function DoneDataPipelineConfig() {
         .addUseCase('loadData', cacheFirstLoadUseCase)
         .addUseCase('createLoad', createLoadUseCase)
         .addUseCase('deleteLoad', deleteLoadUseCase)
+        .addUseCase('revertLoad', deleteLoadUseCase)
         .build();
 }
