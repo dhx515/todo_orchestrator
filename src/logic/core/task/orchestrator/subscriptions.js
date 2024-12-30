@@ -17,19 +17,22 @@
  * @type {Subscription[]}
  */
 export const subscriptions = [
-    { event: 'Todo:createLoad', handler: 'Summary:increaseLoad', priority: 10 },
-    { event: 'Todo:cancelLoad', handler: 'Summary:decreaseLoad', priority: 5 },
-    { event: 'Todo:cancelLoad', handler: 'Cancel:createLoad',    priority: 10 },
-    { event: 'Todo:doneLoad',   handler: 'Summary:decreaseLoad', priority: 5 },
-    { event: 'Todo:doneLoad',   handler: 'Done:createLoad',      priority: 10 },
+    { event: 'Todo:createLoad', handler: 'Summary:increaseData', priority: 10 },
+    { event: 'Todo:createData', handler: 'Summary:increaseData', priority: 10 },
+    { event: 'Todo:cancelLoad', handler: 'Summary:decreaseData', priority: 5 },
+    { event: 'Todo:cancelLoad', handler: 'Cancel:createData',    priority: 10 },
+    { event: 'Todo:doneLoad',   handler: 'Summary:decreaseData', priority: 5 },
+    { event: 'Todo:doneLoad',   handler: 'Done:createData',      priority: 10 },
 
-    { event: 'Cancel:createLoad', handler: 'Summary:increaseLoad', priority: 5 },
-    { event: 'Cancel:deleteLoad', handler: 'Summary:decreaseLoad', priority: 5 },
-    { event: 'Cancel:revertLoad', handler: 'Summary:decreaseLoad', priority: 5 },
-    { event: 'Cancel:revertLoad', handler: 'Todo:createLoad',      priority: 10 },
+    { event: 'Cancel:createLoad', handler: 'Summary:increaseData', priority: 5 },
+    { event: 'Cancel:createData', handler: 'Summary:increaseData', priority: 10 },
+    { event: 'Cancel:deleteLoad', handler: 'Summary:decreaseData', priority: 5 },
+    { event: 'Cancel:revertLoad', handler: 'Summary:decreaseData', priority: 5 },
+    { event: 'Cancel:revertLoad', handler: 'Todo:createData',      priority: 10 },
     
-    { event: 'Done:createLoad', handler: 'Summary:increaseLoad', priority: 5 },
-    { event: 'Done:deleteLoad', handler: 'Summary:decreaseLoad', priority: 5 },
-    { event: 'Done:revertLoad', handler: 'Summary:decreaseLoad', priority: 5 },
-    { event: 'Done:revertLoad', handler: 'Todo:createLoad',      priority: 10 },
+    { event: 'Done:createLoad', handler: 'Summary:increaseData', priority: 5 },
+    { event: 'Done:createData', handler: 'Summary:increaseData', priority: 5 },
+    { event: 'Done:deleteLoad', handler: 'Summary:decreaseData', priority: 5 },
+    { event: 'Done:revertLoad', handler: 'Summary:decreaseData', priority: 5 },
+    { event: 'Done:revertLoad', handler: 'Todo:createData',      priority: 10 },
 ];
