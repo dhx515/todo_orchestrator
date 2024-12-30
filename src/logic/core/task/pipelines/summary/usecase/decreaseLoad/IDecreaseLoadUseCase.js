@@ -8,7 +8,7 @@ import ISummaryDataTransporter from '../../transporter/data/ISummaryDataTranspor
 
 
 /** @interface */
-export default class ICreateLoadUseCase extends IUseCase {
+export default class IDecreaseLoadUseCase extends IUseCase {
     decreaseProcessor = null;
     dataTransporer = null;
     
