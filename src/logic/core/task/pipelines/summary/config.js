@@ -13,7 +13,9 @@ import InitialInspector from './inspector/initial/SummaryInitialInspector';
 import DataTransporter from './transporter/data/SummaryDataTransporter';
 import CacheFirstLoadUseCase from './usecase/cacheFirstLoad/CacheFirstLoadUseCase';
 import IncreaseLoadUseCase from './usecase/increaseLoad/IncreaseLoadUseCase';
+import IncreaseDataUseCase from './usecase/increaseData/IncreaseDataUseCase';
 import DecreaseLoadUseCase from './usecase/decreaseLoad/DecreaseLoadUseCase';
+import DecreaseDataUseCase from './usecase/decreaseData/DecreaseDataUseCase';
 
 export function SummaryDataPipelineConfig() {
     const dataStorage = new DataStorage();
@@ -25,11 +27,15 @@ export function SummaryDataPipelineConfig() {
 
     const cacheFirstLoadUseCase = new CacheFirstLoadUseCase(initialInspector, fetchProcessor, dataTransporer);
     const increaseLoadUseCase = new IncreaseLoadUseCase(increaseProcessor, dataTransporer);
+    const increateDataUseCase = new IncreaseDataUseCase(increaseProcessor, dataTransporer);
     const decreaseLoadUseCase = new DecreaseLoadUseCase(decreaseProcessor, dataTransporer);
+    const decreaseDataUseCase = new DecreaseDataUseCase(decreaseProcessor, dataTransporer);
 
     return new PipelineBuilderWithAutoCommand()
         .addUseCase('loadData', cacheFirstLoadUseCase)
         .addUseCase('increaseLoad', increaseLoadUseCase)
+        .addUseCase('increaseData', increateDataUseCase)
         .addUseCase('decreaseLoad', decreaseLoadUseCase)
+        .addUseCase('decreaseData', decreaseDataUseCase)
         .build();
 }
