@@ -34,6 +34,11 @@ describe('TodoDataPipeline', () => {
         expect(result).toStrictEqual(['팀업무', '개인업무']);
     });
 
+    it('deleteLoad', async() => {
+        const result = await todoDataPipeline.command('deleteLoad', '팀업무');
+        expect(result).toStrictEqual(['개인업무', '타팀자료요청']);
+    });
+
     it('deleteData & loadData', async() => {
         await todoDataPipeline.command('deleteData', '개인업무');
         const result = await todoDataPipeline.command('loadData', {1:2});

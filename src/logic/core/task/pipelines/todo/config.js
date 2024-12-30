@@ -27,14 +27,15 @@ export function TodoDataPipelineConfig() {
 
     const cacheFirstLoadUseCase = new CacheFirstLoadUseCase(initialInspector, fetchProcessor, dataTransporer);
     const createLoadUseCase = new CreateLoadUseCase(createProcessor, dataTransporer);
-    const createDataUseCase = new CreateDataUseCase(createProcessor, dataTransporer);
+    const createDataUseCase = new CreateDataUseCase(createProcessor);
     const deleteLoadUseCase = new DeleteLoadUseCase(deleteProcessor, dataTransporer);
-    const deleteDataUseCase = new DeleteDataUseCase(deleteProcessor, dataTransporer);
+    const deleteDataUseCase = new DeleteDataUseCase(deleteProcessor);
 
     return new PipelineBuilderWithAutoCommand()
         .addUseCase('loadData', cacheFirstLoadUseCase)
         .addUseCase('createLoad', createLoadUseCase)
         .addUseCase('createData', createDataUseCase)
+        .addUseCase('deleteLoad', deleteLoadUseCase)
         .addUseCase('cancelLoad', deleteLoadUseCase)
         .addUseCase('doneLoad', deleteLoadUseCase)
         .addUseCase('deleteData', deleteDataUseCase)
