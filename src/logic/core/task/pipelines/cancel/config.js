@@ -13,7 +13,9 @@ import InitialInspector from './inspector/initial/CancelInitialInspector';
 import DataTransporter from './transporter/data/CancelDataTransporter';
 import CacheFirstLoadUseCase from './usecase/cacheFirstLoad/CacheFirstLoadUseCase';
 import CreateLoadUseCase from './usecase/createLoad/CreateLoadUseCase';
+import CreateDataUseCase from './usecase/createData/CreateDataUseCase';
 import DeleteLoadUseCase from './usecase/deleteLoad/DeleteLoadUseCase';
+import DeleteDataUseCase from './usecase/deleteData/DeleteDataUseCase';
 
 export function CancelDataPipelineConfig() {
     const dataStorage = new DataStorage();
@@ -25,12 +27,16 @@ export function CancelDataPipelineConfig() {
 
     const cacheFirstLoadUseCase = new CacheFirstLoadUseCase(initialInspector, fetchProcessor, dataTransporer);
     const createLoadUseCase = new CreateLoadUseCase(createProcessor, dataTransporer);
+    const createDataUseCase = new CreateDataUseCase(createProcessor);
     const deleteLoadUseCase = new DeleteLoadUseCase(deleteProcessor, dataTransporer);
+    const deleteDataUseCase = new DeleteDataUseCase(deleteProcessor);
 
     return new PipelineBuilderWithAutoCommand()
         .addUseCase('loadData', cacheFirstLoadUseCase)
         .addUseCase('createLoad', createLoadUseCase)
+        .addUseCase('createData', createDataUseCase)
         .addUseCase('deleteLoad', deleteLoadUseCase)
         .addUseCase('revertLoad', deleteLoadUseCase)
+        .addUseCase('deleteData', deleteDataUseCase)
         .build();
 }

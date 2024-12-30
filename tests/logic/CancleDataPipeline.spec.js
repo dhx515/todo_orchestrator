@@ -28,9 +28,15 @@ describe('CancelDataPipeline', () => {
         expect(result).toStrictEqual(['팀행사준비', '오전반차']);
     });
 
-    it('createLoad and deleteLoad', async() => {
-        await cancelDataPipeline.command('createLoad', '커피챗');
+    it('createData and deleteLoad', async() => {
+        await cancelDataPipeline.command('createData', '커피챗');
         const result = await cancelDataPipeline.command('deleteLoad', '독후감작성');
         expect(result).toStrictEqual(['팀행사준비', '오전반차', '커피챗']);
+    });
+
+    it('deleteData and createLoad', async() => {
+        await cancelDataPipeline.command('deleteData', '팀행사준비');
+        const result = await cancelDataPipeline.command('createLoad', '커피챗');
+        expect(result).toStrictEqual(['독후감작성', '오전반차', '커피챗']);
     });
 });
