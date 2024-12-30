@@ -11,6 +11,7 @@ import { CancelDataPipelineConfig } from '../pipelines/cancel/config';
 import { SummaryDataPipelineConfig } from '../pipelines/summary/config';
 
 import CustomEventDispatcher from './CustomEventDispatcher';
+import { subscriptions } from './subscriptions';
 
 export function TaskOrchestratorConfig() {
     const todoDataPipeline = TodoDataPipelineConfig();
@@ -18,31 +19,16 @@ export function TaskOrchestratorConfig() {
     const cancelDataPipeline = CancelDataPipelineConfig();
     const summaryDataPipeline = SummaryDataPipelineConfig();
 
-    return new OrchestratorBuilder()
+    const orchestratorBuilder = new OrchestratorBuilder()
         .addPipeline('Todo', todoDataPipeline)
         .addPipeline('Done', doneDataPipeline)
         .addPipeline('Cancel', cancelDataPipeline)
         .addPipeline('Summary', summaryDataPipeline)
-        .initializeCustomDispatcher(CustomEventDispatcher)
-        .subscribe('Todo:createLoad', 'Summary:increaseLoad', 10)
+        .initializeCustomDispatcher(CustomEventDispatcher);
+    
+    subscriptions.forEach(({ event, handler, priority }) => {
+        orchestratorBuilder.subscribe(event, handler, priority);
+    });
 
-        .subscribe('Todo:cancelLoad', 'Summary:decreaseLoad', 5)
-        .subscribe('Todo:cancelLoad', 'Cancel:createLoad', 10)
-        
-        .subscribe('Todo:doneLoad', 'Summary:decreaseLoad', 5)
-        .subscribe('Todo:doneLoad', 'Done:createLoad', 10)
-        
-        .subscribe('Cancel:createLoad', 'Summary:increaseLoad', 5)
-        .subscribe('Cancel:deleteLoad', 'Summary:decreaseLoad', 5)
-
-        .subscribe('Cancel:revertLoad', 'Summary:decreaseLoad', 5)
-        .subscribe('Cancel:revertLoad', 'Todo:createLoad', 10)
-
-        .subscribe('Done:createLoad', 'Summary:increaseLoad', 5)
-        .subscribe('Done:deleteLoad', 'Summary:decreaseLoad', 5)
-
-        .subscribe('Done:revertLoad', 'Summary:decreaseLoad', 5)
-        .subscribe('Done:revertLoad', 'Todo:createLoad', 10)
-
-        .build();
+    return orchestratorBuilder.build();
 }
