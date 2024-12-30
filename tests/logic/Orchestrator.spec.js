@@ -56,6 +56,19 @@ describe('TodoDataPipeline', () => {
         });
     });
 
+    // Todo 삭제 -> Summary: Todo-1
+    it('Todo:DeleteData & Summary:loadData ', async() => {
+        const result1 = await orchestrator.command('Todo', 'deleteLoad', '타팀자료요청');
+        expect(result1).toStrictEqual(['팀업무', '개인업무']);
+
+        const result2 = await orchestrator.command('Summary', 'loadData', {});
+        expect(result2).toStrictEqual({
+            Todo: 2,
+            Cancel: 3,
+            Done: 3,
+        });
+    });
+
     // Cancel 삭제 -> Summary: Cancel-1
     it('Cancel:DeleteData & Summary:loadData ', async() => {
         const result1 = await orchestrator.command('Cancel', 'deleteLoad', '팀행사준비');

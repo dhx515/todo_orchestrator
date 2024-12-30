@@ -23,6 +23,7 @@ export const subscriptions = [
     { event: 'Todo:cancelLoad', handler: 'Cancel:createData',    priority: 10 },
     { event: 'Todo:doneLoad',   handler: 'Summary:decreaseData', priority: 5 },
     { event: 'Todo:doneLoad',   handler: 'Done:createData',      priority: 10 },
+    { event: 'Todo:deleteLoad', handler: 'Summary:decreaseData', priority: 5 },
 
     { event: 'Cancel:createLoad', handler: 'Summary:increaseData', priority: 5 },
     { event: 'Cancel:createData', handler: 'Summary:increaseData', priority: 10 },
