@@ -28,9 +28,15 @@ describe('DoneDataPipeline', () => {
         expect(result).toStrictEqual(['분기계획작성', '화상회의']);
     });
 
-    it('createLoad and deleteLoad', async() => {
-        await doneDataPipeline.command('createLoad', '커피챗');
+    it('createData and deleteLoad', async() => {
+        await doneDataPipeline.command('createData', '커피챗');
         const result = await doneDataPipeline.command('deleteLoad', '운영인수인계');
         expect(result).toStrictEqual(['분기계획작성', '화상회의', '커피챗']);
+    });
+
+    it('deleteData and createLoad', async() => {
+        await doneDataPipeline.command('deleteData', '분기계획작성');
+        const result = await doneDataPipeline.command('createLoad', '커피챗');
+        expect(result).toStrictEqual(['운영인수인계', '화상회의', '커피챗']);
     });
 });
