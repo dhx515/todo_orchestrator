@@ -13,7 +13,7 @@
                     <div class="button-group">
                         <v-btn 
                             icon="mdi-arrow-left"
-                            color="#F0F0F0" 
+                            color="#1976d2" 
                             rounded="pill"
                             style="width: 36px; height: 36px;"
                             @click="revertTask(item)"
