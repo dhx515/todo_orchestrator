@@ -5,6 +5,7 @@
             <TodoContents
                 :loadData = "todoLoadData"
                 :createLoad = "todoCreateLoad"
+                :deleteLoad = "todoDeleteLoad"
                 :cancelLoad = "todoCancelLoad"
                 :doneLoad =  "todoDoneLoad"
                 class="pa-0 ma-0"
@@ -63,6 +64,11 @@ const todoLoadData = async () => {
 };
 const todoCreateLoad = async (param) => {
     const res = await orchestrator.command('Todo', 'createLoad', param);
+    props.callUpdateSummary();
+    return res;
+};
+const todoDeleteLoad = async (param) => { 
+    const res = await orchestrator.command('Todo', 'deleteLoad', param);
     props.callUpdateSummary();
     return res;
 };

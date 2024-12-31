@@ -11,11 +11,13 @@ describe('TodoContents.vue', () => {
         createLoadMock = jest.fn().mockResolvedValue(['Task 1', 'Task 2', 'Task 3']);
         cancelLoadMock = jest.fn().mockResolvedValue(['Task 1']);
         doneLoadMock = jest.fn().mockResolvedValue(['Task 2']);
+        deleteLoadMock = jest.fn().mockResolvedValue(['Task 2']);
 
         wrapper = mount(TodoContents, {
             props: {
                 loadData: loadDataMock,
                 createLoad: createLoadMock,
+                deleteLoad: deleteLoadMock,
                 cancelLoad: cancelLoadMock,
                 doneLoad: doneLoadMock,
             },
@@ -47,6 +49,14 @@ describe('TodoContents.vue', () => {
         expect(items[2].text()).toContain('Task 3');
     });
 
+    it('delete a todo', async () => {
+        await wrapper.vm.deleteTodo('Task 1');
+        await wrapper.vm.$nextTick();
+        const items = wrapper.findAll('.v-list-item-title');
+        expect(items.length).toBe(1);
+        expect(items[0].text()).toContain('Task 2');
+    });
+
     it('cancels a todo', async () => {
         await wrapper.vm.cancelTodo('Task 2');
         await wrapper.vm.$nextTick();
@@ -55,7 +65,7 @@ describe('TodoContents.vue', () => {
         expect(items[0].text()).toContain('Task 1');
     });
 
-    it('deletes a todo', async () => {
+    it('done a todo', async () => {
         await wrapper.vm.deleteTodo('Task 1');
         await wrapper.vm.$nextTick();
         const items = wrapper.findAll('.v-list-item-title');

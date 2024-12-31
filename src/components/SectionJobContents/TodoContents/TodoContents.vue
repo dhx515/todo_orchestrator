@@ -28,7 +28,7 @@
                             color="green" 
                             rounded="pill"
                             style="width: 36px; height: 36px;"
-                            @click="deleteTodo(item)"
+                            @click="doneTodo(item)"
                         />
                         <v-btn 
                             icon="mdi-cancel"
@@ -36,6 +36,13 @@
                             rounded="pill"
                             style="width: 36px; height: 36px;"
                             @click="cancelTodo(item)"
+                        />
+                        <v-btn 
+                            icon="mdi-delete"
+                            color="#F0F0F0" 
+                            rounded="pill"
+                            style="width: 36px; height: 36px;"
+                            @click="deleteTodo(item)"
                         />
                     </div>
                 </v-list-item-title>
@@ -56,7 +63,7 @@ import { ref, onMounted } from 'vue';
 import AddTodoModal from './AddTodoModal.vue';
 
 
-const props = defineProps(['loadData', 'createLoad', 'cancelLoad', 'doneLoad']);
+const props = defineProps(['loadData', 'createLoad', 'deleteLoad', 'cancelLoad', 'doneLoad']);
 
 const todoItems = ref([]);
 
@@ -71,10 +78,13 @@ const closeModal = () => {
 const createTodo = async (task) => {
     todoItems.value = await props.createLoad(task);
 };
+const deleteTodo = async (task) => {
+    todoItems.value = await props.deleteLoad(task);
+};
 const cancelTodo = async (item) => {
     todoItems.value = await props.cancelLoad(item);
 };
-const deleteTodo = async (item) => {
+const doneTodo = async (item) => {
     todoItems.value = await props.doneLoad(item);
 };
 
