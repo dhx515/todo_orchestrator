@@ -21,15 +21,15 @@ export default class Orchestrator {
      * @returns {Promise<*>} The result of the command execution.
      */
     async command(pipelineName, commandName, ...args) {
-    const pipeline = this.#pipelines[pipelineName];
-    if (!pipeline) {
-        throw new Error(`Pipeline ${pipelineName} not found.`);
-    }
+        const pipeline = this.#pipelines[pipelineName];
+        if (!pipeline) {
+            throw new Error(`Pipeline ${pipelineName} not found.`);
+        }
 
-    const result = await pipeline.command(commandName, ...args);
+        const result = await pipeline.command(commandName, ...args);
 
-    await this.#dispatcher.dispatch(`${pipelineName}:${commandName}`, ...args);
-    
-    return result;
+        await this.#dispatcher.dispatch(`${pipelineName}:${commandName}`, ...args);
+        
+        return result;
     }
 }
