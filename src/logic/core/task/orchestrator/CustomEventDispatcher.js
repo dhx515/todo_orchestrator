@@ -35,9 +35,9 @@ export default class CustomEventDispatcher extends IDispatcher{
     /**
      * Dispatches an event, invoking all subscribed pipeline commands in order.
      * @param {string} eventName - The name of the event.
-     * @param {*} data - Data to pass to the pipeline commands.
+     * @param {string} param - Param for the pipeline commands.
      */
-    async dispatch(eventName, data) {
+    async dispatch(eventName, param) {
         const commands = this.#handlers[eventName];
         if (!commands) return;
         
@@ -50,16 +50,15 @@ export default class CustomEventDispatcher extends IDispatcher{
 
             switch(pipelineName) {
                 case 'Summary': {
-                    await pipeline.command(commandName, data.pipelineName);
+                    const triggerPipelineName = eventName.split(':')[0];
+                    await pipeline.command(commandName, triggerPipelineName);
                     break;
                 }
                 case 'Todo':
                 case 'Cancel':
                 case 'Done': {
-                    const requestTarget = data.request[0]; // Only one request target
-                    const result = await pipeline.command(commandName, requestTarget);
-                    const eventData = { pipelineName, request: requestTarget, result };
-                    await this.dispatch(command, eventData);
+                    await pipeline.command(commandName, param);
+                    await this.dispatch(command, param);
                     break;
                 }
                 default:

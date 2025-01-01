@@ -35,9 +35,9 @@ export default class EventDispatcher extends IDispatcher{
     /**
      * Dispatches an event, invoking all subscribed pipeline commands in order.
      * @param {string} eventName - The name of the event.
-     * @param {*} data - Data to pass to the pipeline commands.
+     * @param {*} param - Param for the pipeline commands.
      */
-    async dispatch(eventName, data) {
+    async dispatch(eventName, param) {
         const commands = this.#handlers[eventName];
         if (!commands) return;
         
@@ -49,7 +49,7 @@ export default class EventDispatcher extends IDispatcher{
             }
 
             // Dispatches an event using the result of the previous command as the default
-            await pipeline.command(commandName, data.result);
+            await pipeline.command(commandName, param);
         }
     }
 }
