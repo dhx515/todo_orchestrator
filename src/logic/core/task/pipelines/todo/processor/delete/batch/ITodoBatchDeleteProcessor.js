@@ -1,12 +1,12 @@
 /**
- * @file ITodoCreateProcessor.js
- * @description Interface of Todo Create Processor
+ * @file ITodoBatchDeleteProcessor.js
+ * @description Interface of Todo Batch Delete Processor
  */
-import IProcessor from '../../../../../../shared/interfaces/IProcessor'
+import IProcessor from '@/logic/shared/interfaces/IProcessor';
 
 
 /** @interface */
-export default class ITodoCreateProcessor extends IProcessor {
+export default class ITodoBatchDeleteProcessor extends IProcessor {
     constructor(dataStorage) {
         super(dataStorage);
     }
@@ -15,7 +15,7 @@ export default class ITodoCreateProcessor extends IProcessor {
      * Executes the processing logic for this processor.
      * 
      * @abstract
-     * @param {string} param
+     * @param {string[]} param
      * @throws {Error} If the method is not implemented in the subclass.
      */
     process(param) {

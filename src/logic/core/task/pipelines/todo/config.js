@@ -7,37 +7,57 @@
 import PipelineBuilderWithAutoCommand from '../../../../shared/pipeline/PipelineBuilderWithAutoCommand';
 import DataStorage from './dataStorage/TodoDataStorage';
 import FetchProcessor from './processor/fetch/TodoFetchProcessor';
-import CreateProcessor from './processor/create/TodoCreateProcessor';
-import DeleteProcessor from './processor/delete/TodoDeleteProcessor';
+import SingleCreateProcessor from './processor/create/single/TodoSingleCreateProcessor';
+import BatchCreateProcessor from './processor/create/batch/TodoBatchCreateProcessor';
+import SingleDeleteProcessor from './processor/delete/single/TodoSingleDeleteProcessor';
+import BatchDeleteProcessor from './processor/delete/batch/TodoBatchDeleteProcessor';
 import InitialInspector from './inspector/initial/TodoInitialInspector';
 import DataTransporter from './transporter/data/TodoDataTransporter';
 import CacheFirstLoadUseCase from './usecase/cacheFirstLoad/CacheFirstLoadUseCase';
-import CreateLoadUseCase from './usecase/createLoad/CreateLoadUseCase';
-import CreateDataUseCase from './usecase/createData/CreateDataUseCase';
-import DeleteLoadUseCase from './usecase/deleteLoad/DeleteLoadUseCase';
-import DeleteDataUseCase from './usecase/deleteData/DeleteDataUseCase';
+import SingleCreateLoadUseCase from './usecase/singleCreateLoad/SingleCreateLoadUseCase';
+import BatchCreateLoadUseCase from './usecase/batchCreateLoad/BatchCreateLoadUseCase';
+import SingleCreateDataUseCase from './usecase/singleCreateData/SingleCreateDataUseCase';
+import BatchCreateDataUseCase from './usecase/batchCreateData/BatchCreateDataUseCase';
+import SingleDeleteLoadUseCase from './usecase/singleDeleteLoad/SingleDeleteLoadUseCase';
+import BatchDeleteLoadUseCase from './usecase/batchDeleteLoad/BatchDeleteLoadUseCase';
+import SingleDeleteDataUseCase from './usecase/singleDeleteData/SingleDeleteDataUseCase';
+import BatchDeleteDataUseCase from './usecase/batchDeleteData/BatchDeleteDataUseCase';
 
 export function TodoDataPipelineConfig() {
-    const dataStorage = new DataStorage();
-    const fetchProcessor = new FetchProcessor(dataStorage);
-    const createProcessor = new CreateProcessor(dataStorage);
-    const deleteProcessor = new DeleteProcessor(dataStorage);
-    const dataTransporer = new DataTransporter(dataStorage);
-    const initialInspector = new InitialInspector(dataStorage);
+    const aDataStorage = new DataStorage();
+    const aFetchProcessor = new FetchProcessor(aDataStorage);
+    const aSingleCreateProcessor = new SingleCreateProcessor(aDataStorage);
+    const aBatchCreateProcessor = new BatchCreateProcessor(aDataStorage);
+    const aSingleDeleteProcessor = new SingleDeleteProcessor(aDataStorage);
+    const aBatchDeleteProcessor = new BatchDeleteProcessor(aDataStorage);
+    const aDataTransporer = new DataTransporter(aDataStorage);
+    const aInitialInspector = new InitialInspector(aDataStorage);
 
-    const cacheFirstLoadUseCase = new CacheFirstLoadUseCase(initialInspector, fetchProcessor, dataTransporer);
-    const createLoadUseCase = new CreateLoadUseCase(createProcessor, dataTransporer);
-    const createDataUseCase = new CreateDataUseCase(createProcessor);
-    const deleteLoadUseCase = new DeleteLoadUseCase(deleteProcessor, dataTransporer);
-    const deleteDataUseCase = new DeleteDataUseCase(deleteProcessor);
+    const aCacheFirstLoadUseCase = new CacheFirstLoadUseCase(aInitialInspector, aFetchProcessor, aDataTransporer);
+    const aSingleCreateLoadUseCase = new SingleCreateLoadUseCase(aSingleCreateProcessor, aDataTransporer);
+    const aBatchCreateLoadUseCase = new BatchCreateLoadUseCase(aBatchCreateProcessor, aDataTransporer);
+    const aSingleCreateDataUseCase = new SingleCreateDataUseCase(aSingleCreateProcessor);
+    const aBatchCreateDataUseCase = new BatchCreateDataUseCase(aBatchCreateProcessor);
+    const aSingleDeleteLoadUseCase = new SingleDeleteLoadUseCase(aSingleDeleteProcessor, aDataTransporer);
+    const aBatchDeleteLoadUseCase = new BatchDeleteLoadUseCase(aBatchDeleteProcessor, aDataTransporer); 
+    const aSingleDeleteDataUseCase = new SingleDeleteDataUseCase(aSingleDeleteProcessor);
+    const aBatchDeleteDataUseCase = new BatchDeleteDataUseCase(aBatchDeleteProcessor);
 
     return new PipelineBuilderWithAutoCommand()
-        .addUseCase('loadData', cacheFirstLoadUseCase)
-        .addUseCase('createLoad', createLoadUseCase)
-        .addUseCase('createData', createDataUseCase)
-        .addUseCase('deleteLoad', deleteLoadUseCase)
-        .addUseCase('cancelLoad', deleteLoadUseCase)
-        .addUseCase('doneLoad', deleteLoadUseCase)
-        .addUseCase('deleteData', deleteDataUseCase)
+        .addUseCase('loadData', aCacheFirstLoadUseCase)
+
+        .addUseCase('singleCreateLoad', aSingleCreateLoadUseCase)
+        .addUseCase('singleCreateData', aSingleCreateDataUseCase)
+        .addUseCase('singleDeleteLoad', aSingleDeleteLoadUseCase)
+        .addUseCase('singleCancelLoad', aSingleDeleteLoadUseCase)
+        .addUseCase('singleDoneLoad', aSingleDeleteLoadUseCase)
+        .addUseCase('singleDeleteData', aSingleDeleteDataUseCase)
+
+        .addUseCase('batchCreateLoad', aBatchCreateLoadUseCase)
+        .addUseCase('batchCreateData', aBatchCreateDataUseCase)
+        .addUseCase('batchDeleteLoad', aBatchDeleteLoadUseCase)
+        .addUseCase('batchCancelLoad', aBatchDeleteLoadUseCase)
+        .addUseCase('batchDoneLoad', aBatchDeleteLoadUseCase)
+        .addUseCase('batchDeleteData', aBatchDeleteDataUseCase)
         .build();
 }

@@ -2,7 +2,7 @@
  * @file ICacheFirstLoadUseCase.js
  * @description Interface of Todo Cache First Load Use Case
  */
-import IUseCase from '../../../../../../shared/interfaces/IUseCase';
+import IUseCase from '@/logic/shared/interfaces/IUseCase';
 import ITodoInitialInspector from '../../inspector/initial/ITodoInitialInspector';
 import ITodoFetchProcessor from '../../processor/fetch/ITodoFetchProcessor';
 import ITodoDataTransporter from '../../transporter/data/ITodoDataTransporter';

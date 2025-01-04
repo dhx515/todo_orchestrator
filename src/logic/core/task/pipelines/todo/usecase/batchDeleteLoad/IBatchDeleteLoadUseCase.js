@@ -1,34 +1,34 @@
 /**
- * @file IDeleteLoadUseCase.js
+ * @file IBatchDeleteLoadUseCase.js
  * @description Interface of Todo Delete Load Use Case
  */
-import IUseCase from '../../../../../../shared/interfaces/IUseCase';
-import ITodoDeleteProcessor from '../../processor/delete/ITodoDeleteProcessor';
+import IUseCase from '@/logic/shared/interfaces/IUseCase';
+import ITodoBatchDeleteProcessor from '../../processor/delete/batch/ITodoBatchDeleteProcessor';
 import ITodoDataTransporter from '../../transporter/data/ITodoDataTransporter';
 
 
 /** @interface */
-export default class IDeleteLoadUseCase extends IUseCase {
-    deleteProcessor = null;
-    dataTransporer = null;
+export default class IBatchDeleteLoadUseCase extends IUseCase {
+    aBatchDeleteProcessor = null;
+    aDataTransporter = null;
     
-    constructor(deleteProcessor, dataTransporer) {
+    constructor(aBatchDeleteProcessor, aDataTransporter) {
         super();
 
-        this.#validateTodoDeleteProcessor(deleteProcessor);
-        this.#validateTodoDataTransporter(dataTransporer);
+        this.#validateTodoBatchDeleteProcessor(aBatchDeleteProcessor);
+        this.#validateTodoDataTransporter(aDataTransporter);
 
-        this.deleteProcessor = deleteProcessor;
-        this.dataTransporer = dataTransporer;
+        this.aBatchDeleteProcessor = aBatchDeleteProcessor;
+        this.aDataTransporter = aDataTransporter;
     }
 
     /**
      * Validates the delete processor object.
-     * @param {ITodoDeleteProcessor} target - The delete processor instance to validate.
-     * @throws Will throw an error if the target is not an instance of ITodoDeleteProcessor.
+     * @param {ITodoBatchDeleteProcessor} target - The delete processor instance to validate.
+     * @throws Will throw an error if the target is not an instance of ITodoBatchDeleteProcessor.
      */
-    #validateTodoDeleteProcessor(target) {
-        if (!(target instanceof ITodoDeleteProcessor)) {
+    #validateTodoBatchDeleteProcessor(target) {
+        if (!(target instanceof ITodoBatchDeleteProcessor)) {
             throw new Error('Invalid todo processor object');
         }
     }
@@ -48,7 +48,7 @@ export default class IDeleteLoadUseCase extends IUseCase {
      * Executes the use case logic for this UseCase.
      * 
      * @abstract
-     * @param {string} param
+     * @param {string[]} param - The parameter for the use case.
      * @throws {Error} If the method is not implemented in the subclass.
      */
     execute(param) {

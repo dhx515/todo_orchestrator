@@ -1,12 +1,12 @@
 /**
- * @file ITodoDeleteProcessor.js
- * @description Interface of Todo Delete Processor
+ * @file ITodoSingleDeleteProcessor.js
+ * @description Interface of Todo Single Delete Processor
  */
-import IProcessor from '../../../../../../shared/interfaces/IProcessor'
+import IProcessor from '@/logic/shared/interfaces/IProcessor';
 
 
 /** @interface */
-export default class ITodoDeleteProcessor extends IProcessor {
+export default class ITodoSingleDeleteProcessor extends IProcessor {
     constructor(dataStorage) {
         super(dataStorage);
     }

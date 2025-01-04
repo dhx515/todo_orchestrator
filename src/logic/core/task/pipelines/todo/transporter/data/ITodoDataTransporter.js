@@ -2,7 +2,7 @@
  * @file ITodoTransporter.js
  * @description Interface of Todo Data Transporter
  */
-import ITransporter from '../../../../../../shared/interfaces/ITransporter';
+import ITransporter from '@/logic/shared/interfaces/ITransporter';
 
 
 /** @interface */

@@ -3,7 +3,7 @@
  * @description Implement of Todo Fetch Processor
  */
 import ITodoFetchProcessor from './ITodoFetchProcessor';
-import { fetchTodoData } from '../api';
+import { fetchTodoData } from '@/logic/api/todo/api';
 
 
 /** @implements {ITodoFetchProcessor} */

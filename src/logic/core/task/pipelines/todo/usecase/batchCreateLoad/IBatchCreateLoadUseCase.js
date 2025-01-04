@@ -1,34 +1,34 @@
 /**
- * @file ICreateLoadUseCase.js
- * @description Interface of Todo Create Load Use Case
+ * @file IBatchCreateLoadUseCase.js
+ * @description Interface of Todo Batch Create Load Use Case
  */
-import IUseCase from '../../../../../../shared/interfaces/IUseCase';
-import ITodoCreateProcessor from '../../processor/create/ITodoCreateProcessor';
+import IUseCase from '@/logic/shared/interfaces/IUseCase';
+import ITodoBatchCreateProcessor from '../../processor/create/batch/ITodoBatchCreateProcessor';
 import ITodoDataTransporter from '../../transporter/data/ITodoDataTransporter';
 
 
 /** @interface */
 export default class ICreateLoadUseCase extends IUseCase {
-    createProcessor = null;
-    dataTransporer = null;
+    aBatchCreateProcessor = null;
+    aDataTransporter = null;
     
-    constructor(createProcessor, dataTransporer) {
+    constructor(aBatchCreateProcessor, aDataTransporter) {
         super();
 
-        this.#validateTodoCreateProcessor(createProcessor);
-        this.#validateTodoDataTransporter(dataTransporer);
+        this.#validateTodoBatchCreateProcessor(aBatchCreateProcessor);
+        this.#validateTodoDataTransporter(aDataTransporter);
 
-        this.createProcessor = createProcessor;
-        this.dataTransporer = dataTransporer;
+        this.aBatchCreateProcessor = aBatchCreateProcessor;
+        this.aDataTransporter = aDataTransporter;
     }
 
     /**
      * Validates the create processor object.
-     * @param {ITodoCreateProcessor} target - The create processor instance to validate.
-     * @throws Will throw an error if the target is not an instance of ITodoCreateProcessor.
+     * @param {ITodoBatchCreateProcessor} target - The create processor instance to validate.
+     * @throws Will throw an error if the target is not an instance of ITodoBatchCreateProcessor.
      */
-    #validateTodoCreateProcessor(target) {
-        if (!(target instanceof ITodoCreateProcessor)) {
+    #validateTodoBatchCreateProcessor(target) {
+        if (!(target instanceof ITodoBatchCreateProcessor)) {
             throw new Error('Invalid todo processor object');
         }
     }
@@ -48,7 +48,7 @@ export default class ICreateLoadUseCase extends IUseCase {
      * Executes the use case logic for this UseCase.
      * 
      * @abstract
-     * @param {string} param
+     * @param {string[]} param - The parameter for the use case.
      * @throws {Error} If the method is not implemented in the subclass.
      */
     execute(param) {

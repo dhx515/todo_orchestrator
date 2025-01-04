@@ -1,12 +1,12 @@
 /**
- * @file ITodoFetchProcessor.js
- * @description Interface of Todo Fetch Processor
+ * @file ITodoBatchCreateProcessor.js
+ * @description Interface of Todo Batch Create Processor
  */
-import IProcessor from '@/logic/shared/interfaces/IProcessor'
+import IProcessor from '@/logic/shared/interfaces/IProcessor';
 
 
 /** @interface */
-export default class ITodoFetchProcessor extends IProcessor {
+export default class ITodoBatchCreateProcessor extends IProcessor {
     constructor(dataStorage) {
         super(dataStorage);
     }
@@ -15,7 +15,7 @@ export default class ITodoFetchProcessor extends IProcessor {
      * Executes the processing logic for this processor.
      * 
      * @abstract
-     * @param {object} param
+     * @param {string[]} param
      * @throws {Error} If the method is not implemented in the subclass.
      */
     process(param) {

@@ -2,7 +2,7 @@
  * @file ITodoDataStorage.js
  * @description Interface of Todo DataStorage
  */
-import IDataStorage from '../../../../../shared/interfaces/IDataStorage';
+import IDataStorage from '@/logic/shared/interfaces/IDataStorage';
 
 
 /** @interface */
