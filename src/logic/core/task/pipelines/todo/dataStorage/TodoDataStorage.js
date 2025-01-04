@@ -25,7 +25,19 @@ export default class TodoDataStorage extends ITodoDataStorage {
         this.#todoList.push(param);
     }
 
+    addTodoItemList(param) {
+        param.forEach(item => {
+            this.#todoList.push(item);
+        });
+    }
+
     deleteTodoItem(param) {
         this.#todoList = this.#todoList.filter((item) => item !== param);
+    }
+
+    deleteTodoItemList(param) {
+        param.forEach(item => {
+            this.#todoList = this.#todoList.filter((todo) => todo !== item);
+        });
     }
 }

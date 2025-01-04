@@ -17,8 +17,6 @@ export default class TodoBatchCreateProcessor extends ITodoBatchCreateProcessor 
             return new Error('Failed to create Todo Data');
         }
 
-        param.forEach(item => {
-            this.dataStorage.addTodoItem(item);
-        });
+        this.dataStorage.addTodoItemList(param);
     }
 }

@@ -17,8 +17,6 @@ export default class TodoBatchDeleteProcessor extends ITodoBatchDeleteProcessor 
             return new Error('Failed to delete Todo Data');
         }
 
-        param.forEach(item => {
-            this.dataStorage.deleteTodoItem(item);
-        });
+        this.dataStorage.deleteTodoItemList(param);
     }
 }
