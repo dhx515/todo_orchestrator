@@ -49,15 +49,13 @@ export function DoneDataPipelineConfig() {
         .addUseCase('singleCreateLoad', aSingleCreateLoadUseCase)
         .addUseCase('singleCreateData', aSingleCreateDataUseCase)
         .addUseCase('singleDeleteLoad', aSingleDeleteLoadUseCase)
-        .addUseCase('singleCancelLoad', aSingleDeleteLoadUseCase)
-        .addUseCase('singleDoneLoad', aSingleDeleteLoadUseCase)
+        .addUseCase('singleRevertLoad', aSingleDeleteLoadUseCase)
         .addUseCase('singleDeleteData', aSingleDeleteDataUseCase)
 
         .addUseCase('batchCreateLoad', aBatchCreateLoadUseCase)
         .addUseCase('batchCreateData', aBatchCreateDataUseCase)
         .addUseCase('batchDeleteLoad', aBatchDeleteLoadUseCase)
-        .addUseCase('batchCancelLoad', aBatchDeleteLoadUseCase)
-        .addUseCase('batchDoneLoad', aBatchDeleteLoadUseCase)
+        .addUseCase('batchRevertLoad', aBatchDeleteLoadUseCase)
         .addUseCase('batchDeleteData', aBatchDeleteDataUseCase)
         .build();
 }
