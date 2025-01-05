@@ -1,12 +1,12 @@
 /**
- * @file IDoneCreateProcessor.js
- * @description Interface of Done Create Processor
+ * @file IDoneSingleCreateProcessor.js
+ * @description Interface of Done Single Create Processor
  */
-import IProcessor from '../../../../../../shared/interfaces/IProcessor'
+import IProcessor from '@/logic/shared/interfaces/IProcessor';
 
 
 /** @interface */
-export default class IDoneCreateProcessor extends IProcessor {
+export default class IDoneSingleCreateProcessor extends IProcessor {
     constructor(dataStorage) {
         super(dataStorage);
     }

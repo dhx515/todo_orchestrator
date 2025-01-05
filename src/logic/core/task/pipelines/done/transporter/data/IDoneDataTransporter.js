@@ -2,7 +2,7 @@
  * @file IDoneTransporter.js
  * @description Interface of Done Data Transporter
  */
-import ITransporter from '../../../../../../shared/interfaces/ITransporter';
+import ITransporter from '@/logic/shared/interfaces/ITransporter';
 
 
 /** @interface */

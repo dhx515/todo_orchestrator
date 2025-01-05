@@ -1,12 +1,12 @@
 /**
- * @file IDoneFetchProcessor.js
- * @description Interface of Done Fetch Processor
+ * @file IDoneSingleDeleteProcessor.js
+ * @description Interface of Done Delete Processor
  */
 import IProcessor from '@/logic/shared/interfaces/IProcessor';
 
 
 /** @interface */
-export default class IDoneFetchProcessor extends IProcessor {
+export default class IDoneSingleDeleteProcessor extends IProcessor {
     constructor(dataStorage) {
         super(dataStorage);
     }
@@ -15,7 +15,7 @@ export default class IDoneFetchProcessor extends IProcessor {
      * Executes the processing logic for this processor.
      * 
      * @abstract
-     * @param {object} param
+     * @param {string} param
      * @throws {Error} If the method is not implemented in the subclass.
      */
     process(param) {

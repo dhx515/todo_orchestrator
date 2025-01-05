@@ -25,7 +25,19 @@ export default class DoneDataStorage extends IDoneDataStorage {
         this.#doneList.push(param);
     }
 
+    addDoneItemList(param) {
+        param.forEach(item => {
+            this.#doneList.push(item);
+        });
+    }
+
     deleteDoneItem(param) {
-        this.#doneList = this.#doneList.filter((item) => item !== param);
+        this.#doneList = this.#doneList.filter((done) => done !== param);
+    }
+
+    deleteDoneItemList(param) {
+        param.forEach(item => {
+            this.#doneList = this.#doneList.filter((done) => done !== item);
+        });
     }
 }

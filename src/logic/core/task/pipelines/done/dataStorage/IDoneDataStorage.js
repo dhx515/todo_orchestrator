@@ -33,9 +33,23 @@ export default class IDoneDataStorage extends IDataStorage {
     }
 
     /**
+     * @param {string[]} param 
+     */
+    addDoneItemList(param) {
+        throw new Error('Method not implemented');
+    }
+
+    /**
      * @param {string} param 
      */
     deleteDoneItem(param) {
+        throw new Error('Method not implemented');
+    }
+    
+    /**
+     * @param {string[]} param 
+     */
+    deleteDoneItemList(param) {
         throw new Error('Method not implemented');
     }
 }

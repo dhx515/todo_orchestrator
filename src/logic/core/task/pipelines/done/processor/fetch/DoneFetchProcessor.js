@@ -3,7 +3,7 @@
  * @description Implement of Done Fetch Processor
  */
 import IDoneFetchProcessor from './IDoneFetchProcessor';
-import { fetchDoneData } from '../api';
+import { fetchDoneData } from '@/logic/api/done/api';
 
 
 /** @implements {IDoneFetchProcessor} */

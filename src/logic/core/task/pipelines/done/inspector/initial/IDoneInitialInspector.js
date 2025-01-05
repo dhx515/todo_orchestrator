@@ -2,7 +2,7 @@
  * @file IDoneInitialInspector.js
  * @description Interface of Done Initial Inspector
  */
-import IInspector from '../../../../../../shared/interfaces/IInspector';
+import IInspector from '@/logic/shared/interfaces/IInspector';
 
 
 /** @interface */
