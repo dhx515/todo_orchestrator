@@ -63,23 +63,23 @@ const todoLoadData = async () => {
     return orchestrator.command('Todo', 'loadData', {});
 };
 const todoCreateLoad = async (param) => {
-    const res = await orchestrator.command('Todo', 'createLoad', param);
+    const res = await orchestrator.command('Todo', 'singleCreateLoad', param);
     props.callUpdateSummary();
     return res;
 };
 const todoDeleteLoad = async (param) => { 
-    const res = await orchestrator.command('Todo', 'deleteLoad', param);
+    const res = await orchestrator.command('Todo', 'singleDeleteLoad', param);
     props.callUpdateSummary();
     return res;
 };
 const todoCancelLoad = async (param) => { 
-    const res = await orchestrator.command('Todo', 'cancelLoad', param);
+    const res = await orchestrator.command('Todo', 'singleCancelLoad', param);
     props.callUpdateSummary();
     callUpdateCancel();
     return res;
 };
 const todoDoneLoad = async (param) => { 
-    const res = await orchestrator.command('Todo', 'doneLoad', param);
+    const res = await orchestrator.command('Todo', 'singleDoneLoad', param);
     props.callUpdateSummary();
     callUpdateDone();
     return res;
@@ -89,12 +89,12 @@ const doneLoadData = async () => {
     return orchestrator.command('Done', 'loadData', {});
 };
 const doneDeleteLoad = async (param) => { 
-    const res = await orchestrator.command('Done', 'deleteLoad', param);
+    const res = await orchestrator.command('Done', 'singleDeleteLoad', param);
     props.callUpdateSummary();
     return res;
 };
 const doneRevertLoad = async (param) => { 
-    const res = await orchestrator.command('Done', 'revertLoad', param);
+    const res = await orchestrator.command('Done', 'singleRevertLoad', param);
     props.callUpdateSummary();
     callUpdateTodo();
     return res;
@@ -104,12 +104,12 @@ const cancelLoadData = async () => {
     return orchestrator.command('Cancel', 'loadData', {});
 };
 const cancelDeleteLoad = async (param) => { 
-    const res = await orchestrator.command('Cancel', 'deleteLoad', param);
+    const res = await orchestrator.command('Cancel', 'singleDeleteLoad', param);
     props.callUpdateSummary();
     return res;
 };
 const cancelRevertLoad = async (param) => { 
-    const res = await orchestrator.command('Cancel', 'revertLoad', param);
+    const res = await orchestrator.command('Cancel', 'singleRevertLoad', param);
     props.callUpdateSummary();
     callUpdateTodo();
     return res;
