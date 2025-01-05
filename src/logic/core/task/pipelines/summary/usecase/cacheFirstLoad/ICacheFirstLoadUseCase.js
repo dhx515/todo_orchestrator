@@ -2,7 +2,7 @@
  * @file ICacheFirstLoadUseCase.js
  * @description Interface of Summary Cache First Load Use Case
  */
-import IUseCase from '../../../../../../shared/interfaces/IUseCase';
+import IUseCase from '@/logic/shared/interfaces/IUseCase';
 import ISummaryInitialInspector from '../../inspector/initial/ISummaryInitialInspector';
 import ISummaryFetchProcessor from '../../processor/fetch/ISummaryFetchProcessor';
 import ISummaryDataTransporter from '../../transporter/data/ISummaryDataTransporter';
@@ -10,20 +10,20 @@ import ISummaryDataTransporter from '../../transporter/data/ISummaryDataTranspor
 
 /** @interface */
 export default class ICacheFirstLoadUseCase extends IUseCase {
-    initialInspector = null;
-    fetchProcessor = null;
-    dataTransporer = null;
+    aInitialInspector = null;
+    aFetchProcessor = null;
+    aDataTransporer = null;
 
-    constructor(initialInspector, fetchProcessor, dataTransporer) {
+    constructor(aInitialInspector, aFetchProcessor, aDataTransporer) {
         super();
 
-        this.#validateSummaryInitialInspector(initialInspector);
-        this.#validateSummaryFetchProcessor(fetchProcessor);
-        this.#validateSummaryDataTransporter(dataTransporer);
+        this.#validateSummaryInitialInspector(aInitialInspector);
+        this.#validateSummaryFetchProcessor(aFetchProcessor);
+        this.#validateSummaryDataTransporter(aDataTransporer);
 
-        this.initialInspector = initialInspector;
-        this.fetchProcessor = fetchProcessor;
-        this.dataTransporer = dataTransporer;
+        this.aInitialInspector = aInitialInspector;
+        this.aFetchProcessor = aFetchProcessor;
+        this.aDataTransporer = aDataTransporer;
     }
 
     /**

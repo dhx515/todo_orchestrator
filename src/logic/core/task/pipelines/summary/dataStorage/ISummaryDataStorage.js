@@ -2,7 +2,7 @@
  * @file ISummaryDataStorage.js
  * @description Interface of Summary DataStorage
  */
-import IDataStorage from '../../../../../shared/interfaces/IDataStorage';
+import IDataStorage from '@/logic/shared/interfaces/IDataStorage';
 
 
 /** @interface */
@@ -27,15 +27,17 @@ export default class ISummaryDataStorage extends IDataStorage {
 
     /**
      * @param {string} param
+     * @param {number} value
      */
-    increaseItemCount(param) {
+    increaseItemCount(param, value) {
         throw new Error('Method not implemented');
     }
 
     /**
      * @param {string} param
+     * @param {number} value
      */
-    decreaseItemCount(param) {
+    decreaseItemCount(param, value) {
         throw new Error('Method not implemented');
     }
 }

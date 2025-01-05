@@ -3,7 +3,7 @@
  * @description Implement of Summary Increase Processor
  */
 import ISummaryIncreaseProcessor from './ISummaryIncreaseProcessor';
-import { increaseSummaryData } from '../api';
+import { increaseSummaryData } from '@/logic/api/summary/api';
 
 
 /** @implements {ISummaryIncreaseProcessor} */
@@ -12,11 +12,11 @@ export default class SummaryIncreaseProcessor extends ISummaryIncreaseProcessor 
         super(dataStorage);
     }
 
-    async process(param) {
+    async process(param, value = 1) {
         if (await increaseSummaryData(param) === false) {
             return new Error('Failed to increase Summary Data');
         }
 
-        this.dataStorage.increaseItemCount(param);
+        this.dataStorage.increaseItemCount(param, value);
     }
 }

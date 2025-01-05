@@ -2,20 +2,20 @@
  * @file IDecreaseDataUseCase.js
  * @description Interface of Summary Data decrease Data Use Case
  */
-import IUseCase from '../../../../../../shared/interfaces/IUseCase';
+import IUseCase from '@/logic/shared/interfaces/IUseCase';
 import ISummaryDecreaseProcessor from '../../processor/decrease/ISummaryDecreaseProcessor';
 
 
 /** @interface */
 export default class IDecreaseDataUseCase extends IUseCase {
-    decreaseProcessor = null;
+    aDecreaseProcessor = null;
     
-    constructor(decreaseProcessor) {
+    constructor(aDecreaseProcessor) {
         super();
 
-        this.#validateSummaryDecreaseProcessor(decreaseProcessor);
+        this.#validateSummaryDecreaseProcessor(aDecreaseProcessor);
 
-        this.decreaseProcessor = decreaseProcessor;
+        this.aDecreaseProcessor = aDecreaseProcessor;
     }
 
     /**
@@ -34,9 +34,10 @@ export default class IDecreaseDataUseCase extends IUseCase {
      * 
      * @abstract
      * @param {string} param
+     * @param {number} value
      * @throws {Error} If the method is not implemented in the subclass.
      */
-    execute(param) {
+    execute(param, value = 1) {
         throw new Error('Method not implemented');
     }
 }

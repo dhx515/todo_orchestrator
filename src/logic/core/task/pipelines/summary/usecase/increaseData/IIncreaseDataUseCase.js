@@ -2,20 +2,20 @@
  * @file IIncreaseDataUseCase.js
  * @description Interface of Summary Data increase Data Use Case
  */
-import IUseCase from '../../../../../../shared/interfaces/IUseCase';
+import IUseCase from '@/logic/shared/interfaces/IUseCase';
 import ISummaryIncreaseProcessor from '../../processor/increase/ISummaryIncreaseProcessor';
 
 
 /** @interface */
 export default class ICreateDataUseCase extends IUseCase {
-    increaseProcessor = null;
+    aIncreaseProcessor = null;
     
-    constructor(increaseProcessor) {
+    constructor(aIncreaseProcessor) {
         super();
 
-        this.#validateSummaryIncreaseProcessor(increaseProcessor);
+        this.#validateSummaryIncreaseProcessor(aIncreaseProcessor);
 
-        this.increaseProcessor = increaseProcessor;
+        this.aIncreaseProcessor = aIncreaseProcessor;
     }
 
     /**
@@ -34,9 +34,10 @@ export default class ICreateDataUseCase extends IUseCase {
      * 
      * @abstract
      * @param {string} param
+     * @param {number} value
      * @throws {Error} If the method is not implemented in the subclass.
      */
-    execute(param) {
+    execute(param, value = 1) {
         throw new Error('Method not implemented');
     }
 }

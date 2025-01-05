@@ -2,7 +2,7 @@
  * @file ISummaryInitialInspector.js
  * @description Interface of Summary Initial Inspector
  */
-import IInspector from '../../../../../../shared/interfaces/IInspector';
+import IInspector from '@/logic/shared/interfaces/IInspector';
 
 
 /** @interface */

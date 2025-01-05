@@ -3,7 +3,7 @@
  * @description Implement of Summary Decrease Processor
  */
 import ISummaryDecreaseProcessor from './ISummaryDecreaseProcessor';
-import { decreaseSummaryData } from '../api';
+import { decreaseSummaryData } from '@/logic/api/summary/api';
 
 
 /** @implements {ISummaryDecreaseProcessor} */
@@ -12,11 +12,11 @@ export default class SummaryDecreaseProcessor extends ISummaryDecreaseProcessor 
         super(dataStorage);
     }
 
-    async process(param) {
+    async process(param, value = 1) {
         if (await decreaseSummaryData(param) === false) {
             return new Error('Failed to decrease Summary Data');
         }
 
-        this.dataStorage.decreaseItemCount(param);
+        this.dataStorage.decreaseItemCount(param, value);
     }
 }

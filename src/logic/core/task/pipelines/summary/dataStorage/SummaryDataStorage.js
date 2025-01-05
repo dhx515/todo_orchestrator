@@ -21,14 +21,14 @@ export default class SummaryDataStorage extends ISummaryDataStorage {
         this.#summary = param;
     }
 
-    increaseItemCount(param) {
-        const newCount = this.#summary[param] + 1;
+    increaseItemCount(param, value) {
+        const newCount = this.#summary[param] + value;
         this.#summary[param] = newCount;
     }
 
-    decreaseItemCount(param) {
+    decreaseItemCount(param, value) {
         const currentCount = this.#summary[param];
-        const newCount = Math.max(0, currentCount - 1); // 음수 방지
+        const newCount = Math.max(0, currentCount - value); // 음수 방지
         this.#summary[param] = newCount;
     }
 }

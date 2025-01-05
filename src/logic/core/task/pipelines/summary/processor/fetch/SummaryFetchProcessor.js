@@ -3,7 +3,7 @@
  * @description Implement of Summary Fetch Processor
  */
 import ISummaryFetchProcessor from './ISummaryFetchProcessor';
-import { fetchSummaryData } from '../api';
+import { fetchSummaryData } from '@/logic/api/summary/api';
 
 
 /** @implements {ISummaryFetchProcessor} */

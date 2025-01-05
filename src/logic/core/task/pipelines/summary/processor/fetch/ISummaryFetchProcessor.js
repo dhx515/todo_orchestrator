@@ -2,7 +2,7 @@
  * @file ISummaryFetchProcessor.js
  * @description Interface of Summary Fetch Processor
  */
-import IProcessor from '../../../../../../shared/interfaces/IProcessor'
+import IProcessor from '@/logic/shared/interfaces/IProcessor';
 
 
 /** @interface */

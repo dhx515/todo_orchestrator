@@ -2,7 +2,7 @@
  * @file ISummaryTransporter.js
  * @description Interface of Summary Data Transporter
  */
-import ITransporter from '../../../../../../shared/interfaces/ITransporter';
+import ITransporter from '@/logic/shared/interfaces/ITransporter';
 
 
 /** @interface */
