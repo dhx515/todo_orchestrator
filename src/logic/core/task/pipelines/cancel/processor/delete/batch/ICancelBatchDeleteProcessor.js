@@ -1,12 +1,12 @@
 /**
- * @file ICancelDeleteProcessor.js
- * @description Interface of Cancel Delete Processor
+ * @file ICancelBatchDeleteProcessor.js
+ * @description Interface of Cancel Batch Delete Processor
  */
-import IProcessor from '../../../../../../shared/interfaces/IProcessor'
+import IProcessor from '@/logic/shared/interfaces/IProcessor';
 
 
 /** @interface */
-export default class ICancelDeleteProcessor extends IProcessor {
+export default class ICancelBatchDeleteProcessor extends IProcessor {
     constructor(dataStorage) {
         super(dataStorage);
     }
@@ -15,7 +15,7 @@ export default class ICancelDeleteProcessor extends IProcessor {
      * Executes the processing logic for this processor.
      * 
      * @abstract
-     * @param {string} param
+     * @param {string[]} param
      * @throws {Error} If the method is not implemented in the subclass.
      */
     process(param) {

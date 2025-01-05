@@ -1,12 +1,12 @@
 /**
- * @file ICancelFetchProcessor.js
- * @description Interface of Cancel Fetch Processor
+ * @file ICancelSingleDeleteProcessor.js
+ * @description Interface of Cancel Single Delete Processor
  */
 import IProcessor from '@/logic/shared/interfaces/IProcessor';
 
 
 /** @interface */
-export default class ICancelFetchProcessor extends IProcessor {
+export default class ICancelSingleDeleteProcessor extends IProcessor {
     constructor(dataStorage) {
         super(dataStorage);
     }
@@ -15,7 +15,7 @@ export default class ICancelFetchProcessor extends IProcessor {
      * Executes the processing logic for this processor.
      * 
      * @abstract
-     * @param {object} param
+     * @param {string} param
      * @throws {Error} If the method is not implemented in the subclass.
      */
     process(param) {

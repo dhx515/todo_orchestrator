@@ -2,7 +2,7 @@
  * @file ICacheFirstLoadUseCase.js
  * @description Interface of Cancel Cache First Load Use Case
  */
-import IUseCase from '../../../../../../shared/interfaces/IUseCase';
+import IUseCase from '@/logic/shared/interfaces/IUseCase';
 import ICancelInitialInspector from '../../inspector/initial/ICancelInitialInspector';
 import ICancelFetchProcessor from '../../processor/fetch/ICancelFetchProcessor';
 import ICancelDataTransporter from '../../transporter/data/ICancelDataTransporter';

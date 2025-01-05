@@ -2,7 +2,7 @@
  * @file ICancelDataStorage.js
  * @description Interface of Cancel DataStorage
  */
-import IDataStorage from '../../../../../shared/interfaces/IDataStorage';
+import IDataStorage from '@/logic/shared/interfaces/IDataStorage';
 
 
 /** @interface */
@@ -26,9 +26,9 @@ export default class ICancelDataStorage extends IDataStorage {
     }
 
     /**
-     * @param {string} param 
+     * @param {string[]} param 
      */
-    addCancelItem(param) {
+    addCancelItemList(param) {
         throw new Error('Method not implemented');
     }
 
@@ -36,6 +36,13 @@ export default class ICancelDataStorage extends IDataStorage {
      * @param {string} param 
      */
     deleteCancelItem(param) {
+        throw new Error('Method not implemented');
+    }
+    
+    /**
+     * @param {string[]} param 
+     */
+    deleteCancelItemList(param) {
         throw new Error('Method not implemented');
     }
 }

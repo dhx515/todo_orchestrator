@@ -3,7 +3,7 @@
  * @description Implement of Cancel Fetch Processor
  */
 import ICancelFetchProcessor from './ICancelFetchProcessor';
-import { fetchCancelData } from '../api';
+import { fetchCancelData } from '@/logic/api/cancel/api';
 
 
 /** @implements {ICancelFetchProcessor} */

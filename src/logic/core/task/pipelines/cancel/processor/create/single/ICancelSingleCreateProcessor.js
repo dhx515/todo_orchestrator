@@ -1,12 +1,12 @@
 /**
- * @file ICancelCreateProcessor.js
- * @description Interface of Cancel Create Processor
+ * @file ICancelSingleCreateProcessor.js
+ * @description Interface of Cancel Single Create Processor
  */
-import IProcessor from '../../../../../../shared/interfaces/IProcessor'
+import IProcessor from '@/logic/shared/interfaces/IProcessor';
 
 
 /** @interface */
-export default class ICancelCreateProcessor extends IProcessor {
+export default class ICancelSingleCreateProcessor extends IProcessor {
     constructor(dataStorage) {
         super(dataStorage);
     }

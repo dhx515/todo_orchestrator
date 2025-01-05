@@ -1,34 +1,34 @@
 /**
- * @file ICreateLoadUseCase.js
- * @description Interface of Cancel Data Create Load Use Case
+ * @file IBatchCreateLoadUseCase.js
+ * @description Interface of Cancel Data Batch Create Load Use Case
  */
-import IUseCase from '../../../../../../shared/interfaces/IUseCase';
-import ICancelCreateProcessor from '../../processor/create/ICancelCreateProcessor';
+import IUseCase from '@/logic/shared/interfaces/IUseCase';
+import ICancelBatchCreateProcessor from '../../processor/create/batch/ICancelBatchCreateProcessor';
 import ICancelDataTransporter from '../../transporter/data/ICancelDataTransporter';
 
 
 /** @interface */
 export default class ICreateLoadUseCase extends IUseCase {
-    createProcessor = null;
-    dataTransporer = null;
+    aBatchCreateProcessor = null;
+    aDataTransporter = null;
     
-    constructor(createProcessor, dataTransporer) {
+    constructor(aBatchCreateProcessor, aDataTransporter) {
         super();
 
-        this.#validateCancelCreateProcessor(createProcessor);
-        this.#validateCancelDataTransporter(dataTransporer);
+        this.#validateCancelBatchCreateProcessor(aBatchCreateProcessor);
+        this.#validateCancelDataTransporter(aDataTransporter);
 
-        this.createProcessor = createProcessor;
-        this.dataTransporer = dataTransporer;
+        this.aBatchCreateProcessor = aBatchCreateProcessor;
+        this.aDataTransporter = aDataTransporter;
     }
 
     /**
      * Validates the create processor object.
-     * @param {ICancelCreateProcessor} target - The create processor instance to validate.
-     * @throws Will throw an error if the target is not an instance of ICancelCreateProcessor.
+     * @param {ICancelBatchCreateProcessor} target - The create processor instance to validate.
+     * @throws Will throw an error if the target is not an instance of ICancelBatchCreateProcessor.
      */
-    #validateCancelCreateProcessor(target) {
-        if (!(target instanceof ICancelCreateProcessor)) {
+    #validateCancelBatchCreateProcessor(target) {
+        if (!(target instanceof ICancelBatchCreateProcessor)) {
             throw new Error('Invalid Cancel processor object');
         }
     }
@@ -48,7 +48,7 @@ export default class ICreateLoadUseCase extends IUseCase {
      * Executes the use case logic for this UseCase.
      * 
      * @abstract
-     * @param {string} param
+     * @param {string[]} param
      * @throws {Error} If the method is not implemented in the subclass.
      */
     execute(param) {
