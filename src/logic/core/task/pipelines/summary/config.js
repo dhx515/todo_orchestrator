@@ -20,12 +20,12 @@ export function SummaryDataPipelineConfig() {
     const fetchProcessor = new FetchProcessor(dataStorage);
     const increaseProcessor = new IncreaseProcessor(dataStorage);
     const decreaseProcessor = new DecreaseProcessor(dataStorage);
-    const dataTransporer = new DataTransporter(dataStorage);
+    const dataTransporter = new DataTransporter(dataStorage);
     const initialInspector = new InitialInspector(dataStorage);
 
-    const cacheFirstLoadUseCase = new CacheFirstLoadUseCase(initialInspector, fetchProcessor, dataTransporer);
-    const increateDataUseCase = new IncreaseDataUseCase(increaseProcessor, dataTransporer);
-    const decreaseDataUseCase = new DecreaseDataUseCase(decreaseProcessor, dataTransporer);
+    const cacheFirstLoadUseCase = new CacheFirstLoadUseCase(initialInspector, fetchProcessor, dataTransporter);
+    const increateDataUseCase = new IncreaseDataUseCase(increaseProcessor, dataTransporter);
+    const decreaseDataUseCase = new DecreaseDataUseCase(decreaseProcessor, dataTransporter);
 
     return new PipelineBuilderWithAutoCommand()
         .addUseCase('loadData', cacheFirstLoadUseCase)

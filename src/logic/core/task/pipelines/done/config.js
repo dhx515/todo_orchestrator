@@ -24,38 +24,38 @@ import SingleDeleteDataUseCase from './usecase/singleDeleteData/SingleDeleteData
 import BatchDeleteDataUseCase from './usecase/batchDeleteData/BatchDeleteDataUseCase';
 
 export function DoneDataPipelineConfig() {
-    const aDataStorage = new DataStorage();
-    const aFetchProcessor = new FetchProcessor(aDataStorage);
-    const aSingleCreateProcessor = new SingleCreateProcessor(aDataStorage);
-    const aBatchCreateProcessor = new BatchCreateProcessor(aDataStorage);
-    const aSingleDeleteProcessor = new SingleDeleteProcessor(aDataStorage);
-    const aBatchDeleteProcessor = new BatchDeleteProcessor(aDataStorage);
-    const aDataTransporer = new DataTransporter(aDataStorage);
-    const aInitialInspector = new InitialInspector(aDataStorage);
+    const dataStorage = new DataStorage();
+    const fetchProcessor = new FetchProcessor(dataStorage);
+    const singleCreateProcessor = new SingleCreateProcessor(dataStorage);
+    const batchCreateProcessor = new BatchCreateProcessor(dataStorage);
+    const singleDeleteProcessor = new SingleDeleteProcessor(dataStorage);
+    const batchDeleteProcessor = new BatchDeleteProcessor(dataStorage);
+    const dataTransporter = new DataTransporter(dataStorage);
+    const initialInspector = new InitialInspector(dataStorage);
 
-    const aCacheFirstLoadUseCase = new CacheFirstLoadUseCase(aInitialInspector, aFetchProcessor, aDataTransporer);
-    const aSingleCreateLoadUseCase = new SingleCreateLoadUseCase(aSingleCreateProcessor, aDataTransporer);
-    const aBatchCreateLoadUseCase = new BatchCreateLoadUseCase(aBatchCreateProcessor, aDataTransporer);
-    const aSingleCreateDataUseCase = new SingleCreateDataUseCase(aSingleCreateProcessor);
-    const aBatchCreateDataUseCase = new BatchCreateDataUseCase(aBatchCreateProcessor);
-    const aSingleDeleteLoadUseCase = new SingleDeleteLoadUseCase(aSingleDeleteProcessor, aDataTransporer);
-    const aBatchDeleteLoadUseCase = new BatchDeleteLoadUseCase(aBatchDeleteProcessor, aDataTransporer); 
-    const aSingleDeleteDataUseCase = new SingleDeleteDataUseCase(aSingleDeleteProcessor);
-    const aBatchDeleteDataUseCase = new BatchDeleteDataUseCase(aBatchDeleteProcessor);
+    const cacheFirstLoadUseCase = new CacheFirstLoadUseCase(initialInspector, fetchProcessor, dataTransporter);
+    const singleCreateLoadUseCase = new SingleCreateLoadUseCase(singleCreateProcessor, dataTransporter);
+    const batchCreateLoadUseCase = new BatchCreateLoadUseCase(batchCreateProcessor, dataTransporter);
+    const singleCreateDataUseCase = new SingleCreateDataUseCase(singleCreateProcessor);
+    const batchCreateDataUseCase = new BatchCreateDataUseCase(batchCreateProcessor);
+    const singleDeleteLoadUseCase = new SingleDeleteLoadUseCase(singleDeleteProcessor, dataTransporter);
+    const batchDeleteLoadUseCase = new BatchDeleteLoadUseCase(batchDeleteProcessor, dataTransporter); 
+    const singleDeleteDataUseCase = new SingleDeleteDataUseCase(singleDeleteProcessor);
+    const batchDeleteDataUseCase = new BatchDeleteDataUseCase(batchDeleteProcessor);
 
     return new PipelineBuilderWithAutoCommand()
-        .addUseCase('loadData', aCacheFirstLoadUseCase)
+        .addUseCase('loadData', cacheFirstLoadUseCase)
 
-        .addUseCase('singleCreateLoad', aSingleCreateLoadUseCase)
-        .addUseCase('singleCreateData', aSingleCreateDataUseCase)
-        .addUseCase('singleDeleteLoad', aSingleDeleteLoadUseCase)
-        .addUseCase('singleRevertLoad', aSingleDeleteLoadUseCase)
-        .addUseCase('singleDeleteData', aSingleDeleteDataUseCase)
+        .addUseCase('singleCreateLoad', singleCreateLoadUseCase)
+        .addUseCase('singleCreateData', singleCreateDataUseCase)
+        .addUseCase('singleDeleteLoad', singleDeleteLoadUseCase)
+        .addUseCase('singleRevertLoad', singleDeleteLoadUseCase)
+        .addUseCase('singleDeleteData', singleDeleteDataUseCase)
 
-        .addUseCase('batchCreateLoad', aBatchCreateLoadUseCase)
-        .addUseCase('batchCreateData', aBatchCreateDataUseCase)
-        .addUseCase('batchDeleteLoad', aBatchDeleteLoadUseCase)
-        .addUseCase('batchRevertLoad', aBatchDeleteLoadUseCase)
-        .addUseCase('batchDeleteData', aBatchDeleteDataUseCase)
+        .addUseCase('batchCreateLoad', batchCreateLoadUseCase)
+        .addUseCase('batchCreateData', batchCreateDataUseCase)
+        .addUseCase('batchDeleteLoad', batchDeleteLoadUseCase)
+        .addUseCase('batchRevertLoad', batchDeleteLoadUseCase)
+        .addUseCase('batchDeleteData', batchDeleteDataUseCase)
         .build();
 }
