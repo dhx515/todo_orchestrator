@@ -9,17 +9,17 @@ import ITodoDataTransporter from '../../transporter/data/ITodoDataTransporter';
 
 /** @interface */
 export default class ISingleCreateLoadUseCase extends IUseCase {
-    aSingleCreateProcessor = null;
-    aDataTransporter = null;
+    createProcessor = null;
+    dataTransporter = null;
     
-    constructor(aSingleCreateProcessor, aDataTransporter) {
+    constructor(createProcessor, dataTransporter) {
         super();
 
-        this.#validateTodoSingleCreateProcessor(aSingleCreateProcessor);
-        this.#validateTodoDataTransporter(aDataTransporter);
+        this.#validateTodoSingleCreateProcessor(createProcessor);
+        this.#validateTodoDataTransporter(dataTransporter);
 
-        this.aSingleCreateProcessor = aSingleCreateProcessor;
-        this.aDataTransporter = aDataTransporter;
+        this.createProcessor = createProcessor;
+        this.dataTransporter = dataTransporter;
     }
 
     /**

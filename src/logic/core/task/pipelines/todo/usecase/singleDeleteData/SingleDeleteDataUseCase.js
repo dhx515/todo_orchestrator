@@ -7,11 +7,11 @@ import ISingleDeleteDataUseCase from './ISingleDeleteDataUseCase';
 
 /** @implements {ISingleDeleteDataUseCase} */
 export default class SingleDeleteDataUseCase extends ISingleDeleteDataUseCase {
-    constructor(aSingleDeleteProcessor) {
-        super(aSingleDeleteProcessor);
+    constructor(deleteProcessor) {
+        super(deleteProcessor);
     }
 
     async execute(param) {
-        await this.aSingleDeleteProcessor.process(param);
+        await this.deleteProcessor.process(param);
     }
 }

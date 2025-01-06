@@ -8,14 +8,14 @@ import ITodoSingleDeleteProcessor from '../../processor/delete/single/ITodoSingl
 
 /** @interface */
 export default class ISingleDeleteDataUseCase extends IUseCase {
-    aSingleDeleteProcessor = null;
+    deleteProcessor = null;
     
-    constructor(aSingleDeleteProcessor) {
+    constructor(deleteProcessor) {
         super();
 
-        this.#validateTodoSingleDeleteProcessor(aSingleDeleteProcessor);
+        this.#validateTodoSingleDeleteProcessor(deleteProcessor);
 
-        this.aSingleDeleteProcessor = aSingleDeleteProcessor;
+        this.deleteProcessor = deleteProcessor;
     }
 
     /**

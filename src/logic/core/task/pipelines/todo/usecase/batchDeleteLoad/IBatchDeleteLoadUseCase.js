@@ -9,17 +9,17 @@ import ITodoDataTransporter from '../../transporter/data/ITodoDataTransporter';
 
 /** @interface */
 export default class IBatchDeleteLoadUseCase extends IUseCase {
-    aBatchDeleteProcessor = null;
-    aDataTransporter = null;
+    deleteProcessor = null;
+    dataTransporter = null;
     
-    constructor(aBatchDeleteProcessor, aDataTransporter) {
+    constructor(deleteProcessor, dataTransporter) {
         super();
 
-        this.#validateTodoBatchDeleteProcessor(aBatchDeleteProcessor);
-        this.#validateTodoDataTransporter(aDataTransporter);
+        this.#validateTodoBatchDeleteProcessor(deleteProcessor);
+        this.#validateTodoDataTransporter(dataTransporter);
 
-        this.aBatchDeleteProcessor = aBatchDeleteProcessor;
-        this.aDataTransporter = aDataTransporter;
+        this.deleteProcessor = deleteProcessor;
+        this.dataTransporter = dataTransporter;
     }
 
     /**

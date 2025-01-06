@@ -8,14 +8,14 @@ import ITodoBatchCreateProcessor from '../../processor/create/batch/ITodoBatchCr
 
 /** @interface */
 export default class ICreateDataUseCase extends IUseCase {
-    aBatchCreateProcessor = null;
+    createProcessor = null;
     
-    constructor(aBatchCreateProcessor) {
+    constructor(createProcessor) {
         super();
 
-        this.#validateTodoBatchCreateProcessor(aBatchCreateProcessor);
+        this.#validateTodoBatchCreateProcessor(createProcessor);
 
-        this.aBatchCreateProcessor = aBatchCreateProcessor;
+        this.createProcessor = createProcessor;
     }
 
     /**

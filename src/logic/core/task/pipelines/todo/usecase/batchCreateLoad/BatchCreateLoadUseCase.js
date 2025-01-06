@@ -7,13 +7,13 @@ import IBatchCreateLoadUseCase from './IBatchCreateLoadUseCase';
 
 /** @implements {IBatchCreateLoadUseCase} */
 export default class BatchCreateLoadUseCase extends IBatchCreateLoadUseCase {
-    constructor(aBatchCreateProcessor, aDataTransporter) {
-        super(aBatchCreateProcessor, aDataTransporter);
+    constructor(createProcessor, dataTransporter) {
+        super(createProcessor, dataTransporter);
     }
 
     async execute(param) {
-        await this.aBatchCreateProcessor.process(param);
+        await this.createProcessor.process(param);
         
-        return await this.aDataTransporter.transport();
+        return await this.dataTransporter.transport();
     }
 }

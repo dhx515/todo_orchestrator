@@ -8,14 +8,14 @@ import ITodoBatchDeleteProcessor from '../../processor/delete/batch/ITodoBatchDe
 
 /** @interface */
 export default class IBatchDeleteDataUseCase extends IUseCase {
-    aBatchDeleteProcessor = null;
+    deleteProcessor = null;
     
-    constructor(aBatchDeleteProcessor) {
+    constructor(deleteProcessor) {
         super();
 
-        this.#validateTodoBatchDeleteProcessor(aBatchDeleteProcessor);
+        this.#validateTodoBatchDeleteProcessor(deleteProcessor);
 
-        this.aBatchDeleteProcessor = aBatchDeleteProcessor;
+        this.deleteProcessor = deleteProcessor;
     }
 
     /**

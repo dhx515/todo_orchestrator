@@ -7,11 +7,11 @@ import IBatchCreateDataUseCase from './IBatchCreateDataUseCase';
 
 /** @implements {IBatchCreateDataUseCase} */
 export default class BatchCreateDataUseCase extends IBatchCreateDataUseCase {
-    constructor(aBatchCreateProcessor) {
-        super(aBatchCreateProcessor);
+    constructor(createProcessor) {
+        super(createProcessor);
     }
 
     async execute(param) {
-        await this.aBatchCreateProcessor.process(param);
+        await this.createProcessor.process(param);
     }
 }

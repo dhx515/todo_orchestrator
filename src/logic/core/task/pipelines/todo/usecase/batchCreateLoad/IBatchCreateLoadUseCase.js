@@ -9,17 +9,17 @@ import ITodoDataTransporter from '../../transporter/data/ITodoDataTransporter';
 
 /** @interface */
 export default class ICreateLoadUseCase extends IUseCase {
-    aBatchCreateProcessor = null;
-    aDataTransporter = null;
+    createProcessor = null;
+    dataTransporter = null;
     
-    constructor(aBatchCreateProcessor, aDataTransporter) {
+    constructor(createProcessor, dataTransporter) {
         super();
 
-        this.#validateTodoBatchCreateProcessor(aBatchCreateProcessor);
-        this.#validateTodoDataTransporter(aDataTransporter);
+        this.#validateTodoBatchCreateProcessor(createProcessor);
+        this.#validateTodoDataTransporter(dataTransporter);
 
-        this.aBatchCreateProcessor = aBatchCreateProcessor;
-        this.aDataTransporter = aDataTransporter;
+        this.createProcessor = createProcessor;
+        this.dataTransporter = dataTransporter;
     }
 
     /**
