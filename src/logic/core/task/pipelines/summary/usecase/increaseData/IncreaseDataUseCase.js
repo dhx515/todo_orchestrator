@@ -7,11 +7,11 @@ import IIncreaseDataUseCase from './IIncreaseDataUseCase';
 
 /** @implements {IIncreaseDataUseCase} */
 export default class IncreaseDataUseCase extends IIncreaseDataUseCase {
-    constructor(aIncreaseProcessor) {
-        super(aIncreaseProcessor);
+    constructor(increaseProcessor) {
+        super(increaseProcessor);
     }
 
     async execute(param, value = 1) {
-        await this.aIncreaseProcessor.process(param, value);
+        await this.increaseProcessor.process(param, value);
     }
 }

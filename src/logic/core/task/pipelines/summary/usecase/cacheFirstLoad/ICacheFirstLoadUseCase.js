@@ -10,20 +10,20 @@ import ISummaryDataTransporter from '../../transporter/data/ISummaryDataTranspor
 
 /** @interface */
 export default class ICacheFirstLoadUseCase extends IUseCase {
-    aInitialInspector = null;
-    aFetchProcessor = null;
-    aDataTransporer = null;
+    initialInspector = null;
+    fetchProcessor = null;
+    dataTransporer = null;
 
-    constructor(aInitialInspector, aFetchProcessor, aDataTransporer) {
+    constructor(initialInspector, fetchProcessor, dataTransporer) {
         super();
 
-        this.#validateSummaryInitialInspector(aInitialInspector);
-        this.#validateSummaryFetchProcessor(aFetchProcessor);
-        this.#validateSummaryDataTransporter(aDataTransporer);
+        this.#validateSummaryInitialInspector(initialInspector);
+        this.#validateSummaryFetchProcessor(fetchProcessor);
+        this.#validateSummaryDataTransporter(dataTransporer);
 
-        this.aInitialInspector = aInitialInspector;
-        this.aFetchProcessor = aFetchProcessor;
-        this.aDataTransporer = aDataTransporer;
+        this.initialInspector = initialInspector;
+        this.fetchProcessor = fetchProcessor;
+        this.dataTransporer = dataTransporer;
     }
 
     /**

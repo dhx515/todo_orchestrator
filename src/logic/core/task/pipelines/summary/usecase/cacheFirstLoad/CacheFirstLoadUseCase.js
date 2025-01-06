@@ -7,14 +7,14 @@ import ICacheFirstLoadUseCase from './ICacheFirstLoadUseCase';
 
 /** @implements {ICacheFirstLoadUseCase} */
 export default class CacheFirstLoadUseCase extends ICacheFirstLoadUseCase {
-    constructor(aInitialInspector, aFetchProcessor, aDataTransporer) {
-        super(aInitialInspector, aFetchProcessor, aDataTransporer);
+    constructor(initialInspector, fetchProcessor, dataTransporer) {
+        super(initialInspector, fetchProcessor, dataTransporer);
     }
 
     async execute(param) {
-        if (!this.aInitialInspector.inspect()) {
-            await this.aFetchProcessor.process(param);
+        if (!this.initialInspector.inspect()) {
+            await this.fetchProcessor.process(param);
         }
-        return await this.aDataTransporer.transport();
+        return await this.dataTransporer.transport();
     }
 }

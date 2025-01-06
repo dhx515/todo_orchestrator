@@ -8,14 +8,14 @@ import ISummaryIncreaseProcessor from '../../processor/increase/ISummaryIncrease
 
 /** @interface */
 export default class ICreateDataUseCase extends IUseCase {
-    aIncreaseProcessor = null;
+    increaseProcessor = null;
     
-    constructor(aIncreaseProcessor) {
+    constructor(increaseProcessor) {
         super();
 
-        this.#validateSummaryIncreaseProcessor(aIncreaseProcessor);
+        this.#validateSummaryIncreaseProcessor(increaseProcessor);
 
-        this.aIncreaseProcessor = aIncreaseProcessor;
+        this.increaseProcessor = increaseProcessor;
     }
 
     /**
