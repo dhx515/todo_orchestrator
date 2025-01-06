@@ -8,14 +8,14 @@ import ICancelSingleCreateProcessor from '../../processor/create/single/ICancelS
 
 /** @interface */
 export default class ISingleCreateDataUseCase extends IUseCase {
-    aSingleCreateProcessor = null;
+    createProcessor = null;
     
-    constructor(aSingleCreateProcessor) {
+    constructor(createProcessor) {
         super();
 
-        this.#validateCancelSingleCreateProcessor(aSingleCreateProcessor);
+        this.#validateCancelSingleCreateProcessor(createProcessor);
 
-        this.aSingleCreateProcessor = aSingleCreateProcessor;
+        this.createProcessor = createProcessor;
     }
 
     /**

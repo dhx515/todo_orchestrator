@@ -9,17 +9,17 @@ import ICancelDataTransporter from '../../transporter/data/ICancelDataTransporte
 
 /** @interface */
 export default class ISingleCreateLoadUseCase extends IUseCase {
-    aSingleCreateProcessor = null;
-    aDataTransporter = null;
+    createProcessor = null;
+    dataTransporter = null;
     
-    constructor(aSingleCreateProcessor, aDataTransporter) {
+    constructor(createProcessor, dataTransporter) {
         super();
 
-        this.#validateCancelSingleCreateProcessor(aSingleCreateProcessor);
-        this.#validateCancelDataTransporter(aDataTransporter);
+        this.#validateCancelSingleCreateProcessor(createProcessor);
+        this.#validateCancelDataTransporter(dataTransporter);
 
-        this.aSingleCreateProcessor = aSingleCreateProcessor;
-        this.aDataTransporter = aDataTransporter;
+        this.createProcessor = createProcessor;
+        this.dataTransporter = dataTransporter;
     }
 
     /**

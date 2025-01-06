@@ -9,17 +9,17 @@ import ICancelDataTransporter from '../../transporter/data/ICancelDataTransporte
 
 /** @interface */
 export default class IBatchDeleteLoadUseCase extends IUseCase {
-    aBatchDeleteProcessor = null;
-    aDataTransporter = null;
+    deleteProcessor = null;
+    dataTransporter = null;
     
-    constructor(aBatchDeleteProcessor, aDataTransporter) {
+    constructor(deleteProcessor, dataTransporter) {
         super();
 
-        this.#validateCancelBatchDeleteProcessor(aBatchDeleteProcessor);
-        this.#validateCancelDataTransporter(aDataTransporter);
+        this.#validateCancelBatchDeleteProcessor(deleteProcessor);
+        this.#validateCancelDataTransporter(dataTransporter);
 
-        this.aBatchDeleteProcessor = aBatchDeleteProcessor;
-        this.aDataTransporter = aDataTransporter;
+        this.deleteProcessor = deleteProcessor;
+        this.dataTransporter = dataTransporter;
     }
 
     /**

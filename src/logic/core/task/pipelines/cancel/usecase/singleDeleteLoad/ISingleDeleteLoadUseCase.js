@@ -9,17 +9,17 @@ import ICancelDataTransporter from '../../transporter/data/ICancelDataTransporte
 
 /** @interface */
 export default class ISingleDeleteLoadUseCase extends IUseCase {
-    aSingleDeleteProcessor = null;
-    aDataTransporter = null;
+    deleteProcessor = null;
+    dataTransporter = null;
     
-    constructor(aSingleDeleteProcessor, aDataTransporter) {
+    constructor(deleteProcessor, dataTransporter) {
         super();
 
-        this.#validateCancelSingleDeleteProcessor(aSingleDeleteProcessor);
-        this.#validateCancelDataTransporter(aDataTransporter);
+        this.#validateCancelSingleDeleteProcessor(deleteProcessor);
+        this.#validateCancelDataTransporter(dataTransporter);
 
-        this.aSingleDeleteProcessor = aSingleDeleteProcessor;
-        this.aDataTransporter = aDataTransporter;
+        this.deleteProcessor = deleteProcessor;
+        this.dataTransporter = dataTransporter;
     }
 
     /**

@@ -8,14 +8,14 @@ import ICancelSingleDeleteProcessor from '../../processor/delete/single/ICancelS
 
 /** @interface */
 export default class ISingleDeleteDataUseCase extends IUseCase {
-    aSingleDeleteProcessor = null;
+    deleteProcessor = null;
     
-    constructor(aSingleDeleteProcessor) {
+    constructor(deleteProcessor) {
         super();
 
-        this.#validateCancelSingleDeleteProcessor(aSingleDeleteProcessor);
+        this.#validateCancelSingleDeleteProcessor(deleteProcessor);
 
-        this.aSingleDeleteProcessor = aSingleDeleteProcessor;
+        this.deleteProcessor = deleteProcessor;
     }
 
     /**

@@ -8,14 +8,14 @@ import ICancelBatchDeleteProcessor from '../../processor/delete/batch/ICancelBat
 
 /** @interface */
 export default class IBatchDeleteDataUseCase extends IUseCase {
-    aBatchDeleteProcessor = null;
+    deleteProcessor = null;
     
-    constructor(aBatchDeleteProcessor) {
+    constructor(deleteProcessor) {
         super();
 
-        this.#validateCancelBatchDeleteProcessor(aBatchDeleteProcessor);
+        this.#validateCancelBatchDeleteProcessor(deleteProcessor);
 
-        this.aBatchDeleteProcessor = aBatchDeleteProcessor;
+        this.deleteProcessor = deleteProcessor;
     }
 
     /**

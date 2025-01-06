@@ -8,14 +8,14 @@ import ICancelBatchCreateProcessor from '../../processor/create/batch/ICancelBat
 
 /** @interface */
 export default class IBatchCreateDataUseCase extends IUseCase {
-    aBatchCreateProcessor = null;
+    createProcessor = null;
     
-    constructor(aBatchCreateProcessor) {
+    constructor(createProcessor) {
         super();
 
-        this.#validateCancelBatchCreateProcessor(aBatchCreateProcessor);
+        this.#validateCancelBatchCreateProcessor(createProcessor);
 
-        this.aBatchCreateProcessor = aBatchCreateProcessor;
+        this.createProcessor = createProcessor;
     }
 
     /**

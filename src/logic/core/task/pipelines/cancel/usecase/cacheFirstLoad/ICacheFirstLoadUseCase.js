@@ -12,18 +12,18 @@ import ICancelDataTransporter from '../../transporter/data/ICancelDataTransporte
 export default class ICacheFirstLoadUseCase extends IUseCase {
     initialInspector = null;
     fetchProcessor = null;
-    dataTransporer = null;
+    dataTransporter = null;
 
-    constructor(initialInspector, fetchProcessor, dataTransporer) {
+    constructor(initialInspector, fetchProcessor, dataTransporter) {
         super();
 
         this.#validateCancelInitialInspector(initialInspector);
         this.#validateCancelFetchProcessor(fetchProcessor);
-        this.#validateCancelDataTransporter(dataTransporer);
+        this.#validateCancelDataTransporter(dataTransporter);
 
         this.initialInspector = initialInspector;
         this.fetchProcessor = fetchProcessor;
-        this.dataTransporer = dataTransporer;
+        this.dataTransporter = dataTransporter;
     }
 
     /**
