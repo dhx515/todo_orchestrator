@@ -21,25 +21,7 @@ export default class Orchestrator {
      * @returns {Promise<*>} The result of the command execution.
      */
     async command(pipelineName, commandName, ...args) {
-        let result;
-        if (args.length === 1) {
-            result = await this.#executeSingleCommand(pipelineName, commandName, args[0]);
-        } else if (args.length >= 2) {
-            result = await this.#executeBatchCommand(pipelineName, commandName, args);
-        }
-
-        return result;
-    }
-
-    /**
-     * Executes a command with a single argument and dispatches events.
-     * @param {string} pipelineName - The name of the pipeline.
-     * @param {string} commandName - The name of the command.
-     * @param {*} arg - The argument for the command.
-     * @returns {Promise<*>} The result of the command execution.
-     * @private
-     */
-    async #executeSingleCommand(pipelineName, commandName, arg) {
+        const arg = this.#extractArgs(args);
         const pipeline = this.#getPipeline(pipelineName);
         const result = await pipeline.command(commandName, arg);
 
@@ -48,19 +30,20 @@ export default class Orchestrator {
     }
 
     /**
-     * Executes a command with multiple arguments and dispatches events.
-     * @param {string} pipelineName - The name of the pipeline.
-     * @param {string} commandName - The name of the command.
+     * Extracts arguments based on their length.
      * @param {Array} args - The arguments for the command.
-     * @returns {Promise<*>} The result of the command execution.
+     * @returns {*} The extracted argument(s).
      * @private
      */
-    async #executeBatchCommand(pipelineName, commandName, args) {
-        const pipeline = this.#getPipeline(pipelineName);
-        const result = await pipeline.command(commandName, args);
-        
-        await this.#dispatcher.dispatch(`${pipelineName}:${commandName}`, args);
-        return result;
+    #extractArgs(args) {
+        switch (args.length) {
+            case 0:
+                return null;
+            case 1:
+                return args[0];
+            default:
+                return args;
+        }
     }
 
     /**
