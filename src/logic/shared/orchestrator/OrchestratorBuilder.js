@@ -50,7 +50,7 @@ export default class OrchestratorBuilder {
      */
     subscribe(eventName, handlerCommand, priority = 10) {
         if (!this.#dispatcher) {
-            this.initializeDispatcher();
+            this.initializeAutoDispatcher();
         }
         this.#dispatcher.subscribe(eventName, handlerCommand, priority);
         return this;
