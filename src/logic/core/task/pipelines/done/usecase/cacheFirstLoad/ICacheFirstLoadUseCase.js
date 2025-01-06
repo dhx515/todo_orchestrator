@@ -12,18 +12,18 @@ import IDoneDataTransporter from '../../transporter/data/IDoneDataTransporter';
 export default class ICacheFirstLoadUseCase extends IUseCase {
     initialInspector = null;
     fetchProcessor = null;
-    dataTransporer = null;
+    dataTransporter = null;
 
-    constructor(initialInspector, fetchProcessor, dataTransporer) {
+    constructor(initialInspector, fetchProcessor, dataTransporter) {
         super();
 
         this.#validateDoneInitialInspector(initialInspector);
         this.#validateDoneFetchProcessor(fetchProcessor);
-        this.#validateDoneDataTransporter(dataTransporer);
+        this.#validateDoneDataTransporter(dataTransporter);
 
         this.initialInspector = initialInspector;
         this.fetchProcessor = fetchProcessor;
-        this.dataTransporer = dataTransporer;
+        this.dataTransporter = dataTransporter;
     }
 
     /**
