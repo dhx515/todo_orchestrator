@@ -38,41 +38,6 @@ export default class CustomEventDispatcher extends IDispatcher{
      * @param {string|string[]} param - Param for the pipeline commands.
      */
     async dispatch(eventName, param) {
-        if (Array.isArray(param)) {
-            await this.#dispatchBatchCommand(eventName, param);
-        } else {
-            await this.#dispatchSingleCommand(eventName, param);
-        }
-    }
-
-    /**
-     * Dispatches a single command for the given event.
-     * @param {string} eventName - The name of the event.
-     * @param {string} param - Param for the pipeline command.
-     * @private
-     */
-    async #dispatchSingleCommand(eventName, param) {
-        await this.#dispatchCommands(eventName, param, false);
-    }
-
-    /**
-     * Dispatches batch commands for the given event.
-     * @param {string} eventName - The name of the event.
-     * @param {string[]} params - Params for the pipeline commands.
-     * @private
-     */
-    async #dispatchBatchCommand(eventName, params) {
-        await this.#dispatchCommands(eventName, params, true);
-    }
-
-    /**
-     * Helper method to dispatch commands, reducing duplication between single and batch dispatch.
-     * @param {string} eventName - The name of the event.
-     * @param {string|string[]} param - Param(s) for the pipeline commands.
-     * @param {boolean} isBatch - Indicates if the dispatch is batch or single.
-     * @private
-     */
-    async #dispatchCommands(eventName, param, isBatch) {
         const commands = this.#handlers[eventName];
         if (!commands) return;
 
@@ -86,7 +51,7 @@ export default class CustomEventDispatcher extends IDispatcher{
             switch (pipelineName) {
                 case 'Summary': {
                     const triggerPipelineName = eventName.split(':')[0];
-                    if (isBatch) {
+                    if (this.#isBatch(param)) {
                         await pipeline.command(commandName, triggerPipelineName, param.length);
                     } else {
                         await pipeline.command(commandName, triggerPipelineName);
@@ -104,5 +69,15 @@ export default class CustomEventDispatcher extends IDispatcher{
                     break;
             }
         }
+    }
+
+    /**
+     * Checks if the parameter is a batch (array).
+     * @param {*} param - The parameter to check.
+     * @returns {boolean} True if the parameter is an array, false otherwise.
+     * @private
+     */
+    #isBatch(param) {
+        return Array.isArray(param);
     }
 }
