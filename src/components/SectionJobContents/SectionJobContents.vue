@@ -3,9 +3,9 @@
     <v-row>
         <v-col cols="4">
             <TodoContents
-                :loadData = "todoLoadData"
-                :createLoad = "todoCreateLoad"
-                :deleteLoad = "todoDeleteLoad"
+                :loadData = "generateLoadData('Todo')"
+                :createLoad = "generateCreateLoad('Todo')"
+                :deleteLoad = "generateDeleteLoad('Todo')"
                 :cancelLoad = "todoCancelLoad"
                 :doneLoad =  "todoDoneLoad"
                 class="pa-0 ma-0"
@@ -13,19 +13,25 @@
             />
         </v-col>
         <v-col cols="4">
-            <DoneContents
-                :loadData = "doneLoadData"
-                :deleteLoad = "doneDeleteLoad"
-                :revertLoad = "doneRevertLoad"
+            <TaskContents
+                domain = "Done"
+                color = "green"
+                :loadData = "generateLoadData('Done')"
+                :createLoad = "generateCreateLoad('Done')"
+                :deleteLoad = "generateDeleteLoad('Done')"
+                :revertLoad = "generateRevertLoad('Done')"
                 class="pa-0 ma-0"
                 :key = "updateKeySectionDone"
             />
         </v-col>
         <v-col cols="4">
-            <CanceledContents
-                :loadData = "cancelLoadData"
-                :deleteLoad = "cancelDeleteLoad"
-                :revertLoad = "cancelRevertLoad"
+            <TaskContents
+                domain = "Canceled"
+                color = "red"
+                :loadData = "generateLoadData('Cancel')"
+                :createLoad = "generateCreateLoad('Cancel')"
+                :deleteLoad = "generateDeleteLoad('Cancel')"
+                :revertLoad = "generateRevertLoad('Cancel')"
                 class="pa-0 ma-0"
                 :key = "updateKeySectionCancel"
             />
@@ -37,8 +43,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import TodoContents from './TodoContents/TodoContents.vue';
-import CanceledContents from './CanceledContents.vue';
-import DoneContents from './DoneContents.vue';
+import TaskContents from './TaskContents/TaskContents.vue';
 
 
 const props = defineProps(['orchestrator', 'callUpdateSummary']);
@@ -59,18 +64,32 @@ const callUpdateDone = () => {
     updateKeySectionDone.value += 1;
 }
 
-const todoLoadData = async () => { 
-    return orchestrator.command('Todo', 'loadData', {});
+const generateLoadData = (arg) => {
+    return async (param) => {
+        return await orchestrator.command(arg, 'loadData', param);
+    }
 };
-const todoCreateLoad = async (param) => {
-    const res = await orchestrator.command('Todo', 'singleCreateLoad', param);
-    props.callUpdateSummary();
-    return res;
+const generateCreateLoad = (arg) => {
+    return async (param) => {
+        const res = await orchestrator.command(arg, 'singleCreateLoad', param);
+        props.callUpdateSummary();
+        return res;
+    }
 };
-const todoDeleteLoad = async (param) => { 
-    const res = await orchestrator.command('Todo', 'singleDeleteLoad', param);
-    props.callUpdateSummary();
-    return res;
+const generateDeleteLoad = (arg) => {
+    return async (param) => {
+        const res = await orchestrator.command(arg, 'singleDeleteLoad', param);
+        props.callUpdateSummary();
+        return res;
+    }
+};
+const generateRevertLoad = (arg) => {
+    return async (param) => {
+        const res = await orchestrator.command(arg, 'singleRevertLoad', param);
+        props.callUpdateSummary();
+        callUpdateTodo();
+        return res;
+    }
 };
 const todoCancelLoad = async (param) => { 
     const res = await orchestrator.command('Todo', 'singleCancelLoad', param);
@@ -82,36 +101,6 @@ const todoDoneLoad = async (param) => {
     const res = await orchestrator.command('Todo', 'singleDoneLoad', param);
     props.callUpdateSummary();
     callUpdateDone();
-    return res;
-};
-
-const doneLoadData = async () => { 
-    return orchestrator.command('Done', 'loadData', {});
-};
-const doneDeleteLoad = async (param) => { 
-    const res = await orchestrator.command('Done', 'singleDeleteLoad', param);
-    props.callUpdateSummary();
-    return res;
-};
-const doneRevertLoad = async (param) => { 
-    const res = await orchestrator.command('Done', 'singleRevertLoad', param);
-    props.callUpdateSummary();
-    callUpdateTodo();
-    return res;
-};
-
-const cancelLoadData = async () => { 
-    return orchestrator.command('Cancel', 'loadData', {});
-};
-const cancelDeleteLoad = async (param) => { 
-    const res = await orchestrator.command('Cancel', 'singleDeleteLoad', param);
-    props.callUpdateSummary();
-    return res;
-};
-const cancelRevertLoad = async (param) => { 
-    const res = await orchestrator.command('Cancel', 'singleRevertLoad', param);
-    props.callUpdateSummary();
-    callUpdateTodo();
     return res;
 };
 
