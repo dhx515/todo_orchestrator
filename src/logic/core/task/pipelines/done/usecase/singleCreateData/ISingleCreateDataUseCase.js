@@ -8,14 +8,14 @@ import IDoneSingleCreateProcessor from '../../processor/create/single/IDoneSingl
 
 /** @interface */
 export default class ICreateDataUseCase extends IUseCase {
-    aSingleCreateProcessor = null;
+    createProcessor = null;
     
-    constructor(aSingleCreateProcessor) {
+    constructor(createProcessor) {
         super();
 
-        this.#validateDoneSingleCreateProcessor(aSingleCreateProcessor);
+        this.#validateDoneSingleCreateProcessor(createProcessor);
 
-        this.aSingleCreateProcessor = aSingleCreateProcessor;
+        this.createProcessor = createProcessor;
     }
 
     /**

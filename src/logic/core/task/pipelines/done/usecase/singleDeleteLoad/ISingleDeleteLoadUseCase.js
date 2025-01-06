@@ -9,17 +9,17 @@ import IDoneDataTransporter from '../../transporter/data/IDoneDataTransporter';
 
 /** @interface */
 export default class ISingleDeleteLoadUseCase extends IUseCase {
-    aSingleDeleteProcessor = null;
-    aDataTransporer = null;
+    deleteProcessor = null;
+    dataTransporter = null;
     
-    constructor(aSingleDeleteProcessor, aDataTransporer) {
+    constructor(deleteProcessor, dataTransporter) {
         super();
 
-        this.#validateDoneSingleDeleteProcessor(aSingleDeleteProcessor);
-        this.#validateDoneDataTransporter(aDataTransporer);
+        this.#validateDoneSingleDeleteProcessor(deleteProcessor);
+        this.#validateDoneDataTransporter(dataTransporter);
 
-        this.aSingleDeleteProcessor = aSingleDeleteProcessor;
-        this.aDataTransporer = aDataTransporer;
+        this.deleteProcessor = deleteProcessor;
+        this.dataTransporter = dataTransporter;
     }
 
     /**

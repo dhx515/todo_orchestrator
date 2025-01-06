@@ -7,13 +7,13 @@ import IBatchDeleteLoadUseCase from './IBatchDeleteLoadUseCase';
 
 /** @implements {IBatchDeleteLoadUseCase} */
 export default class BatchDeleteLoadUseCase extends IBatchDeleteLoadUseCase {
-    constructor(aBatchDeleteProcessor, aDataTransporer) {
-        super(aBatchDeleteProcessor, aDataTransporer);
+    constructor(deleteProcessor, dataTransporter) {
+        super(deleteProcessor, dataTransporter);
     }
 
     async execute(param) {
-        await this.aBatchDeleteProcessor.process(param);
+        await this.deleteProcessor.process(param);
         
-        return await this.aDataTransporer.transport();
+        return await this.dataTransporter.transport();
     }
 }

@@ -7,13 +7,13 @@ import ISingleCreateLoadUseCase from './ISingleCreateLoadUseCase';
 
 /** @implements {ISingleCreateLoadUseCase} */
 export default class SingleCreateLoadUseCase extends ISingleCreateLoadUseCase {
-    constructor(aSingleCreateProcessor, aDataTransporer) {
-        super(aSingleCreateProcessor, aDataTransporer);
+    constructor(createProcessor, dataTransporter) {
+        super(createProcessor, dataTransporter);
     }
 
     async execute(param) {
-        await this.aSingleCreateProcessor.process(param);
+        await this.createProcessor.process(param);
         
-        return await this.aDataTransporer.transport();
+        return await this.dataTransporter.transport();
     }
 }

@@ -7,11 +7,11 @@ import ISingleCreateDataUseCase from './ISingleCreateDataUseCase';
 
 /** @implements {ISingleCreateDataUseCase} */
 export default class SingleCreateDataUseCase extends ISingleCreateDataUseCase {
-    constructor(aSingleCreateProcessor) {
-        super(aSingleCreateProcessor);
+    constructor(createProcessor) {
+        super(createProcessor);
     }
 
     async execute(param) {
-        await this.aSingleCreateProcessor.process(param);
+        await this.createProcessor.process(param);
     }
 }

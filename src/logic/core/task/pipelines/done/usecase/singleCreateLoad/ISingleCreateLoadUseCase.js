@@ -9,17 +9,17 @@ import IDoneDataTransporter from '../../transporter/data/IDoneDataTransporter';
 
 /** @interface */
 export default class ISingleCreateLoadUseCase extends IUseCase {
-    aSingleCreateProcessor = null;
-    aDataTransporer = null;
+    createProcessor = null;
+    dataTransporter = null;
     
-    constructor(aSingleCreateProcessor, aDataTransporer) {
+    constructor(createProcessor, dataTransporter) {
         super();
 
-        this.#validateDoneSingleCreateProcessor(aSingleCreateProcessor);
-        this.#validateDoneDataTransporter(aDataTransporer);
+        this.#validateDoneSingleCreateProcessor(createProcessor);
+        this.#validateDoneDataTransporter(dataTransporter);
 
-        this.aSingleCreateProcessor = aSingleCreateProcessor;
-        this.aDataTransporer = aDataTransporer;
+        this.createProcessor = createProcessor;
+        this.dataTransporter = dataTransporter;
     }
 
     /**

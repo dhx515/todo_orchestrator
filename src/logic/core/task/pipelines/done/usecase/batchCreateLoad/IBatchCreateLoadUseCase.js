@@ -9,17 +9,17 @@ import IDoneDataTransporter from '../../transporter/data/IDoneDataTransporter';
 
 /** @interface */
 export default class IBatchCreateLoadUseCase extends IUseCase {
-    aBatchCreateProcessor = null;
-    aDataTransporer = null;
+    createProcessor = null;
+    dataTransporter = null;
     
-    constructor(aBatchCreateProcessor, aDataTransporer) {
+    constructor(createProcessor, dataTransporter) {
         super();
 
-        this.#validateDoneBatchCreateProcessor(aBatchCreateProcessor);
-        this.#validateDoneDataTransporter(aDataTransporer);
+        this.#validateDoneBatchCreateProcessor(createProcessor);
+        this.#validateDoneDataTransporter(dataTransporter);
 
-        this.aBatchCreateProcessor = aBatchCreateProcessor;
-        this.aDataTransporer = aDataTransporer;
+        this.createProcessor = createProcessor;
+        this.dataTransporter = dataTransporter;
     }
 
     /**

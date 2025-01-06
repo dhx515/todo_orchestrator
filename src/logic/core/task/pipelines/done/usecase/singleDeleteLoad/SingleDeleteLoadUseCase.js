@@ -7,13 +7,13 @@ import ISingleDeleteLoadUseCase from './ISingleDeleteLoadUseCase';
 
 /** @implements {ISingleDeleteLoadUseCase} */
 export default class SingleDeleteLoadUseCase extends ISingleDeleteLoadUseCase {
-    constructor(aSingleDeleteProcessor, aDataTransporer) {
-        super(aSingleDeleteProcessor, aDataTransporer);
+    constructor(deleteProcessor, dataTransporter) {
+        super(deleteProcessor, dataTransporter);
     }
 
     async execute(param) {
-        await this.aSingleDeleteProcessor.process(param);
+        await this.deleteProcessor.process(param);
         
-        return await this.aDataTransporer.transport();
+        return await this.dataTransporter.transport();
     }
 }
