@@ -14,16 +14,16 @@ import CustomEventDispatcher from './CustomEventDispatcher';
 import { subscriptions } from './subscriptions';
 
 export function TaskOrchestratorConfig() {
-    const aTodoDataPipeline = TodoDataPipelineConfig();
-    const aDoneDataPipeline = DoneDataPipelineConfig();
-    const aCancelDataPipeline = CancelDataPipelineConfig();
-    const aSummaryDataPipeline = SummaryDataPipelineConfig();
+    const todoDataPipeline = TodoDataPipelineConfig();
+    const doneDataPipeline = DoneDataPipelineConfig();
+    const cancelDataPipeline = CancelDataPipelineConfig();
+    const summaryDataPipeline = SummaryDataPipelineConfig();
 
     const orchestratorBuilder = new OrchestratorBuilder()
-        .addPipeline('Todo', aTodoDataPipeline)
-        .addPipeline('Done', aDoneDataPipeline)
-        .addPipeline('Cancel', aCancelDataPipeline)
-        .addPipeline('Summary', aSummaryDataPipeline)
+        .addPipeline('Todo', todoDataPipeline)
+        .addPipeline('Done', doneDataPipeline)
+        .addPipeline('Cancel', cancelDataPipeline)
+        .addPipeline('Summary', summaryDataPipeline)
         .initializeCustomDispatcher(CustomEventDispatcher);
     
     subscriptions.forEach(({ event, handler, priority }) => {
