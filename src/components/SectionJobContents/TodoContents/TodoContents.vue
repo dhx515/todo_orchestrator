@@ -134,7 +134,7 @@ const deleteTodo = async (task) => {
     todoItems.value = await props.deleteLoad(task);
 };
 const batchDeleteTodo = async () => {
-    if (checkSelectedItems() === false) return;
+    if (checkSelectedItems('delete') === false) return;
     
     todoItems.value = await props.batchDeleteLoad(selectedItems.value);
     selectedItems.value = [];
@@ -143,7 +143,7 @@ const cancelTodo = async (item) => {
     todoItems.value = await props.cancelLoad(item);
 };
 const batchCancelTodo = async () => {
-    if (checkSelectedItems() === false) return;
+    if (checkSelectedItems('cancel') === false) return;
     
     todoItems.value = await props.batchCancelLoad(selectedItems.value);
     selectedItems.value = [];
@@ -152,14 +152,14 @@ const doneTodo = async (item) => {
     todoItems.value = await props.doneLoad(item);
 };
 const batchDoneTodo = async () => {
-    if (checkSelectedItems() === false) return;
+    if (checkSelectedItems('done') === false) return;
     
     todoItems.value = await props.batchDoneLoad(selectedItems.value);
     selectedItems.value = [];
 };
-const checkSelectedItems = () => {
+const checkSelectedItems = (type) => {
     if (selectedItems.value.length < 2) {
-        snackbarMessage.value = 'You need to select at least 2 items for batch delete.';
+        snackbarMessage.value = `You need to select at least 2 items for batch ${type}.`;
         snackbar.value = true;
         return false;
     }
