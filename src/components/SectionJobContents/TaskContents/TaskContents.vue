@@ -60,7 +60,7 @@
                 Revert
             </v-btn>
             <v-btn
-                :color="selectedItems.length < 2? 'gray':'error'"
+                :color="selectedItems.length < 2? 'gray':'black'"
                 @click="batchDeleteTask"
             >
                 Delete
