@@ -1,6 +1,7 @@
 <template>
 <v-container>
     <v-card outlined>
+    
         <v-card-title :class="[color, 'white--text', 'd-flex', 'justify-space-between', 'align-center']">
             {{ domain }}
             <v-btn 
@@ -14,14 +15,20 @@
                 <v-icon size="24">mdi-plus</v-icon>
             </v-btn>
         </v-card-title>
+
         <v-divider/>
+        
         <v-list>
-            <v-list-item v-for="(item, index) in taskItems" :key="index">
+            <v-list-item v-for="(item, index) in taskItems" :key="index" >
+                
                 <v-list-item-title 
                     class="d-flex justify-space-between align-center rounded-lg pa-2"
                     style="background-color: #f9f9f9;"
                 >
-                    {{ item }}
+                    <div class="d-flex align-center pa-0 ma-0">
+                        <v-checkbox v-model="selectedItems" :value="item" class="pa-0 ma-0 d-flex"/>
+                        {{ item }}
+                    </div>
                     <div class="button-group">
                         <v-btn 
                             icon="mdi-arrow-left"
@@ -41,8 +48,33 @@
                 </v-list-item-title>
             </v-list-item>
         </v-list>
+        
+        <v-card-actions
+            class="d-flex justify-center"
+            v-if="selectedItems.length > 0"
+        >
+            <v-btn
+                :color="selectedItems.length < 2? 'gray':'primary'"
+                @click="batchRevertTask"
+            >
+                Revert
+            </v-btn>
+            <v-btn
+                :color="selectedItems.length < 2? 'gray':'error'"
+                @click="batchDeleteTask"
+            >
+                Delete
+            </v-btn>
+        </v-card-actions>
     </v-card>
-    
+
+    <v-snackbar v-model="snackbar" :timeout="3000">
+        {{ snackbarMessage }}
+        <v-btn color="red" text @click="snackbar = false">
+            Close
+        </v-btn>
+    </v-snackbar>
+
     <AddTaskModal
         v-model="isModalOpen"
         :domain = "domain"
@@ -56,10 +88,16 @@
 import { ref, onMounted } from 'vue';
 import AddTaskModal from './AddTaskModal.vue';
 
-
-const props = defineProps(['domain', 'color', 'loadData', 'createLoad', 'deleteLoad', 'revertLoad']);
+const props = defineProps(['domain', 'color'
+    , 'loadData'
+    , 'createLoad', 'batchCreateLoad'
+    , 'deleteLoad', 'batchDeleteLoad'
+    , 'revertLoad', 'batchRevertLoad']);
 
 const taskItems = ref([]);
+const selectedItems = ref([]);
+const snackbar = ref(false);
+const snackbarMessage = ref('');
 
 const isModalOpen = ref(false);
 const openModal = () => {
@@ -67,18 +105,47 @@ const openModal = () => {
 };
 const closeModal = () => {
     isModalOpen.value = false;
-}
-
-const createTask = async(item) => {
-    taskItems.value = await props.createLoad(item);
 };
 
-const deleteTask = async(item) => {
+const createTask = async (item) => {
+    if (typeof item === 'string' && item.includes(',')) {
+        // 쉼표로 구분된 문자열을 배열로 변환하고, 각 항목의 공백을 제거
+        const tasks = item.split(',').map(task => task.trim()).filter(task => task.length > 0);
+        taskItems.value = await props.batchCreateLoad(tasks);
+    } else {
+        // 단일 문자열 또는 다른 타입의 항목은 그대로 사용
+        taskItems.value = await props.createLoad(item);
+    }
+};
+
+const deleteTask = async (item) => {
     taskItems.value = await props.deleteLoad(item);
 };
 
-const revertTask = async(item) => {
+const batchDeleteTask = async () => {
+    if (selectedItems.value.length < 2) {
+        snackbarMessage.value = 'You need to select at least 2 items for batch delete.';
+        snackbar.value = true;
+        return;
+    }
+    
+    taskItems.value = await props.batchDeleteLoad(selectedItems.value);
+    selectedItems.value = [];
+};
+
+const revertTask = async (item) => {
     taskItems.value = await props.revertLoad(item);
+};
+
+const batchRevertTask = async () => {
+    if (selectedItems.value.length < 2) {
+        snackbarMessage.value = 'You need to select at least 2 items for batch revert.';
+        snackbar.value = true;
+        return;
+    }
+    
+    taskItems.value = await props.batchRevertLoad(selectedItems.value);
+    selectedItems.value = [];
 };
 
 onMounted(async () => {
