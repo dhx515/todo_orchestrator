@@ -5,9 +5,13 @@
             <TodoContents
                 :loadData = "generateLoadData('Todo')"
                 :createLoad = "generateCreateLoad('Todo')"
+                :batchCreateLoad = "generateCreateLoad('Todo', 'batch')"
                 :deleteLoad = "generateDeleteLoad('Todo')"
-                :cancelLoad = "todoCancelLoad"
-                :doneLoad =  "todoDoneLoad"
+                :batchDeleteLoad = "generateDeleteLoad('Todo', 'batch')"
+                :cancelLoad = "generateTodoCancelLoad()"
+                :batchCancelLoad = "generateTodoCancelLoad('batch')"
+                :doneLoad =  "generateTodoDoneLoad()"
+                :batchDoneLoad = "generateTodoDoneLoad('batch')"
                 class="pa-0 ma-0"
                 :key = "updateKeySectionTodo"
             />
@@ -97,19 +101,22 @@ const generateRevertLoad = (pipeineName, type='single') => {
         return res;
     }
 };
-const todoCancelLoad = async (param) => { 
-    const res = await orchestrator.command('Todo', 'singleCancelLoad', param);
-    props.callUpdateSummary();
-    callUpdateCancel();
-    return res;
+const generateTodoCancelLoad = (type='single') => {
+    return async (param) => {
+        const res = await orchestrator.command('Todo', type+'CancelLoad', param);
+        props.callUpdateSummary();
+        callUpdateCancel();
+        return res;
+    }
 };
-const todoDoneLoad = async (param) => { 
-    const res = await orchestrator.command('Todo', 'singleDoneLoad', param);
-    props.callUpdateSummary();
-    callUpdateDone();
-    return res;
+const generateTodoDoneLoad = (type='single') => {
+    return async (param) => {
+        const res = await orchestrator.command('Todo', type+'DoneLoad', param);
+        props.callUpdateSummary();
+        callUpdateDone();
+        return res;
+    }
 };
-
 
 onMounted(async () => {
     console.log("onMounted: SectionJobContents");

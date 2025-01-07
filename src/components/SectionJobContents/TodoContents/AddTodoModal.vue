@@ -2,6 +2,7 @@
     <v-dialog max-width="500">
         <v-card>
             <v-card-title class="primary white--text">Add Todo</v-card-title>
+            <v-card-subtitle>Separate multiple tasks with commas</v-card-subtitle>
             <v-card-text>
                 <v-text-field
                     v-model="task"
