@@ -26,7 +26,7 @@
                     style="background-color: #f9f9f9;"
                 >
                     <div class="d-flex align-center pa-0 ma-0">
-                        <v-checkbox v-model="selectedItems" :value="item" class="pa-0 ma-0 d-flex"/>
+                        <v-checkbox v-model="selectedItems" :value="index" class="pa-0 ma-0 d-flex"/>
                         {{ item }}
                     </div>
                     <div class="button-group">
@@ -130,7 +130,8 @@ const batchDeleteTask = async () => {
         return;
     }
     
-    taskItems.value = await props.batchDeleteLoad(selectedItems.value);
+    const itemsToDelete = selectedItems.value.map(index => taskItems.value[index]);
+    taskItems.value = await props.batchDeleteLoad(itemsToDelete);
     selectedItems.value = [];
 };
 
@@ -146,7 +147,8 @@ const batchRevertTask = async () => {
         return;
     }
     
-    taskItems.value = await props.batchRevertLoad(selectedItems.value);
+    const itemsToRevert = selectedItems.value.map(index => taskItems.value[index]);
+    taskItems.value = await props.batchRevertLoad(itemsToRevert);
     selectedItems.value = [];
 };
 

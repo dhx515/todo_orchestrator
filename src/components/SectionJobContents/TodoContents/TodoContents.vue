@@ -25,7 +25,7 @@
                     style="background-color: #f9f9f9;"
                 >
                     <div class="d-flex align-center pa-0 ma-0">
-                        <v-checkbox v-model="selectedItems" :value="item" class="pa-0 ma-0 d-flex"/>
+                        <v-checkbox v-model="selectedItems" :value="index" class="pa-0 ma-0 d-flex"/>
                         {{ item }}
                     </div>
                     <div class="button-group">
@@ -137,7 +137,8 @@ const deleteTodo = async (task) => {
 const batchDeleteTodo = async () => {
     if (checkSelectedItems('delete') === false) return;
     
-    todoItems.value = await props.batchDeleteLoad(selectedItems.value);
+    const itemsToDelete = selectedItems.value.map(index => todoItems.value[index]);
+    todoItems.value = await props.batchDeleteLoad(itemsToDelete);
     selectedItems.value = [];
 };
 const cancelTodo = async (item) => {
@@ -147,7 +148,8 @@ const cancelTodo = async (item) => {
 const batchCancelTodo = async () => {
     if (checkSelectedItems('cancel') === false) return;
     
-    todoItems.value = await props.batchCancelLoad(selectedItems.value);
+    const itemsToCancel = selectedItems.value.map(index => todoItems.value[index]);
+    todoItems.value = await props.batchCancelLoad(itemsToCancel);
     selectedItems.value = [];
 };
 const doneTodo = async (item) => {
@@ -157,7 +159,8 @@ const doneTodo = async (item) => {
 const batchDoneTodo = async () => {
     if (checkSelectedItems('done') === false) return;
     
-    todoItems.value = await props.batchDoneLoad(selectedItems.value);
+    const itemsToDone = selectedItems.value.map(index => todoItems.value[index]);
+    todoItems.value = await props.batchDoneLoad(itemsToDone);
     selectedItems.value = [];
 };
 const checkSelectedItems = (type) => {
