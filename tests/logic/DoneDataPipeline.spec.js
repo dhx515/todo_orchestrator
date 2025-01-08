@@ -18,6 +18,12 @@ describe('DoneDataPipeline', () => {
         expect(result).toStrictEqual(['분기계획작성', '운영인수인계', '화상회의', '커피챗']);
     });
 
+    it('singleCreateData & singleDeleteLoad', async() => {
+        await doneDataPipeline.command('singleCreateData', '화상회의');
+        const result = await doneDataPipeline.command('singleDeleteLoad', '화상회의');
+        expect(result).toStrictEqual(['분기계획작성', '운영인수인계', '화상회의']);
+    });
+
     it('singleCreateData & loadData', async() => {
         await doneDataPipeline.command('singleCreateData', '커피챗');
         const result = await doneDataPipeline.command('loadData', {});
