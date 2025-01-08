@@ -32,12 +32,15 @@ export default class DoneDataStorage extends IDoneDataStorage {
     }
 
     deleteDoneItem(param) {
-        this.#doneList = this.#doneList.filter((done) => done !== param);
+        const index = this.#doneList.findIndex(item => item === param);
+        if (index !== -1) {
+            this.#doneList.splice(index, 1);
+        }
     }
 
     deleteDoneItemList(param) {
         param.forEach(item => {
-            this.#doneList = this.#doneList.filter((done) => done !== item);
+            this.deleteDoneItem(item);
         });
     }
 }

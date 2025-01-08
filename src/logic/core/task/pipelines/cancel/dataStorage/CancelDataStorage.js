@@ -32,12 +32,15 @@ export default class CancelDataStorage extends ICancelDataStorage {
     }
 
     deleteCancelItem(param) {
-        this.#cancelList = this.#cancelList.filter((item) => item !== param);
+        const index = this.#cancelList.findIndex(item => item === param);
+        if (index !== -1) {
+            this.#cancelList.splice(index, 1);
+        }
     }
 
     deleteCancelItemList(param) {
         param.forEach(item => {
-            this.#cancelList = this.#cancelList.filter((done) => done !== item);
+            this.deleteCancelItem(item);
         });
     }
 }
