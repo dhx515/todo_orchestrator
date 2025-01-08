@@ -1,6 +1,7 @@
 # Todo Orchestrator
 
 Todo Orchestrator is a Vue.js application that helps you manage your tasks efficiently. It includes features for creating, updating, and deleting tasks, as well as viewing tasks in different states such as Todo, Done, and Canceled.
+![Todo Orchestrator Screenshot](docs/screenshot.png)
 
 ## Features
 
@@ -18,9 +19,11 @@ src/
 │   ├── SectionJobContents/
 │   │   ├── SectionJobContents.vue
 │   │   ├── TodoContents/
-│   │   │   └── TodoContents.vue
-│   │   ├── DoneContents.vue
-│   │   └── CanceledContents.vue
+│   │   │   ├── TodoContents.vue
+│   │   │   └── AddTodoModal.vue
+│   │   ├── TaskContents/
+│   │   │   ├── TaskContents.vue
+│   │   │   └── AddTaskModal.vue
 ├── App.vue
 ├── main.js
 ├── logic/
@@ -39,16 +42,21 @@ src/
 │   │   │   │       └── config.js
 │   ├── shared/
 │   │   ├── orchestrator/
+│   │   ├── dispatcher/
 │   │   ├── pipeline/
-│   │   └── utils/
+│   │   ├── command/
+│   │   └── interfaces/
 tests/
 ├── components/
 │   ├── SectionSummary.spec.js
-│   ├── SectionJobContents.spec.js
-│   ├── TodoContents.spec.js
-│   ├── DoneContents.spec.js
-│   └── CanceledContents.spec.js
-└── logic/
+│   ├── TaskContents.spec.js
+│   └── TodoContents.spec.js
+├── logic/
+│   ├── Orchestrator.spec.js
+│   ├── SummaryDataPipeline.spec.js
+│   ├── TodoDataPipeline.spec.js
+│   ├── DoneDataPipeline.spec.js
+│   └── CancelDataPipeline.spec.js
 ```
 
 ## Setup
