@@ -132,6 +132,7 @@ const createTodo = async (target) => {
 };
 const deleteTodo = async (task) => {
     todoItems.value = await props.deleteLoad(task);
+    selectedItems.value = [];
 };
 const batchDeleteTodo = async () => {
     if (checkSelectedItems('delete') === false) return;
@@ -141,6 +142,7 @@ const batchDeleteTodo = async () => {
 };
 const cancelTodo = async (item) => {
     todoItems.value = await props.cancelLoad(item);
+    selectedItems.value = [];
 };
 const batchCancelTodo = async () => {
     if (checkSelectedItems('cancel') === false) return;
@@ -150,6 +152,7 @@ const batchCancelTodo = async () => {
 };
 const doneTodo = async (item) => {
     todoItems.value = await props.doneLoad(item);
+    selectedItems.value = [];
 };
 const batchDoneTodo = async () => {
     if (checkSelectedItems('done') === false) return;

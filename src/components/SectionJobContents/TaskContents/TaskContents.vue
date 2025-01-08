@@ -120,6 +120,7 @@ const createTask = async (item) => {
 
 const deleteTask = async (item) => {
     taskItems.value = await props.deleteLoad(item);
+    selectedItems.value = [];
 };
 
 const batchDeleteTask = async () => {
@@ -135,6 +136,7 @@ const batchDeleteTask = async () => {
 
 const revertTask = async (item) => {
     taskItems.value = await props.revertLoad(item);
+    selectedItems.value = [];
 };
 
 const batchRevertTask = async () => {
