@@ -1,12 +1,12 @@
 /**
- * @file ITodoInitialInspector.js
- * @description Interface of Todo Initial Inspector
+ * @file ITodoDataInspector.js
+ * @description Interface of Todo Data Inspector
  */
 import IInspector from '@/logic/shared/interfaces/IInspector';
 
 
 /** @interface */
-export default class ITodoInitialInspector extends IInspector {
+export default class ITodoDataInspector extends IInspector {
     constructor(dataStorage){
         super(dataStorage);
     }

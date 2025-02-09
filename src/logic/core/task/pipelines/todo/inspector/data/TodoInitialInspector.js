@@ -2,11 +2,11 @@
  * @file TodoInitialInspector.js
  * @description Implement of Todo Initial Inspector
  */
-import ITodoInitialInspector from './ITodoInitialInspector';
+import ITodoDataInspector from './ITodoDataInspector';
 
 
-/** @implements {ITodoInitialInspector} */
-export default class TodoInitialInspector extends ITodoInitialInspector {
+/** @implements {ITodoDataInspector} */
+export default class TodoInitialInspector extends ITodoDataInspector {
     constructor(dataStorage){
         super(dataStorage);
     }
