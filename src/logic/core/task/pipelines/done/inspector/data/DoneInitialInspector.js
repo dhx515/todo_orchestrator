@@ -1,12 +1,12 @@
 /**
  * @file DoneInitialInspector.js
- * @description Implement of Done Initial Inspector
+ * @description Implement of Done Data Inspector
  */
-import IDoneInitialInspector from './IDoneInitialInspector';
+import IDoneDataInspector from './IDoneDataInspector';
 
 
-/** @implements {IDoneInitialInspector} */
-export default class DoneInitialInspector extends IDoneInitialInspector {
+/** @implements {IDoneDataInspector} */
+export default class DoneInitialInspector extends IDoneDataInspector {
     constructor(dataStorage){
         super(dataStorage);
     }

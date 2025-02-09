@@ -1,6 +1,6 @@
 /**
- * @file IDoneInitialInspector.js
- * @description Interface of Done Initial Inspector
+ * @file IDoneDataInspector.js
+ * @description Interface of Done Data Inspector
  */
 import IInspector from '@/logic/shared/interfaces/IInspector';
 
