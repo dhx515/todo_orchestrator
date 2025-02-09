@@ -1,12 +1,12 @@
 /**
- * @file ISummaryInitialInspector.js
- * @description Interface of Summary Initial Inspector
+ * @file ISummaryDataInspector.js
+ * @description Interface of Summary Data Inspector
  */
 import IInspector from '@/logic/shared/interfaces/IInspector';
 
 
 /** @interface */
-export default class ISummaryInitialInspector extends IInspector {
+export default class ISummaryDataInspector extends IInspector {
     constructor(dataStorage){
         super(dataStorage);
     }

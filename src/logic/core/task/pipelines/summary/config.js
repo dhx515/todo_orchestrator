@@ -9,9 +9,10 @@ import DataStorage from './dataStorage/SummaryDataStorage';
 import FetchProcessor from './processor/fetch/SummaryFetchProcessor';
 import IncreaseProcessor from './processor/increase/SummaryIncreaseProcessor';
 import DecreaseProcessor from './processor/decrease/SummaryDecreaseProcessor';
-import InitialInspector from './inspector/initial/SummaryInitialInspector';
 import DataTransporter from './transporter/data/SummaryDataTransporter';
-import CacheFirstLoadUseCase from './usecase/cacheFirstLoad/CacheFirstLoadUseCase';
+import InitialInspector from './inspector/data/SummaryInitialInspector';
+import EmptyInspector from './inspector/data/SummaryEmptyInspector';
+import ConditionalProcessLoadUseCase from '@/logic/shared/usecase/ConditionalProcessLoadUseCase';
 import IncreaseDataUseCase from './usecase/increaseData/IncreaseDataUseCase';
 import DecreaseDataUseCase from './usecase/decreaseData/DecreaseDataUseCase';
 
@@ -22,10 +23,11 @@ export function SummaryDataPipelineConfig() {
     const decreaseProcessor = new DecreaseProcessor(dataStorage);
     const dataTransporter = new DataTransporter(dataStorage);
     const initialInspector = new InitialInspector(dataStorage);
+    const emptyInspector = new EmptyInspector(dataStorage);
 
-    const cacheFirstLoadUseCase = new CacheFirstLoadUseCase(initialInspector, fetchProcessor, dataTransporter);
-    const increateDataUseCase = new IncreaseDataUseCase(increaseProcessor, dataTransporter);
-    const decreaseDataUseCase = new DecreaseDataUseCase(decreaseProcessor, dataTransporter);
+    const cacheFirstLoadUseCase = new ConditionalProcessLoadUseCase(emptyInspector, fetchProcessor, dataTransporter);
+    const increateDataUseCase = new IncreaseDataUseCase(initialInspector, increaseProcessor);
+    const decreaseDataUseCase = new DecreaseDataUseCase(initialInspector, decreaseProcessor);
 
     return new PipelineBuilderWithAutoCommand()
         .addUseCase('loadData', cacheFirstLoadUseCase)

@@ -2,11 +2,11 @@
  * @file SummaryInitialInspector.js
  * @description Implement of Summary Initial Inspector
  */
-import ISummaryInitialInspector from './ISummaryInitialInspector';
+import ISummaryDataInspector from './ISummaryDataInspector';
 
 
-/** @implements {ISummaryInitialInspector} */
-export default class SummaryInitialInspector extends ISummaryInitialInspector {
+/** @implements {ISummaryDataInspector} */
+export default class SummaryInitialInspector extends ISummaryDataInspector {
     constructor(dataStorage){
         super(dataStorage);
     }
