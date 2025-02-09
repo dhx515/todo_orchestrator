@@ -1,12 +1,12 @@
 /**
- * @file ICancelInitialInspector.js
- * @description Interface of Cancel Initial Inspector
+ * @file ICancelDataInspector.js
+ * @description Interface of Cancel Data Inspector
  */
 import IInspector from '@/logic/shared/interfaces/IInspector';
 
 
 /** @interface */
-export default class ICancelInitialInspector extends IInspector {
+export default class ICancelDataInspector extends IInspector {
     constructor(dataStorage){
         super(dataStorage);
     }

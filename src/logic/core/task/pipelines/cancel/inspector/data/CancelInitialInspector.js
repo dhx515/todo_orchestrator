@@ -1,12 +1,12 @@
 /**
  * @file CancelInitialInspector.js
- * @description Implement of Cancel Initial Inspector
+ * @description Implement of Cancel Data Inspector
  */
-import ICancelInitialInspector from './ICancelInitialInspector';
+import ICancelDataInspector from './ICancelDataInspector';
 
 
-/** @implements {ICancelInitialInspector} */
-export default class CancelInitialInspector extends ICancelInitialInspector {
+/** @implements {ICancelDataInspector} */
+export default class CancelInitialInspector extends ICancelDataInspector {
     constructor(dataStorage){
         super(dataStorage);
     }

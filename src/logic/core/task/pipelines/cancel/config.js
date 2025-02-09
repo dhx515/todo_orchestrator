@@ -11,17 +11,12 @@ import SingleCreateProcessor from './processor/create/single/CancelSingleCreateP
 import BatchCreateProcessor from './processor/create/batch/CancelBatchCreateProcessor';
 import SingleDeleteProcessor from './processor/delete/single/CancelSingleDeleteProcessor';
 import BatchDeleteProcessor from './processor/delete/batch/CancelBatchDeleteProcessor';
-import InitialInspector from './inspector/initial/CancelInitialInspector';
+import InitialInspector from './inspector/data/CancelInitialInspector';
+import EmptyInspector from './inspector/data/CancelEmptyInspector';
 import DataTransporter from './transporter/data/CancelDataTransporter';
-import CacheFirstLoadUseCase from './usecase/cacheFirstLoad/CacheFirstLoadUseCase';
-import SingleCreateLoadUseCase from './usecase/singleCreateLoad/SingleCreateLoadUseCase';
-import BatchCreateLoadUseCase from './usecase/batchCreateLoad/BatchCreateLoadUseCase';
-import SingleCreateDataUseCase from './usecase/singleCreateData/SingleCreateDataUseCase';
-import BatchCreateDataUseCase from './usecase/batchCreateData/BatchCreateDataUseCase';
-import SingleDeleteLoadUseCase from './usecase/singleDeleteLoad/SingleDeleteLoadUseCase';
-import BatchDeleteLoadUseCase from './usecase/batchDeleteLoad/BatchDeleteLoadUseCase';
-import SingleDeleteDataUseCase from './usecase/singleDeleteData/SingleDeleteDataUseCase';
-import BatchDeleteDataUseCase from './usecase/batchDeleteData/BatchDeleteDataUseCase';
+import ValidatedProcessUseCase from '@/logic/shared/usecase/ValidatedProcessUseCase';
+import ValidatedProcessLoadUseCase from '@/logic/shared/usecase/ValidatedProcessLoadUseCase';
+import ConditionalProcessLoadUseCase from '@/logic/shared/usecase/ConditionalProcessLoadUseCase';
 
 export function CancelDataPipelineConfig() {
     const dataStorage = new DataStorage();
@@ -32,16 +27,17 @@ export function CancelDataPipelineConfig() {
     const batchDeleteProcessor = new BatchDeleteProcessor(dataStorage);
     const dataTransporter = new DataTransporter(dataStorage);
     const initialInspector = new InitialInspector(dataStorage);
+    const emptyInspector = new EmptyInspector(dataStorage);
 
-    const cacheFirstLoadUseCase = new CacheFirstLoadUseCase(initialInspector, fetchProcessor, dataTransporter);
-    const singleCreateLoadUseCase = new SingleCreateLoadUseCase(singleCreateProcessor, dataTransporter);
-    const batchCreateLoadUseCase = new BatchCreateLoadUseCase(batchCreateProcessor, dataTransporter);
-    const singleCreateDataUseCase = new SingleCreateDataUseCase(singleCreateProcessor);
-    const batchCreateDataUseCase = new BatchCreateDataUseCase(batchCreateProcessor);
-    const singleDeleteLoadUseCase = new SingleDeleteLoadUseCase(singleDeleteProcessor, dataTransporter);
-    const batchDeleteLoadUseCase = new BatchDeleteLoadUseCase(batchDeleteProcessor, dataTransporter); 
-    const singleDeleteDataUseCase = new SingleDeleteDataUseCase(singleDeleteProcessor);
-    const batchDeleteDataUseCase = new BatchDeleteDataUseCase(batchDeleteProcessor);
+    const cacheFirstLoadUseCase = new ConditionalProcessLoadUseCase(emptyInspector, fetchProcessor, dataTransporter);
+    const singleCreateLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, singleCreateProcessor, dataTransporter);
+    const batchCreateLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, batchCreateProcessor, dataTransporter);
+    const singleCreateDataUseCase = new ValidatedProcessUseCase(initialInspector, singleCreateProcessor);
+    const batchCreateDataUseCase = new ValidatedProcessUseCase(initialInspector, batchCreateProcessor);
+    const singleDeleteLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, singleDeleteProcessor, dataTransporter);
+    const batchDeleteLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, batchDeleteProcessor, dataTransporter);
+    const singleDeleteDataUseCase = new ValidatedProcessUseCase(initialInspector, singleDeleteProcessor);
+    const batchDeleteDataUseCase = new ValidatedProcessUseCase(initialInspector, batchDeleteProcessor);
 
     return new PipelineBuilderWithAutoCommand()
         .addUseCase('loadData', cacheFirstLoadUseCase)
