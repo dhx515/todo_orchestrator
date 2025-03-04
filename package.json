@@ -8,6 +8,11 @@
     "test:unit": "jest --selectProjects components; jest --selectProjects logic",
     "test:unit:components": "jest --selectProjects components",
     "test:unit:logic": "jest --selectProjects logic",
+    "test:unit:logic:todoDataPipeline": "jest /Users/hyun/Documents/github/todo_orchestrator/tests/logic/TodoDataPipeline.spec.js",
+    "test:unit:logic:doneDataPipeline": "jest /Users/hyun/Documents/github/todo_orchestrator/tests/logic/DoneDataPipeline.spec.js",
+    "test:unit:logic:cancelDataPipeline": "jest /Users/hyun/Documents/github/todo_orchestrator/tests/logic/CancelDataPipeline.spec.js",
+    "test:unit:logic:summaryDataPipeline": "jest /Users/hyun/Documents/github/todo_orchestrator/tests/logic/SummaryDataPipeline.spec.js",
+    "test:unit:logic:orchestrator": "jest /Users/hyun/Documents/github/todo_orchestrator/tests/logic/Orchestrator.spec.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -34,12 +39,14 @@
     "eslint": "^8.57.1",
     "eslint-plugin-vue": "^9.32.0",
     "eslint-webpack-plugin": "^4.2.0",
+    "gh-pages": "^6.3.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.5",
     "prettier": "^2.4.1",
     "vue-cli-plugin-vuetify": "~2.5.8",
     "webpack-plugin-vuetify": "^2.0.0-alpha.0"
   },
+  "homepage": "https://dhx515.github.io/todo_orchestrator",
   "eslintConfig": {
     "root": true,
     "env": {
@@ -78,8 +85,12 @@
         "displayName": "components",
         "preset": "@vue/cli-plugin-unit-jest",
         "testEnvironment": "jsdom",
-        "testMatch": ["**/tests/components/**/*.spec.[jt]s?(x)"],
-        "setupFilesAfterEnv": ["<rootDir>/tests/setup/setupComponents.js"],
+        "testMatch": [
+          "**/tests/components/**/*.spec.[jt]s?(x)"
+        ],
+        "setupFilesAfterEnv": [
+          "<rootDir>/tests/setup/setupComponents.js"
+        ],
         "transform": {
           "^.+\\.m?js$": "babel-jest",
           "^.+\\.vue$": "@vue/vue3-jest",
@@ -97,8 +108,12 @@
         "displayName": "logic",
         "preset": "@vue/cli-plugin-unit-jest",
         "testEnvironment": "jsdom",
-        "testMatch": ["**/tests/logic/**/*.spec.[jt]s?(x)"],
-        "setupFilesAfterEnv": ["<rootDir>/tests/setup/setupLogic.js"],
+        "testMatch": [
+          "**/tests/logic/**/*.spec.[jt]s?(x)"
+        ],
+        "setupFilesAfterEnv": [
+          "<rootDir>/tests/setup/setupLogic.js"
+        ],
         "transform": {
           "^.+\\.m?js$": "babel-jest",
           "^.+\\.vue$": "@vue/vue3-jest",
