@@ -7,11 +7,15 @@ import IIncreaseDataUseCase from './IIncreaseDataUseCase';
 
 /** @implements {IIncreaseDataUseCase} */
 export default class IncreaseDataUseCase extends IIncreaseDataUseCase {
-    constructor(increaseProcessor) {
-        super(increaseProcessor);
+    constructor(initialInspector, increaseProcessor) {
+        super(initialInspector, increaseProcessor);
     }
 
     async execute(param, value = 1) {
+        const isValid = await this.initialInspector.inspect();
+        if (!isValid) {
+            throw new Error('Data validation failed.');
+        }
         await this.increaseProcessor.process(param, value);
     }
 }
