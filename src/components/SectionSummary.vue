@@ -5,15 +5,15 @@
             <v-card outlined class="pa-4">
             <v-row justify="space-around">
                 <v-col cols="4" class="text-center">
-                    <h2>Todo</h2>
+                    <h3>Todo</h3>
                     <p>{{ tasks['Todo'] }}</p>
                 </v-col>
                 <v-col cols="4" class="text-center">
-                    <h2>Done</h2>
+                    <h3>Done</h3>
                     <p>{{ tasks['Done'] }}</p>
                 </v-col>
                 <v-col cols="4" class="text-center">
-                    <h2>Canceled</h2>
+                    <h3>Canceled</h3>
                     <p>{{ tasks['Cancel'] }}</p>
                 </v-col>
             </v-row>

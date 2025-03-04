@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <v-row>
-        <v-col cols="4">
+        <v-col cols="12" sm="6" md="4">
             <TodoContents
                 :loadData = "generateLoadData('Todo')"
                 :createLoad = "generateCreateLoad('Todo')"
@@ -16,7 +16,7 @@
                 :key = "updateKeySectionTodo"
             />
         </v-col>
-        <v-col cols="4">
+        <v-col cols="12" sm="6" md="4">
             <TaskContents
                 domain = "Done"
                 color = "green"
@@ -31,7 +31,7 @@
                 :key = "updateKeySectionDone"
             />
         </v-col>
-        <v-col cols="4">
+        <v-col cols="12" sm="6" md="4">
             <TaskContents
                 domain = "Canceled"
                 color = "red"
