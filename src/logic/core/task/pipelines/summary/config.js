@@ -33,5 +33,10 @@ export function SummaryDataPipelineConfig() {
         .addUseCase('loadData', cacheFirstLoadUseCase)
         .addUseCase('increaseData', increateDataUseCase)
         .addUseCase('decreaseData', decreaseDataUseCase)
+
+        .addStatusUpdateSheet([
+            'increaseData',
+            'decreaseData'
+        ])
         .build();
 }

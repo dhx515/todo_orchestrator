@@ -9,9 +9,11 @@ import DataPipelineSingleton from "./DataPipelineSingleton";
 
 export default class PipelineBuilderWithAutoCommand {
     #commands = {};
+    #statusUpdateSheet = [];
 
     constructor() {
         this.#commands = {};
+        this.#statusUpdateSheet = [];
     }
 
     /**
@@ -29,12 +31,17 @@ export default class PipelineBuilderWithAutoCommand {
         return this;
     }
 
+    addStatusUpdateSheet(statusUpdateSheet) {
+        this.#statusUpdateSheet = statusUpdateSheet;
+        return this;
+    }
+
     /**
      * Builds the DataPipeline object with commands
      * @returns {DataPipeline} - The constructed DataPipeline object
      */
     build() {
-        return new DataPipeline(this.#commands);
+        return new DataPipeline(this.#commands, this.#statusUpdateSheet);
     }
 
     /**

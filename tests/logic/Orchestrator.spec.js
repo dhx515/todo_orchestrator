@@ -22,6 +22,14 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 3,
         });
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 0, 
+                'Cancel': 0, 
+                'Summary': 1 
+            }
+        );
     });
 
     // Todo Batch 추가 -> Summary: Todo+1
@@ -35,6 +43,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 3,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 0, 
+                'Cancel': 0, 
+                'Summary': 1 
+            }
+        );
     });
 
     // Todo Single 취소 -> Cancel Single 추가 -> Summary: Todo-1, Cancel+1
@@ -51,6 +68,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 4,
             Done: 3,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 0, 
+                'Cancel': 1, 
+                'Summary': 2 
+            }
+        );
     });
 
     // Todo Batch 취소 -> Cancel Batch 추가 -> Summary: Todo-2, Cancel+2
@@ -67,6 +93,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 5,
             Done: 3,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 0, 
+                'Cancel': 1, 
+                'Summary': 2 
+            }
+        );
     });
 
     // Todo Single 완료 -> Done 추가 -> Summary: Todo-1, Done+1
@@ -83,6 +118,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 4,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 1, 
+                'Cancel': 0, 
+                'Summary': 2 
+            }
+        );
     });
 
     // Todo Batch 완료 -> Done 추가 -> Summary: Todo-3, Done+3
@@ -99,6 +143,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 6,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 1, 
+                'Cancel': 0, 
+                'Summary': 2 
+            }
+        );
     });
 
     // Todo Single 삭제 -> Summary: Todo-1
@@ -112,6 +165,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 3,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 0, 
+                'Cancel': 0, 
+                'Summary': 1 
+            }
+        );
     });
 
     // Todo Batch 삭제 -> Summary: Todo-2
@@ -125,6 +187,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 3,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 0, 
+                'Cancel': 0, 
+                'Summary': 1 
+            }
+        );
     });
 
     // Cancel Single 삭제 -> Summary: Cancel-1
@@ -138,6 +209,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 2,
             Done: 3,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 0, 
+                'Done': 0, 
+                'Cancel': 1, 
+                'Summary': 1 
+            }
+        );
     });
 
     // Cancel Batch 삭제 -> Summary: Cancel-2
@@ -151,6 +231,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 1,
             Done: 3,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 0, 
+                'Done': 0, 
+                'Cancel': 1, 
+                'Summary': 1 
+            }
+        );
     });
 
     // Cancel Single 복원 -> Summary: Cancel-1 -> Todo: Single 추가 -> Summary: Todo+1
@@ -167,6 +256,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 2,
             Done: 3,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 0, 
+                'Cancel': 1, 
+                'Summary': 2 
+            }
+        );
     });
 
     // Cancel Batch 복원 -> Summary: Cancel-1 -> Todo: Single 추가 -> Summary: Todo+1
@@ -183,6 +281,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 1,
             Done: 3,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 0, 
+                'Cancel': 1, 
+                'Summary': 2 
+            }
+        );
     });
 
     // Done Single 삭제 -> Summary: Done-1
@@ -196,6 +303,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 2,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 0, 
+                'Done': 1, 
+                'Cancel': 0, 
+                'Summary': 1 
+            }
+        );
     });
 
     // Done Batch 삭제 -> Summary: Done-1
@@ -209,6 +325,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 1,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 0, 
+                'Done': 1, 
+                'Cancel': 0, 
+                'Summary': 1 
+            }
+        );
     });
 
     // Done Single 복원 -> Summary: Done-1 -> Todo: Single 추가 -> Summary: Todo+1
@@ -225,6 +350,15 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 2,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 1, 
+                'Cancel': 0, 
+                'Summary': 2 
+            }
+        );
     });
 
     // Done Batch 복원 -> Summary: Done-1 -> Todo: Batch 추가 -> Summary: Todo+1
@@ -241,5 +375,14 @@ describe('TodoDataPipeline', () => {
             Cancel: 3,
             Done: 1,
         });
+
+        expect(orchestrator.getPipelineStatusVersion()).toStrictEqual(
+            { 
+                'Todo': 1, 
+                'Done': 1, 
+                'Cancel': 0, 
+                'Summary': 2 
+            }
+        );
     });
 });

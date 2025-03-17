@@ -57,5 +57,14 @@ export function TodoDataPipelineConfig() {
         .addUseCase('batchCancelLoad', batchDeleteLoadUseCase)
         .addUseCase('batchDoneLoad', batchDeleteLoadUseCase)
         .addUseCase('batchDeleteData', batchDeleteDataUseCase)
+        
+        .addStatusUpdateSheet([
+            'singleCreateLoad', 'singleCreateData', 
+            'singleDeleteLoad', 'singleCancelLoad', 
+            'singleDoneLoad', 'singleDeleteData', 
+            'batchCreateLoad', 'batchCreateData', 
+            'batchDeleteLoad', 'batchCancelLoad', 
+            'batchDoneLoad', 'batchDeleteData'
+        ])
         .build();
 }

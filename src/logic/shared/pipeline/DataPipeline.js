@@ -6,6 +6,8 @@
 
 export default class DataPipeline {
     #commands = {};
+    #statusVersion = 0;
+    #statusUpdateSheet = [];
 
     /**
      * Constructs a DataPipeline instance using a command Object.
@@ -15,8 +17,10 @@ export default class DataPipeline {
      * @param {Object<string, Command>} commands - An object containing command instances, 
      * where each key is the command name and each value is an instance of the Command class.
      */
-    constructor(commands) {
+    constructor(commands, statusUpdateSheet) {
         this.#commands = commands;
+        this.#statusVersion = 0;
+        this.#statusUpdateSheet = statusUpdateSheet;
     }
 
     /**
@@ -37,6 +41,19 @@ export default class DataPipeline {
         if (!command || typeof command.execute !== "function") {
             throw new Error(`Command ${commandName} not found`);
         }
-        return await command.execute(...args);
+        const res = await command.execute(...args);
+
+        this.#updateStatus(commandName);
+        return res;
+    }
+
+    #updateStatus(commandName) {
+        if (!this.#statusUpdateSheet.includes(commandName)) return;
+        
+        this.#statusVersion++;
+    }
+
+    getStatusVersion() {
+        return this.#statusVersion;
     }
 }

@@ -13,6 +13,14 @@ export default class Orchestrator {
         this.#dispatcher = dispatcher;
     }
 
+    getPipelineStatusVersion() {
+        return Object.entries(this.#pipelines)
+            .reduce((acc, [pipelineName, pipelineObj]) => {
+                acc[pipelineName] = pipelineObj.getStatusVersion();
+                return acc;
+            }, {});
+    }
+
     /**
      * Executes a command and dispatches events.
      * @param {string} pipelineName - The name of the pipeline.

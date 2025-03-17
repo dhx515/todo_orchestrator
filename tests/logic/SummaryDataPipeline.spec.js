@@ -15,6 +15,7 @@ describe('SummaryDataPipeline', () => {
             Cancel: 3,
             Done: 3,
         });
+        expect(summaryDataPipeline.getStatusVersion()).toStrictEqual(0);
     });
 
     it('increaseData & loadData', async() => {
@@ -25,6 +26,7 @@ describe('SummaryDataPipeline', () => {
             Cancel: 3,
             Done: 3,
         });
+        expect(summaryDataPipeline.getStatusVersion()).toStrictEqual(1);
     });
 
     it('increaseData 3 & loadData', async() => {
@@ -35,6 +37,7 @@ describe('SummaryDataPipeline', () => {
             Cancel: 3,
             Done: 3,
         });
+        expect(summaryDataPipeline.getStatusVersion()).toStrictEqual(1);
     });
 
     it('decreaseData & loadData', async() => {
@@ -45,6 +48,7 @@ describe('SummaryDataPipeline', () => {
             Cancel: 2,
             Done: 3,
         });
+        expect(summaryDataPipeline.getStatusVersion()).toStrictEqual(1);
     });
 
     it('decreaseData 2 & loadData', async() => {
@@ -55,6 +59,7 @@ describe('SummaryDataPipeline', () => {
             Cancel: 1,
             Done: 3,
         });
+        expect(summaryDataPipeline.getStatusVersion()).toStrictEqual(1);
     });
 
     it('increaseData 2 & decreaseData 3 & loadData', async() => {
@@ -66,6 +71,7 @@ describe('SummaryDataPipeline', () => {
             Cancel: 3,
             Done: 0,
         });
+        expect(summaryDataPipeline.getStatusVersion()).toStrictEqual(2);
     });
 
     it('decreaseData 2 & increaseData 3 & loadData', async() => {
@@ -77,5 +83,6 @@ describe('SummaryDataPipeline', () => {
             Cancel: 1,
             Done: 3,
         });
+        expect(summaryDataPipeline.getStatusVersion()).toStrictEqual(2);
     });
 });

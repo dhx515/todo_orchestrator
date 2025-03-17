@@ -53,5 +53,15 @@ export function CancelDataPipelineConfig() {
         .addUseCase('batchDeleteLoad', batchDeleteLoadUseCase)
         .addUseCase('batchRevertLoad', batchDeleteLoadUseCase)
         .addUseCase('batchDeleteData', batchDeleteDataUseCase)
+
+        .addStatusUpdateSheet([
+            'singleCreateLoad', 'singleCreateData',
+            'singleDeleteLoad', 'singleRevertLoad',
+            'singleDeleteData',
+            
+            'batchCreateLoad', 'batchCreateData',
+            'batchDeleteLoad', 'batchRevertLoad',
+            'batchDeleteData'
+        ])
         .build();
 }
