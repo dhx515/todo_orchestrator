@@ -2,10 +2,22 @@
  * @file IUseCase.js
  * @description Common Interface of UseCase
  */
+import IDataHandler from './IDataHander';
 
 
 /** @interface */
 export default class IUseCase {
+
+    /**
+     * Validates the data handler object.
+     * @param {IDataHandler} dataHandler - The data handler instance to validate.
+     * @throws Will throw an error if the dataHandler is not an instance of IDataHandler.
+     */
+    validateDataHandler(dataHandler) {
+        if (!(dataHandler instanceof IDataHandler)) {
+            throw new Error('Invalid data handler object');
+        }
+    }
 
     /**
      * Processes the internal data and transforms it into a specific format or structure.
