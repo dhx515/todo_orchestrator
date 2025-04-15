@@ -2,7 +2,7 @@
  * @file EventDispatcher.js
  * @description Dispatches events to registered handlers with priority support.
  */
-import IDispatcher from './IDispatcher';
+import IDispatcher from '../interfaces/IDispatcher';
 
 
 export default class EventDispatcher extends IDispatcher{
