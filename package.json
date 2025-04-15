@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "jest --selectProjects components; jest --selectProjects logic",
-    "test:unit:components": "jest --selectProjects components",
+    "test:unit:components": "NODE_OPTIONS='--max-old-space-size=4096' jest --selectProjects components",
     "test:unit:logic": "jest --selectProjects logic",
     "test:unit:logic:todoDataPipeline": "jest /Users/hyun/Documents/github/todo_orchestrator/tests/logic/TodoDataPipeline.spec.js",
     "test:unit:logic:doneDataPipeline": "jest /Users/hyun/Documents/github/todo_orchestrator/tests/logic/DoneDataPipeline.spec.js",
