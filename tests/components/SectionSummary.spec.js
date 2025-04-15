@@ -1,33 +1,45 @@
 import { mount } from '@vue/test-utils';
 import SectionSummary from '@/components/SectionSummary.vue';
+import { nextTick } from 'vue';
 
 describe('SectionSummary.vue', () => {
     let wrapper;
-
     let loadDataMock;
+    let updateComponentKeyMock;
 
     beforeEach(async () => {
+
         loadDataMock = jest.fn().mockResolvedValue({
             Todo: 5,
             Done: 3,
             Cancel: 2,
         });
 
+        updateComponentKeyMock = jest.fn();
+
         wrapper = mount(SectionSummary, {
-            props: {
-                loadData: loadDataMock,
+            global: {
+                provide: {
+                    orchestrator: {
+                        command: loadDataMock,
+                    },
+                    updateComponentKey: updateComponentKeyMock,
+                },
             },
         });
 
-        await wrapper.vm.$nextTick(); // Vue 렌더링이 완료될 때까지 대기
+        await nextTick(); // Wait for onMounted and rendering
     });
 
-    it('renders summary items', async () => {
-        expect(loadDataMock).toHaveBeenCalled();
-        await wrapper.vm.$nextTick();
-        expect(wrapper.find('h2').text()).toContain('Todo');
-        expect(wrapper.findAll('p')[0].text()).toContain('5');
-        expect(wrapper.findAll('p')[1].text()).toContain('3');
-        expect(wrapper.findAll('p')[2].text()).toContain('2');
+    it('calls orchestrator.command and updateComponentKey', () => {
+        expect(loadDataMock).toHaveBeenCalledWith('Summary', 'loadData', {});
+        expect(updateComponentKeyMock).toHaveBeenCalled();
+    });
+
+    it('renders task summary values correctly', () => {
+        const allParagraphs = wrapper.findAll('p');
+        expect(allParagraphs[0].text()).toBe('5'); // Todo
+        expect(allParagraphs[1].text()).toBe('3'); // Done
+        expect(allParagraphs[2].text()).toBe('2'); // Cancel
     });
 });
