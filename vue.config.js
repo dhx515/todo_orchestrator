@@ -1,6 +1,7 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: true,
+  publicPath: '/todo_orchestrator',
 
   pluginOptions: {
     vuetify: {
@@ -20,5 +21,5 @@ module.exports = defineConfig({
     config.plugin('eslint').tap(args => {
       return args; // extensions 옵션을 제거
     });
-  },
+  }
 });
