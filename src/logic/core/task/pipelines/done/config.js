@@ -4,7 +4,7 @@
  * This function initializes the data storage, processors, transporters, inspectors and use cases for the pipeline, 
  * and returns a fully constructed data pipeline.
  */
-import PipelineBuilderWithAutoCommand from '../../../../shared/pipeline/PipelineBuilderWithAutoCommand';
+import PipelineBuilder from '../../../../shared/pipeline/PipelineBuilder';
 import DataStorage from './dataStorage/DoneDataStorage';
 import FetchProcessor from './processor/fetch/DoneFetchProcessor';
 import SingleCreateProcessor from './processor/create/single/DoneSingleCreateProcessor';
@@ -39,7 +39,7 @@ export function DoneDataPipelineConfig() {
     const singleDeleteDataUseCase = new ValidatedProcessUseCase(initialInspector, singleDeleteProcessor);
     const batchDeleteDataUseCase = new ValidatedProcessUseCase(initialInspector, batchDeleteProcessor);
 
-    return new PipelineBuilderWithAutoCommand()
+    return new PipelineBuilder()
         .addUseCase('loadData', cacheFirstLoadUseCase)
 
         .addUseCase('singleCreateLoad', singleCreateLoadUseCase)

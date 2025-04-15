@@ -4,7 +4,7 @@
  * This function initializes the data storage, processors, transporters, inspectors and use cases for the pipeline, 
  * and returns a fully constructed data pipeline.
  */
-import PipelineBuilderWithAutoCommand from '../../../../shared/pipeline/PipelineBuilderWithAutoCommand';
+import PipelineBuilder from '../../../../shared/pipeline/PipelineBuilder';
 import DataStorage from './dataStorage/SummaryDataStorage';
 import FetchProcessor from './processor/fetch/SummaryFetchProcessor';
 import IncreaseProcessor from './processor/increase/SummaryIncreaseProcessor';
@@ -29,7 +29,7 @@ export function SummaryDataPipelineConfig() {
     const increateDataUseCase = new IncreaseDataUseCase(initialInspector, increaseProcessor);
     const decreaseDataUseCase = new DecreaseDataUseCase(initialInspector, decreaseProcessor);
 
-    return new PipelineBuilderWithAutoCommand()
+    return new PipelineBuilder()
         .addUseCase('loadData', cacheFirstLoadUseCase)
         .addUseCase('increaseData', increateDataUseCase)
         .addUseCase('decreaseData', decreaseDataUseCase)

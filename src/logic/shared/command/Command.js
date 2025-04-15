@@ -1,44 +1,40 @@
 /**
  * @class Command
- * @description Class to wrap a function and provide an interface for executing it with arguments.
- * This class is primarily used to encapsulate business logic (e.g., UseCases) and provide a uniform interface for execution.
+ * @classdesc Wraps a UseCase and exposes a uniform asynchronous `execute` method.
+ * Useful for standardizing the invocation of business logic (e.g., UseCases).
  */
-export default class Command {
+import ICommand from '../interfaces/ICommand';
+import IUseCase from '../interfaces/IUseCase';
+
+export default class Command extends ICommand {
     /**
+     * @type {IUseCase}
      * @private
-     * @type {Function}
-     * @description The function that will be executed when the `execute` method is called.
+     * @description Private UseCase instance to be executed via command.
      */
-    #executeFn = null;
+    #useCase = null;
 
     /**
      * Creates an instance of the Command class.
-     * @param {Function} executeFn - The function to be executed by this Command. 
-     * The function can accept any number of arguments and return a promise if it's asynchronous.
-     * @example
-     * const myCommand = new Command(async (param1, param2) => {
-     *   // Some business logic here
-     *   return await performAction(param1, param2);
-     * });
+     * @param {IUseCase} useCase - The UseCase object to be wrapped by this Command.
      */
-    constructor(executeFn) {
-        if (typeof executeFn !== 'function') {
-            throw new Error('executeFn must be a function');
-        }
-        this.#executeFn = executeFn;
+    constructor(useCase) {
+        super();
+        this.validateUseCase(useCase);
+        this.#useCase = useCase;
     }
 
     /**
-     * Executes the wrapped function with provided arguments.
-     * @param  {...Object} args - Arguments to pass to the execute function. These can be dynamic and based on the specific use case.
-     * @returns {Promise<any>} - Returns a promise that resolves with the result of the wrapped function's execution.
-     * @throws {Error} - Throws an error if the function cannot be executed.
+     * Executes the wrapped use case with provided arguments.
+     * @param {...*} args - Arguments to pass to the execute function. These are spread parameters for the wrapped use case.
+     * @returns {Promise<*>} A promise resolving to the result of the use case execution.
+     * @throws {Error} If execution of the wrapped use case fails.
      * @example
      * const result = await myCommand.execute('param1', 'param2');
      */
     async execute(...args) {
         try {
-            return await this.#executeFn(...args);
+            return await this.#useCase.execute(...args);
         } catch (error) {
             throw new Error(`Error executing command: ${error.message}`);
         }
