@@ -2,25 +2,13 @@
  * @file ITransporter.js
  * @description Common Interface of Transporter
  */
-import IDataStorage from "./IDataStorage";
+import IDataHandler from "./IDataHandler";
 
 
 /** @interface */
-export default class ITransporter {
+export default class ITransporter extends IDataHandler {
     constructor(dataStorage) {
-        this.validateDataStorage(dataStorage);
-        this.dataStorage = dataStorage;
-    }
-
-    /**
-     * Validates the data storage object.
-     * @param {IDataStorage} dataStorage - The data storage instance to validate.
-     * @throws Will throw an error if the dataStorage is not an instance of IDataStorage.
-     */
-    validateDataStorage(dataStorage) {
-        if (!(dataStorage instanceof IDataStorage)) {
-        throw new Error('Invalid data storage object');
-        }
+        super(dataStorage);
     }
 
     /**
