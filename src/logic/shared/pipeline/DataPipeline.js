@@ -12,7 +12,7 @@ export default class DataPipeline {
      * The command Object is expected to contain key-value pairs where the key is the command name 
      * and the value is an instance of the Command class that will be managed and executed by the pipeline.
      *
-     * @param {Object<string, Command>} commands - An object containing command instances, 
+     * @param {Object<string, ICommand>} commands - An object containing command instances, 
      * where each key is the command name and each value is an instance of the Command class.
      */
     constructor(commands) {
