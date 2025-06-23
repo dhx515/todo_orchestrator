@@ -1,9 +1,11 @@
 import { CancelDataPipelineConfig } from '@/logic/core/task/pipelines/cancel/config';
+import { resetCancelMock } from '@/logic/api/mock/cancelWAS';
 
 describe('CancelDataPipeline', () => {
     let cancelDataPipeline;
 
     beforeEach(async () => {
+        resetCancelMock();
         cancelDataPipeline = CancelDataPipelineConfig();
         await cancelDataPipeline.command('loadData', {});
     });
