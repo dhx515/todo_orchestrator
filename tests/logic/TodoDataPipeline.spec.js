@@ -1,9 +1,11 @@
 import { TodoDataPipelineConfig } from '@/logic/core/task/pipelines/todo/config';
+import { resetTodoMock } from '@/logic/api/mock/todoWAS';
 
 describe('TodoDataPipeline', () => {
     let todoDataPipeline;
 
     beforeEach(async () => {
+        await resetTodoMock();
         todoDataPipeline = TodoDataPipelineConfig();
         await todoDataPipeline.command('loadData', {});
     });
@@ -19,9 +21,9 @@ describe('TodoDataPipeline', () => {
     });
 
     it('singleCreateData & singleDeleteLoad', async() => {
-        await todoDataPipeline.command('singleCreateData', '팀업무');
+        await todoDataPipeline.command('singleCreateData', '커피챗');
         const result = await todoDataPipeline.command('singleDeleteLoad', '팀업무');
-        expect(result).toStrictEqual(['개인업무', '타팀자료요청', '팀업무']);
+        expect(result).toStrictEqual(['개인업무', '타팀자료요청', '커피챗']);
     });
 
     it('singleCreateData & loadData', async() => {

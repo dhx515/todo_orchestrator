@@ -1,9 +1,11 @@
 import { TaskOrchestratorConfig } from '@/logic/core/task/orchestrator/config';
+import { resetTodoMock } from '@/logic/api/mock/todoWAS';
 
 describe('TodoDataPipeline', () => {
     let orchestrator;
 
     beforeEach(async () => {
+        resetTodoMock();
         orchestrator = TaskOrchestratorConfig();
         await orchestrator.command('Todo', 'loadData', {});
         await orchestrator.command('Done', 'loadData', {});

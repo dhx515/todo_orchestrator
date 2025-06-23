@@ -13,10 +13,10 @@ export default class TodoSingleCreateProcessor extends ITodoSingleCreateProcesso
     }
 
     async process(param) {
-        if (await singleCreateTodoData(param) === false) {
-            return new Error('Failed to create Todo Data');
+        try {
+            this.dataStorage.setTodo(singleCreateTodoData(param));
+        } catch (error) {
+            return new Error(`Error creating Todo Data: ${error.message}`);
         }
-
-        this.dataStorage.addTodoItem(param);
     }
 }

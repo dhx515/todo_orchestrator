@@ -13,10 +13,10 @@ export default class TodoBatchDeleteProcessor extends ITodoBatchDeleteProcessor 
     }
 
     async process(param) {
-        if (await batchDeleteTodoData(param) === false) {
-            return new Error('Failed to delete Todo Data');
+        try {
+            this.dataStorage.setTodo(batchDeleteTodoData(param));
+        } catch (error) {
+            return new Error(`Error deleting Todo Data: ${error.message}`);
         }
-
-        this.dataStorage.deleteTodoItemList(param);
     }
 }

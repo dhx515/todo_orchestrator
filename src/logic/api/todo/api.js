@@ -1,26 +1,22 @@
+import { getTodo, addTodo, addTodos, deleteTodo, deleteTodos } from '../mock/todoWAS';
 
 
 export async function fetchTodoData(param) {
-    param;
-    return ['팀업무', '개인업무', '타팀자료요청'];
+    return await getTodo(param);
 }
 
 export async function singleCreateTodoData(param) {
-    param;
-    return true;
+    return addTodo(param);
 }
 
 export async function batchCreateTodoData(param) {
-    param;
-    return true;
+    return addTodos(param);
 }
 
 export async function singleDeleteTodoData(param) {
-    param;
-    return true;
+    return deleteTodo(param);
 }
 
 export async function batchDeleteTodoData(param) {
-    param;
-    return true;
+    return deleteTodos(param);
 }
