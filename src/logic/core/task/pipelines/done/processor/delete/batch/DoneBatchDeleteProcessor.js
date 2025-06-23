@@ -13,10 +13,10 @@ export default class DoneBatchDeleteProcessor extends IDoneBatchDeleteProcessor 
     }
 
     async process(param) {
-        if (await batchDeleteDoneData(param) === false) {
-            return new Error('Failed to delete Done Data');
+        try {
+            this.dataStorage.setDoneList = await batchDeleteDoneData(param);
+        } catch (error) {
+            return new Error(`Error deleting Done Datas: ${error.message}`);
         }
-
-        this.dataStorage.deleteDoneItemList(param);
     }
 }

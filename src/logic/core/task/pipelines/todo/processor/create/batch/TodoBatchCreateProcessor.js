@@ -13,10 +13,10 @@ export default class TodoBatchCreateProcessor extends ITodoBatchCreateProcessor 
     }
 
     async process(param) {
-        if (await batchCreateTodoData(param) === false) {
-            return new Error('Failed to create Todo Data');
+        try {
+            this.dataStorage.setTodo(batchCreateTodoData(param));
+        } catch (error) {
+            return new Error(`Error creating Todo Data: ${error.message}`);
         }
-
-        this.dataStorage.addTodoItemList(param);
     }
 }

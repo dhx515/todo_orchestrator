@@ -13,10 +13,10 @@ export default class TodoSingleDeleteProcessor extends ITodoSingleDeleteProcesso
     }
 
     async process(param) {
-        if (await singleDeleteTodoData(param) === false) {
-            return new Error('Failed to delete Todo Data');
+        try {
+            this.dataStorage.setTodo(singleDeleteTodoData(param));
+        } catch (error) {
+            return new Error(`Error deleting Todo Data: ${error.message}`);
         }
-
-        this.dataStorage.deleteTodoItem(param);
     }
 }

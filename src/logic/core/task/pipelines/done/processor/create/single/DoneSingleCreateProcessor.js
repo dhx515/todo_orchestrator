@@ -13,10 +13,10 @@ export default class DoneSingleCreateProcessor extends IDoneSingleCreateProcesso
     }
 
     async process(param) {
-        if (await singleCreateDoneData(param) === false) {
-            return new Error('Failed to create Done Data');
+        try {
+            this.dataStorage.setDoneList = await singleCreateDoneData(param);
+        } catch (error) {
+            return new Error(`Error creating Done Data: ${error.message}`);
         }
-
-        this.dataStorage.addDoneItem(param);
     }
 }

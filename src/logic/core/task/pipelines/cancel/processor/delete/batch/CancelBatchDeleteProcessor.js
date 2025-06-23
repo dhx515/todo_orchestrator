@@ -13,10 +13,10 @@ export default class CancelDeleteProcessor extends ICancelBatchDeleteProcessor {
     }
 
     async process(param) {
-        if (await batchDeleteCancelData(param) === false) {
-            return new Error('Failed to delete Cancel Data');
+        try {
+            this.dataStorage.setCancelList = await batchDeleteCancelData(param);
+        } catch (error) {
+            return new Error(`Error deleting Cancel Datas: ${error.message}`);
         }
-
-        this.dataStorage.deleteCancelItemList(param);
     }
 }

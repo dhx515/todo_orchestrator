@@ -13,10 +13,10 @@ export default class CancelSingleCreateProcessor extends ICancelSingleCreateProc
     }
 
     async process(param) {
-        if (await singleCreateCancelData(param) === false) {
-            return new Error('Failed to create Cancel Data');
+        try {
+            this.dataStorage.setCancelList = await singleCreateCancelData(param);
+        } catch (error) {
+            return new Error(`Error creating Cancel Data: ${error.message}`);
         }
-
-        this.dataStorage.addCancelItem(param);
     }
 }

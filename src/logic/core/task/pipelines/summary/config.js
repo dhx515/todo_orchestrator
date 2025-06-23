@@ -7,31 +7,17 @@
 import PipelineBuilder from '../../../../shared/pipeline/PipelineBuilder';
 import DataStorage from './dataStorage/SummaryDataStorage';
 import FetchProcessor from './processor/fetch/SummaryFetchProcessor';
-import IncreaseProcessor from './processor/increase/SummaryIncreaseProcessor';
-import DecreaseProcessor from './processor/decrease/SummaryDecreaseProcessor';
 import DataTransporter from './transporter/data/SummaryDataTransporter';
-import InitialInspector from './inspector/data/SummaryInitialInspector';
-import EmptyInspector from './inspector/data/SummaryEmptyInspector';
-import ConditionalProcessLoadUseCase from '@/logic/shared/usecase/ConditionalProcessLoadUseCase';
-import IncreaseDataUseCase from './usecase/increaseData/IncreaseDataUseCase';
-import DecreaseDataUseCase from './usecase/decreaseData/DecreaseDataUseCase';
+import ProcessLoadUseCase from '@/logic/shared/usecase/ProcessLoadUseCase';
 
 export function SummaryDataPipelineConfig() {
     const dataStorage = new DataStorage();
     const fetchProcessor = new FetchProcessor(dataStorage);
-    const increaseProcessor = new IncreaseProcessor(dataStorage);
-    const decreaseProcessor = new DecreaseProcessor(dataStorage);
     const dataTransporter = new DataTransporter(dataStorage);
-    const initialInspector = new InitialInspector(dataStorage);
-    const emptyInspector = new EmptyInspector(dataStorage);
 
-    const cacheFirstLoadUseCase = new ConditionalProcessLoadUseCase(emptyInspector, fetchProcessor, dataTransporter);
-    const increateDataUseCase = new IncreaseDataUseCase(initialInspector, increaseProcessor);
-    const decreaseDataUseCase = new DecreaseDataUseCase(initialInspector, decreaseProcessor);
+    const cacheFirstLoadUseCase = new ProcessLoadUseCase(fetchProcessor, dataTransporter);
 
     return new PipelineBuilder()
         .addUseCase('loadData', cacheFirstLoadUseCase)
-        .addUseCase('increaseData', increateDataUseCase)
-        .addUseCase('decreaseData', decreaseDataUseCase)
         .build();
 }

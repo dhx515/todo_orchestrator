@@ -13,10 +13,10 @@ export default class CancelBatchCreateProcessor extends ICancelBatchCreateProces
     }
 
     async process(param) {
-        if (await batchCreateCancelData(param) === false) {
-            return new Error('Failed to create Cancel Data');
+        try {
+            this.dataStorage.setCancelList = await batchCreateCancelData(param);
+        } catch (error) {
+            return new Error(`Error creating Cancel Datas: ${error.message}`);
         }
-
-        this.dataStorage.addCancelItemList(param);
     }
 }

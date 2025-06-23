@@ -1,26 +1,22 @@
+import { getCancel, addCancel, addCancels, deleteCancel, deleteCancels } from '../mock/cancelWAS';
 
 
 export async function fetchCancelData(param) {
-    param;
-    return ['팀행사준비', '독후감작성', '오전반차'];
+    return getCancel(param);
 }
 
 export async function singleCreateCancelData(param) {
-    param;
-    return true;
+    return addCancel(param);
 }
 
 export async function batchCreateCancelData(param) {
-    param;
-    return true;
+    return addCancels(param);
 }
 
 export async function singleDeleteCancelData(param) {
-    param;
-    return true;
+    return deleteCancel(param);
 }
 
 export async function batchDeleteCancelData(param) {
-    param;
-    return true;
+    return deleteCancels(param);
 }

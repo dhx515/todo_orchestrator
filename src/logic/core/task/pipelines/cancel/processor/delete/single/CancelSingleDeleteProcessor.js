@@ -13,10 +13,10 @@ export default class CancelDeleteProcessor extends ICancelSingleDeleteProcessor 
     }
 
     async process(param) {
-        if (await singleDeleteCancelData(param) === false) {
-            return new Error('Failed to delete Cancel Data');
+        try {
+            this.dataStorage.setCancelList = await singleDeleteCancelData(param);
+        } catch (error) {
+            return new Error(`Error deleting Cancel Data: ${error.message}`);
         }
-
-        this.dataStorage.deleteCancelItem(param);
     }
 }
