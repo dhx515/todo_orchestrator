@@ -24,32 +24,4 @@ export default class ITodoDataStorage extends IDataStorage {
     setTodoList(param) {
         throw new Error('Method not implemented');
     }
-
-    /**
-     * @param {string} param 
-     */
-    addTodoItem(param) {
-        throw new Error('Method not implemented');
-    }
-
-    /**
-     * @param {string[]} param 
-     */
-    addTodoItemList(param) {
-        throw new Error('Method not implemented');
-    }
-
-    /**
-     * @param {string} param 
-     */
-    deleteTodoItem(param) {
-        throw new Error('Method not implemented');
-    }
-
-    /**
-     * @param {string[]} param 
-     */
-    deleteTodoItemList(param) {
-        throw new Error('Method not implemented');
-    }
 }

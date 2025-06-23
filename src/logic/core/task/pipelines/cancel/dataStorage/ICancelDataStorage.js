@@ -24,25 +24,4 @@ export default class ICancelDataStorage extends IDataStorage {
     setCancelList(param) {
         throw new Error('Method not implemented');
     }
-
-    /**
-     * @param {string[]} param 
-     */
-    addCancelItemList(param) {
-        throw new Error('Method not implemented');
-    }
-
-    /**
-     * @param {string} param 
-     */
-    deleteCancelItem(param) {
-        throw new Error('Method not implemented');
-    }
-    
-    /**
-     * @param {string[]} param 
-     */
-    deleteCancelItemList(param) {
-        throw new Error('Method not implemented');
-    }
 }

@@ -24,20 +24,4 @@ export default class ISummaryDataStorage extends IDataStorage {
     setSummary(param) {
         throw new Error('Method not implemented');
     }
-
-    /**
-     * @param {string} param
-     * @param {number} value
-     */
-    increaseItemCount(param, value) {
-        throw new Error('Method not implemented');
-    }
-
-    /**
-     * @param {string} param
-     * @param {number} value
-     */
-    decreaseItemCount(param, value) {
-        throw new Error('Method not implemented');
-    }
 }
