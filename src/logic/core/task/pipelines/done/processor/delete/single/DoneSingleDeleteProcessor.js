@@ -13,10 +13,10 @@ export default class DoneSingleDeleteProcessor extends IDoneSingleDeleteProcesso
     }
 
     async process(param) {
-        if (await singleDeleteDoneData(param) === false) {
-            return new Error('Failed to delete Done Data');
+        try {
+            this.dataStorage.setDoneList = await singleDeleteDoneData(param);
+        } catch (error) {
+            return new Error(`Error deleting Done Data: ${error.message}`);
         }
-
-        this.dataStorage.deleteDoneItem(param);
     }
 }

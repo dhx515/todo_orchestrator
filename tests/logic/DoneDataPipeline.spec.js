@@ -1,9 +1,11 @@
 import { DoneDataPipelineConfig } from '@/logic/core/task/pipelines/done/config';
+import { resetDoneMock } from '@/logic/api/mock/doneWAS';
 
 describe('DoneDataPipeline', () => {
     let doneDataPipeline;
 
     beforeEach(async () => {
+        resetDoneMock();
         doneDataPipeline = DoneDataPipelineConfig();
         await doneDataPipeline.command('loadData', {});
     });

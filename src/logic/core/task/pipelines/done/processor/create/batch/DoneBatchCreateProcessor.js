@@ -13,10 +13,10 @@ export default class DoneBatchCreateProcessor extends IDoneBatchCreateProcessor 
     }
 
     async process(param) {
-        if (await batchCreateDoneData(param) === false) {
-            return new Error('Failed to create Done Data');
+        try {
+            this.dataStorage.setDoneList = await batchCreateDoneData(param);
+        } catch (error) {
+            return new Error(`Error creating Done Datas: ${error.message}`);
         }
-
-        this.dataStorage.addDoneItemList(param);
     }
 }

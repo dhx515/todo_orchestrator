@@ -1,26 +1,22 @@
+import { getDone, addDone, addDones, deleteDone, deleteDones } from '../mock/doneWAS';
 
 
 export async function fetchDoneData(param) {
-    param;
-    return ['분기계획작성', '운영인수인계', '화상회의'];
+    return getDone(param);
 }
 
 export async function singleCreateDoneData(param) {
-    param;
-    return true;
+    return addDone(param);
 }
 
 export async function batchCreateDoneData(param) {
-    param;
-    return true;
+    return addDones(param);
 }
 
 export async function singleDeleteDoneData(param) {
-    param;
-    return true;
+    return deleteDone(param);
 }
 
 export async function batchDeleteDoneData(param) {
-    param;
-    return true;
+    return deleteDones(param);
 }
