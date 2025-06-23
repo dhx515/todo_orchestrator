@@ -2,7 +2,7 @@
  * @file CustomEventDispatcher.js
  * @description Dispatches events to registered handlers with priority support by custom rules.
  */
-import IDispatcher from '@/logic/shared/dispatcher/IDispatcher';
+import IDispatcher from '@/logic/shared/interfaces/IDispatcher';
 
 
 export default class CustomEventDispatcher extends IDispatcher{

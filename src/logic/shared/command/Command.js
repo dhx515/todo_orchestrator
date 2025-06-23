@@ -3,8 +3,12 @@
  * @classdesc Wraps a UseCase and exposes a uniform asynchronous `execute` method.
  * Useful for standardizing the invocation of business logic (e.g., UseCases).
  */
+
+/**
+ * @typedef {import('../interfaces/IUseCase').default} IUseCase
+ */
+
 import ICommand from '../interfaces/ICommand';
-import IUseCase from '../interfaces/IUseCase';
 
 export default class Command extends ICommand {
     /**
