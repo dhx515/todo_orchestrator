@@ -6,7 +6,9 @@
  */
 import PipelineBuilder from '../../../../shared/pipeline/PipelineBuilder';
 import DataStorage from './dataStorage/SummaryDataStorage';
-import FetchProcessor from './processor/fetch/SummaryFetchProcessor';
+
+import Processor from '@/logic/shared/hanlder/Processor';
+import { fetchSummary } from './handlers/processor';
 
 import Transporter from '@/logic/shared/hanlder/Transporter';
 import { transportSummary } from './handlers/transporter';
@@ -15,7 +17,8 @@ import ProcessLoadUseCase from '@/logic/shared/usecase/ProcessLoadUseCase';
 
 export function SummaryDataPipelineConfig() {
     const dataStorage = new DataStorage();
-    const fetchProcessor = new FetchProcessor(dataStorage);
+
+    const fetchProcessor = new Processor(dataStorage, fetchSummary);
 
     const dataTransporter = new Transporter(dataStorage, transportSummary);
 
