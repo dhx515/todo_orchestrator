@@ -10,6 +10,7 @@ module.exports = {
     'no-unused-vars': ['error', { 
       args: 'none', // 함수/메서드 파라미터를 무시
       vars: 'all'   // 변수는 여전히 체크
-    }]
+    }],
+    "no-extra-semi": "off",
   }
 };
