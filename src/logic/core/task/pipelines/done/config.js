@@ -6,28 +6,33 @@
  */
 import PipelineBuilder from '../../../../shared/pipeline/PipelineBuilder';
 import DataStorage from './dataStorage/DoneDataStorage';
-import FetchProcessor from './processor/fetch/DoneFetchProcessor';
-import SingleCreateProcessor from './processor/create/single/DoneSingleCreateProcessor';
-import BatchCreateProcessor from './processor/create/batch/DoneBatchCreateProcessor';
-import SingleDeleteProcessor from './processor/delete/single/DoneSingleDeleteProcessor';
-import BatchDeleteProcessor from './processor/delete/batch/DoneBatchDeleteProcessor';
-import DataTransporter from './transporter/data/DoneDataTransporter';
-import InitialInspector from './inspector/data/DoneInitialInspector';
-import EmptyInspector from './inspector/data/DoneEmptyInspector';
+
+import Processor from '@/logic/shared/hanlder/Processor';
+import { fetchDone, singleCreateDone, batchCreateDone, singleDeleteDone, batchDeleteDone } from './handlers/processor';
+
+import Transporter from '@/logic/shared/hanlder/Transporter';
+import { transportDone } from './handlers/transporter';
+
+import Inspector from '@/logic/shared/hanlder/Inspector';
+import { inspectEmpty, inspectInitialized } from './handlers/inspector';
+
 import ValidatedProcessUseCase from '@/logic/shared/usecase/ValidatedProcessUseCase';
 import ValidatedProcessLoadUseCase from '@/logic/shared/usecase/ValidatedProcessLoadUseCase';
 import ConditionalProcessLoadUseCase from '@/logic/shared/usecase/ConditionalProcessLoadUseCase';
 
 export function DoneDataPipelineConfig() {
     const dataStorage = new DataStorage();
-    const fetchProcessor = new FetchProcessor(dataStorage);
-    const singleCreateProcessor = new SingleCreateProcessor(dataStorage);
-    const batchCreateProcessor = new BatchCreateProcessor(dataStorage);
-    const singleDeleteProcessor = new SingleDeleteProcessor(dataStorage);
-    const batchDeleteProcessor = new BatchDeleteProcessor(dataStorage);
-    const dataTransporter = new DataTransporter(dataStorage);
-    const initialInspector = new InitialInspector(dataStorage);
-    const emptyInspector = new EmptyInspector(dataStorage);
+
+    const fetchProcessor = new Processor(dataStorage, fetchDone);
+    const singleCreateProcessor = new Processor(dataStorage, singleCreateDone);
+    const batchCreateProcessor = new Processor(dataStorage, batchCreateDone);
+    const singleDeleteProcessor = new Processor(dataStorage, singleDeleteDone);
+    const batchDeleteProcessor = new Processor(dataStorage, batchDeleteDone);
+
+    const dataTransporter = new Transporter(dataStorage, transportDone);
+
+    const initialInspector = new Inspector(dataStorage, inspectInitialized);
+    const emptyInspector = new Inspector(dataStorage, inspectEmpty);
 
     const cacheFirstLoadUseCase = new ConditionalProcessLoadUseCase(emptyInspector, fetchProcessor, dataTransporter);
     const singleCreateLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, singleCreateProcessor, dataTransporter);

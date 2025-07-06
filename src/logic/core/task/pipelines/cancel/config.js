@@ -6,28 +6,33 @@
  */
 import PipelineBuilder from '../../../../shared/pipeline/PipelineBuilder';
 import DataStorage from './dataStorage/CancelDataStorage';
-import FetchProcessor from './processor/fetch/CancelFetchProcessor';
-import SingleCreateProcessor from './processor/create/single/CancelSingleCreateProcessor';
-import BatchCreateProcessor from './processor/create/batch/CancelBatchCreateProcessor';
-import SingleDeleteProcessor from './processor/delete/single/CancelSingleDeleteProcessor';
-import BatchDeleteProcessor from './processor/delete/batch/CancelBatchDeleteProcessor';
-import InitialInspector from './inspector/data/CancelInitialInspector';
-import EmptyInspector from './inspector/data/CancelEmptyInspector';
-import DataTransporter from './transporter/data/CancelDataTransporter';
+
+import Processor from '@/logic/shared/hanlder/Processor';
+import { fetchCancel, singleCreateCancel, batchCreateCancel, singleDeleteCancel, batchDeleteCancel } from './handlers/processors';
+
+import Inspector from '@/logic/shared/hanlder/Inspector';
+import { inspectEmpty, inspectInitialized } from './handlers/inspector';
+
+import Transporter from '@/logic/shared/hanlder/Transporter';
+import { transportCancel } from './handlers/transporter';
+
 import ValidatedProcessUseCase from '@/logic/shared/usecase/ValidatedProcessUseCase';
 import ValidatedProcessLoadUseCase from '@/logic/shared/usecase/ValidatedProcessLoadUseCase';
 import ConditionalProcessLoadUseCase from '@/logic/shared/usecase/ConditionalProcessLoadUseCase';
 
 export function CancelDataPipelineConfig() {
     const dataStorage = new DataStorage();
-    const fetchProcessor = new FetchProcessor(dataStorage);
-    const singleCreateProcessor = new SingleCreateProcessor(dataStorage);
-    const batchCreateProcessor = new BatchCreateProcessor(dataStorage);
-    const singleDeleteProcessor = new SingleDeleteProcessor(dataStorage);
-    const batchDeleteProcessor = new BatchDeleteProcessor(dataStorage);
-    const dataTransporter = new DataTransporter(dataStorage);
-    const initialInspector = new InitialInspector(dataStorage);
-    const emptyInspector = new EmptyInspector(dataStorage);
+
+    const fetchProcessor = new Processor(dataStorage, fetchCancel);
+    const singleCreateProcessor = new Processor(dataStorage, singleCreateCancel);
+    const batchCreateProcessor = new Processor(dataStorage, batchCreateCancel);
+    const singleDeleteProcessor = new Processor(dataStorage, singleDeleteCancel);
+    const batchDeleteProcessor = new Processor(dataStorage, batchDeleteCancel);
+
+    const dataTransporter = new Transporter(dataStorage, transportCancel);
+    
+    const initialInspector = new Inspector(dataStorage, inspectInitialized);
+    const emptyInspector = new Inspector(dataStorage, inspectEmpty);
 
     const cacheFirstLoadUseCase = new ConditionalProcessLoadUseCase(emptyInspector, fetchProcessor, dataTransporter);
     const singleCreateLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, singleCreateProcessor, dataTransporter);
