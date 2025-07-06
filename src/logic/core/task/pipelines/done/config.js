@@ -11,7 +11,10 @@ import SingleCreateProcessor from './processor/create/single/DoneSingleCreatePro
 import BatchCreateProcessor from './processor/create/batch/DoneBatchCreateProcessor';
 import SingleDeleteProcessor from './processor/delete/single/DoneSingleDeleteProcessor';
 import BatchDeleteProcessor from './processor/delete/batch/DoneBatchDeleteProcessor';
-import DataTransporter from './transporter/data/DoneDataTransporter';
+
+import Transporter from '@/logic/shared/hanlder/Transporter';
+import { transportDone } from './handlers/transporter';
+
 import InitialInspector from './inspector/data/DoneInitialInspector';
 import EmptyInspector from './inspector/data/DoneEmptyInspector';
 import ValidatedProcessUseCase from '@/logic/shared/usecase/ValidatedProcessUseCase';
@@ -25,7 +28,9 @@ export function DoneDataPipelineConfig() {
     const batchCreateProcessor = new BatchCreateProcessor(dataStorage);
     const singleDeleteProcessor = new SingleDeleteProcessor(dataStorage);
     const batchDeleteProcessor = new BatchDeleteProcessor(dataStorage);
-    const dataTransporter = new DataTransporter(dataStorage);
+
+    const dataTransporter = new Transporter(dataStorage, transportDone);
+
     const initialInspector = new InitialInspector(dataStorage);
     const emptyInspector = new EmptyInspector(dataStorage);
 
