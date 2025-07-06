@@ -15,7 +15,8 @@ export async function fetchTodo(dataStorage, param) {
 
 export async function singleCreateTodo(dataStorage, param) {
     try {
-        dataStorage.setTodo(singleCreateTodoData(param));
+        const todoList = await singleCreateTodoData(param);
+        dataStorage.setTodo(todoList);
     } catch (error) {
         return new Error(`Error creating Todo Data: ${error.message}`);
     }
@@ -23,7 +24,8 @@ export async function singleCreateTodo(dataStorage, param) {
 
 export async function batchCreateTodo(dataStorage, param) {
     try {
-        dataStorage.setTodo(batchCreateTodoData(param));
+        const todoList = await batchCreateTodoData(param);
+        dataStorage.setTodo(todoList);
     } catch (error) {
         return new Error(`Error creating Todo Data: ${error.message}`);
     }
@@ -31,7 +33,8 @@ export async function batchCreateTodo(dataStorage, param) {
 
 export async function singleDeleteTodo(dataStorage, param) {
     try {
-        dataStorage.setTodo(singleDeleteTodoData(param));
+        const todoList = await singleDeleteTodoData(param);
+        dataStorage.setTodo(todoList);
     } catch (error) {
         return new Error(`Error deleting Todo Data: ${error.message}`);
     }
@@ -39,7 +42,8 @@ export async function singleDeleteTodo(dataStorage, param) {
 
 export async function batchDeleteTodo(dataStorage, param) {
     try {
-        dataStorage.setTodo(batchDeleteTodoData(param));
+        const todoList = await batchDeleteTodoData(param);
+        dataStorage.setTodo(todoList);
     } catch (error) {
         return new Error(`Error deleting Todo Data: ${error.message}`);
     }
