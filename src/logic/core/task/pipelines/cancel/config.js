@@ -11,10 +11,10 @@ import SingleCreateProcessor from './processor/create/single/CancelSingleCreateP
 import BatchCreateProcessor from './processor/create/batch/CancelBatchCreateProcessor';
 import SingleDeleteProcessor from './processor/delete/single/CancelSingleDeleteProcessor';
 import BatchDeleteProcessor from './processor/delete/batch/CancelBatchDeleteProcessor';
-import InitialInspector from './inspector/data/CancelInitialInspector';
-import EmptyInspector from './inspector/data/CancelEmptyInspector';
 
-import DataTransporter from './transporter/data/CancelDataTransporter';
+import Inspector from '@/logic/shared/hanlder/Inspector';
+import { inspectEmpty, inspectInitialized } from './handlers/inspector';
+
 import Transporter from '@/logic/shared/hanlder/Transporter';
 import { transportCancel } from './handlers/transporter';
 
@@ -30,11 +30,10 @@ export function CancelDataPipelineConfig() {
     const singleDeleteProcessor = new SingleDeleteProcessor(dataStorage);
     const batchDeleteProcessor = new BatchDeleteProcessor(dataStorage);
 
-    // const dataTransporter = new DataTransporter(dataStorage);
     const dataTransporter = new Transporter(dataStorage, transportCancel);
     
-    const initialInspector = new InitialInspector(dataStorage);
-    const emptyInspector = new EmptyInspector(dataStorage);
+    const initialInspector = new Inspector(dataStorage, inspectInitialized);
+    const emptyInspector = new Inspector(dataStorage, inspectEmpty);
 
     const cacheFirstLoadUseCase = new ConditionalProcessLoadUseCase(emptyInspector, fetchProcessor, dataTransporter);
     const singleCreateLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, singleCreateProcessor, dataTransporter);
