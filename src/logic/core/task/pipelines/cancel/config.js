@@ -6,11 +6,9 @@
  */
 import PipelineBuilder from '../../../../shared/pipeline/PipelineBuilder';
 import DataStorage from './dataStorage/CancelDataStorage';
-import FetchProcessor from './processor/fetch/CancelFetchProcessor';
-import SingleCreateProcessor from './processor/create/single/CancelSingleCreateProcessor';
-import BatchCreateProcessor from './processor/create/batch/CancelBatchCreateProcessor';
-import SingleDeleteProcessor from './processor/delete/single/CancelSingleDeleteProcessor';
-import BatchDeleteProcessor from './processor/delete/batch/CancelBatchDeleteProcessor';
+
+import Processor from '@/logic/shared/hanlder/Processor';
+import { fetchCancel, singleCreateCancel, batchCreateCancel, singleDeleteCancel, batchDeleteCancel } from './handlers/processors';
 
 import Inspector from '@/logic/shared/hanlder/Inspector';
 import { inspectEmpty, inspectInitialized } from './handlers/inspector';
@@ -24,11 +22,12 @@ import ConditionalProcessLoadUseCase from '@/logic/shared/usecase/ConditionalPro
 
 export function CancelDataPipelineConfig() {
     const dataStorage = new DataStorage();
-    const fetchProcessor = new FetchProcessor(dataStorage);
-    const singleCreateProcessor = new SingleCreateProcessor(dataStorage);
-    const batchCreateProcessor = new BatchCreateProcessor(dataStorage);
-    const singleDeleteProcessor = new SingleDeleteProcessor(dataStorage);
-    const batchDeleteProcessor = new BatchDeleteProcessor(dataStorage);
+
+    const fetchProcessor = new Processor(dataStorage, fetchCancel);
+    const singleCreateProcessor = new Processor(dataStorage, singleCreateCancel);
+    const batchCreateProcessor = new Processor(dataStorage, batchCreateCancel);
+    const singleDeleteProcessor = new Processor(dataStorage, singleDeleteCancel);
+    const batchDeleteProcessor = new Processor(dataStorage, batchDeleteCancel);
 
     const dataTransporter = new Transporter(dataStorage, transportCancel);
     
