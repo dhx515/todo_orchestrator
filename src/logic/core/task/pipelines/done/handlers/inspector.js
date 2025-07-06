@@ -1,19 +1,18 @@
 
 
-
 export async function inspectEmpty(dataStorage) {
-    const todoList = dataStorage.getDoneList();
+    const doneList = dataStorage.getDoneList();
 
-    if (todoList === null || !Array.isArray(todoList)) {
+    if (doneList === null || !Array.isArray(doneList)) {
         return true;
     }
     return false;
 };
 
 export async function inspectInitialized(dataStorage) {
-    const todoList = dataStorage.getDoneList();
+    const doneList = dataStorage.getDoneList();
 
-    if (todoList === null || !Array.isArray(todoList)) {
+    if (doneList === null || !Array.isArray(doneList)) {
         return false;
     }
     return true;
