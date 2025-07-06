@@ -15,8 +15,9 @@ import BatchDeleteProcessor from './processor/delete/batch/DoneBatchDeleteProces
 import Transporter from '@/logic/shared/hanlder/Transporter';
 import { transportDone } from './handlers/transporter';
 
-import InitialInspector from './inspector/data/DoneInitialInspector';
-import EmptyInspector from './inspector/data/DoneEmptyInspector';
+import Inspector from '@/logic/shared/hanlder/Inspector';
+import { inspectEmpty, inspectInitialized } from './handlers/inspector';
+
 import ValidatedProcessUseCase from '@/logic/shared/usecase/ValidatedProcessUseCase';
 import ValidatedProcessLoadUseCase from '@/logic/shared/usecase/ValidatedProcessLoadUseCase';
 import ConditionalProcessLoadUseCase from '@/logic/shared/usecase/ConditionalProcessLoadUseCase';
@@ -31,8 +32,8 @@ export function DoneDataPipelineConfig() {
 
     const dataTransporter = new Transporter(dataStorage, transportDone);
 
-    const initialInspector = new InitialInspector(dataStorage);
-    const emptyInspector = new EmptyInspector(dataStorage);
+    const initialInspector = new Inspector(dataStorage, inspectInitialized);
+    const emptyInspector = new Inspector(dataStorage, inspectEmpty);
 
     const cacheFirstLoadUseCase = new ConditionalProcessLoadUseCase(emptyInspector, fetchProcessor, dataTransporter);
     const singleCreateLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, singleCreateProcessor, dataTransporter);
