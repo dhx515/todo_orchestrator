@@ -1,6 +1,6 @@
 
-export async function inspectEmpty(dataStorage) {
-    const todoList = dataStorage.getTodoList();
+export async function inspectEmpty(state) {
+    const todoList = state.value;
 
     if (todoList === null || !Array.isArray(todoList)) {
         return true;
@@ -8,8 +8,8 @@ export async function inspectEmpty(dataStorage) {
     return false;
 };
 
-export async function inspectInitialized(dataStorage) {
-    const todoList = dataStorage.getTodoList();
+export async function inspectInitialized(state) {
+    const todoList = state.value;
 
     if (todoList === null || !Array.isArray(todoList)) {
         return false;
