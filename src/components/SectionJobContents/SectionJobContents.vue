@@ -13,7 +13,7 @@
                 :doneLoad =  "generateTodoDoneLoad()"
                 :batchDoneLoad = "generateTodoDoneLoad('batch')"
                 class="pa-0 ma-0"
-                :key = "updateKeySectionTodo"
+                :key = "componentKey['Todo']"
             />
         </v-col>
         <v-col cols="12" sm="6" md="4">
@@ -28,7 +28,7 @@
                 :revertLoad = "generateRevertLoad('Done')"
                 :batchRevertLoad = "generateRevertLoad('Done', 'batch')"
                 class="pa-0 ma-0"
-                :key = "updateKeySectionDone"
+                :key = "componentKey['Done']"
             />
         </v-col>
         <v-col cols="12" sm="6" md="4">
@@ -43,7 +43,7 @@
                 :revertLoad = "generateRevertLoad('Cancel')"
                 :batchRevertLoad = "generateRevertLoad('Cancel', 'batch')"
                 class="pa-0 ma-0"
-                :key = "updateKeySectionCancel"
+                :key = "componentKey['Cancel']"
             />
         </v-col>
     </v-row>
@@ -51,28 +51,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted, inject } from 'vue';
 import TodoContents from './TodoContents/TodoContents.vue';
 import TaskContents from './TaskContents/TaskContents.vue';
 
 
-const props = defineProps(['orchestrator', 'callUpdateSummary']);
-const orchestrator = props.orchestrator;
-
-const updateKeySectionTodo = ref(0);
-const callUpdateTodo = () => {
-    updateKeySectionTodo.value += 1;
-}
-
-const updateKeySectionCancel = ref(0);
-const callUpdateCancel = () => {
-    updateKeySectionCancel.value += 1;
-}
-
-const updateKeySectionDone = ref(0);
-const callUpdateDone = () => {
-    updateKeySectionDone.value += 1;
-}
+const orchestrator = inject('orchestrator');
+const componentKey = inject('componentKey');
+const updateComponentKey = inject('updateComponentKey');
 
 const generateLoadData = (arg) => {
     return async (param) => {
@@ -82,38 +68,38 @@ const generateLoadData = (arg) => {
 const generateCreateLoad = (pipeineName, type='single') => {
     return async (param) => {
         const res = await orchestrator.command(pipeineName, type+'CreateLoad', param);
-        props.callUpdateSummary();
+        updateComponentKey('Summary');
         return res;
     }
 };
 const generateDeleteLoad = (pipeineName, type='single') => {
     return async (param) => {
         const res = await orchestrator.command(pipeineName, type+'DeleteLoad', param);
-        props.callUpdateSummary();
+        updateComponentKey('Summary');
         return res;
     }
 };
 const generateRevertLoad = (pipeineName, type='single') => {
     return async (param) => {
         const res = await orchestrator.command(pipeineName, type+'RevertLoad', param);
-        props.callUpdateSummary();
-        callUpdateTodo();
+        updateComponentKey('Summary');
+        updateComponentKey('Todo');
         return res;
     }
 };
 const generateTodoCancelLoad = (type='single') => {
     return async (param) => {
         const res = await orchestrator.command('Todo', type+'CancelLoad', param);
-        props.callUpdateSummary();
-        callUpdateCancel();
+        updateComponentKey('Summary');
+        updateComponentKey('Cancel');
         return res;
     }
 };
 const generateTodoDoneLoad = (type='single') => {
     return async (param) => {
         const res = await orchestrator.command('Todo', type+'DoneLoad', param);
-        props.callUpdateSummary();
-        callUpdateDone();
+        updateComponentKey('Summary');
+        updateComponentKey('Done');
         return res;
     }
 };

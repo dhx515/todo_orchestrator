@@ -24,16 +24,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 
 
-const props = defineProps(['loadData']);
+const orchestrator = inject('orchestrator');
 const tasks = ref({});
 
 onMounted(async () => {
     console.log("onMounted: SectionSummary");
 
-    tasks.value = await props.loadData();
+    tasks.value = await orchestrator.command('Summary', 'loadData', {});
 });
 </script>
 
