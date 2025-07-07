@@ -2,15 +2,18 @@ import { TaskOrchestratorConfig } from '@/logic/core/task/orchestrator/config';
 import { resetTodoMock } from '@/logic/api/mock/todoWAS';
 import { resetCancelMock } from '@/logic/api/mock/cancelWAS';
 import { resetDoneMock } from '@/logic/api/mock/doneWAS';
+import { ref } from 'vue';
 
 describe('TodoDataPipeline', () => {
     let orchestrator;
+    let summaryState = ref({});
 
     beforeEach(async () => {
         resetTodoMock();
         resetCancelMock();
         resetDoneMock();
-        orchestrator = TaskOrchestratorConfig();
+        summaryState.value = {};
+        orchestrator = TaskOrchestratorConfig(summaryState);
         await orchestrator.command('Todo', 'loadData', {});
         await orchestrator.command('Done', 'loadData', {});
         await orchestrator.command('Cancel', 'loadData', {});
@@ -22,8 +25,7 @@ describe('TodoDataPipeline', () => {
         const result1 = await orchestrator.command('Todo', 'singleCreateLoad', '커피챗');
         expect(result1).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '커피챗']);
 
-        const result2 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result2).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 4,
             Cancel: 3,
             Done: 3,
@@ -35,8 +37,7 @@ describe('TodoDataPipeline', () => {
         const result1 = await orchestrator.command('Todo', 'batchCreateLoad', ['업무1', '업무2']);
         expect(result1).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '업무1', '업무2']);
 
-        const result2 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result2).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 5,
             Cancel: 3,
             Done: 3,
@@ -51,8 +52,7 @@ describe('TodoDataPipeline', () => {
         const result2 = await orchestrator.command('Cancel', 'loadData', {});
         expect(result2).toStrictEqual(['팀행사준비', '독후감작성', '오전반차', '개인업무']);
 
-        const result3 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result3).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 2,
             Cancel: 4,
             Done: 3,
@@ -67,8 +67,7 @@ describe('TodoDataPipeline', () => {
         const result2 = await orchestrator.command('Cancel', 'loadData', {});
         expect(result2).toStrictEqual(['팀행사준비', '독후감작성', '오전반차', '개인업무', '타팀자료요청']);
 
-        const result3 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result3).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 1,
             Cancel: 5,
             Done: 3,
@@ -83,8 +82,7 @@ describe('TodoDataPipeline', () => {
         const result2 = await orchestrator.command('Done', 'loadData', {});
         expect(result2).toStrictEqual(['분기계획작성', '운영인수인계', '화상회의', '개인업무']);
 
-        const result3 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result3).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 2,
             Cancel: 3,
             Done: 4,
@@ -99,8 +97,7 @@ describe('TodoDataPipeline', () => {
         const result2 = await orchestrator.command('Done', 'loadData', {});
         expect(result2).toStrictEqual(['분기계획작성', '운영인수인계', '화상회의', '개인업무', '팀업무', '타팀자료요청']);
 
-        const result3 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result3).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 0,
             Cancel: 3,
             Done: 6,
@@ -112,8 +109,7 @@ describe('TodoDataPipeline', () => {
         const result1 = await orchestrator.command('Todo', 'singleDeleteLoad', '타팀자료요청');
         expect(result1).toStrictEqual(['팀업무', '개인업무']);
 
-        const result2 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result2).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 2,
             Cancel: 3,
             Done: 3,
@@ -125,8 +121,7 @@ describe('TodoDataPipeline', () => {
         const result1 = await orchestrator.command('Todo', 'batchDeleteLoad', ['팀업무', '타팀자료요청']);
         expect(result1).toStrictEqual(['개인업무']);
 
-        const result2 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result2).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 1,
             Cancel: 3,
             Done: 3,
@@ -138,8 +133,7 @@ describe('TodoDataPipeline', () => {
         const result1 = await orchestrator.command('Cancel', 'singleDeleteLoad', '팀행사준비');
         expect(result1).toStrictEqual(['독후감작성', '오전반차']);
 
-        const result2 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result2).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 3,
             Cancel: 2,
             Done: 3,
@@ -151,8 +145,7 @@ describe('TodoDataPipeline', () => {
         const result1 = await orchestrator.command('Cancel', 'batchDeleteLoad', ['독후감작성', '팀행사준비']);
         expect(result1).toStrictEqual(['오전반차']);
 
-        const result2 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result2).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 3,
             Cancel: 1,
             Done: 3,
@@ -167,8 +160,7 @@ describe('TodoDataPipeline', () => {
         const result2 = await orchestrator.command('Todo', 'loadData', {});
         expect(result2).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '독후감작성']);
 
-        const result3 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result3).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 4,
             Cancel: 2,
             Done: 3,
@@ -183,8 +175,7 @@ describe('TodoDataPipeline', () => {
         const result2 = await orchestrator.command('Todo', 'loadData', {});
         expect(result2).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '독후감작성', '오전반차']);
 
-        const result3 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result3).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 5,
             Cancel: 1,
             Done: 3,
@@ -196,8 +187,7 @@ describe('TodoDataPipeline', () => {
         const result1 = await orchestrator.command('Done', 'singleDeleteLoad', '운영인수인계');
         expect(result1).toStrictEqual(['분기계획작성', '화상회의']);
 
-        const result2 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result2).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 3,
             Cancel: 3,
             Done: 2,
@@ -209,8 +199,7 @@ describe('TodoDataPipeline', () => {
         const result1 = await orchestrator.command('Done', 'batchDeleteLoad', ['운영인수인계', '화상회의']);
         expect(result1).toStrictEqual(['분기계획작성']);
 
-        const result2 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result2).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 3,
             Cancel: 3,
             Done: 1,
@@ -225,8 +214,7 @@ describe('TodoDataPipeline', () => {
         const result2 = await orchestrator.command('Todo', 'loadData', {});
         expect(result2).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '분기계획작성']);
 
-        const result3 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result3).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 4,
             Cancel: 3,
             Done: 2,
@@ -241,8 +229,7 @@ describe('TodoDataPipeline', () => {
         const result2 = await orchestrator.command('Todo', 'loadData', {});
         expect(result2).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '분기계획작성', '화상회의']);
 
-        const result3 = await orchestrator.command('Summary', 'loadData', {});
-        expect(result3).toStrictEqual({
+        expect(summaryState.value).toStrictEqual({
             Todo: 5,
             Cancel: 3,
             Done: 1,

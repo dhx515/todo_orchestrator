@@ -6,15 +6,15 @@
             <v-row justify="space-around">
                 <v-col cols="4" class="text-center">
                     <h3>Todo</h3>
-                    <p>{{ tasks['Todo'] }}</p>
+                    <p>{{ summaryState['Todo'] }}</p>
                 </v-col>
                 <v-col cols="4" class="text-center">
                     <h3>Done</h3>
-                    <p>{{ tasks['Done'] }}</p>
+                    <p>{{ summaryState['Done'] }}</p>
                 </v-col>
                 <v-col cols="4" class="text-center">
                     <h3>Canceled</h3>
-                    <p>{{ tasks['Cancel'] }}</p>
+                    <p>{{ summaryState['Cancel'] }}</p>
                 </v-col>
             </v-row>
             </v-card>
@@ -24,16 +24,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject } from 'vue';
+import { inject, onMounted } from 'vue';
 
 
 const orchestrator = inject('orchestrator');
-const tasks = ref({});
+const summaryState = inject('summaryState');
 
 onMounted(async () => {
     console.log("onMounted: SectionSummary");
 
-    tasks.value = await orchestrator.command('Summary', 'loadData', {});
+    await orchestrator.command('Summary', 'loadData', {});
 });
 </script>
 

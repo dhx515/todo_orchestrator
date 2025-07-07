@@ -1,8 +1,8 @@
 import { fetchSummaryData} from '@/logic/api/summary/api';
 
 
-export async function fetchSummary(dataStorage, param) {
+export async function fetchSummary(state, param) {
     const summary = await fetchSummaryData(param);
 
-    dataStorage.setSummary(summary);
+    state.value = summary;
 }

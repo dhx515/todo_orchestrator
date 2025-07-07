@@ -68,21 +68,18 @@ const generateLoadData = (arg) => {
 const generateCreateLoad = (pipeineName, type='single') => {
     return async (param) => {
         const res = await orchestrator.command(pipeineName, type+'CreateLoad', param);
-        updateComponentKey('Summary');
         return res;
     }
 };
 const generateDeleteLoad = (pipeineName, type='single') => {
     return async (param) => {
         const res = await orchestrator.command(pipeineName, type+'DeleteLoad', param);
-        updateComponentKey('Summary');
         return res;
     }
 };
 const generateRevertLoad = (pipeineName, type='single') => {
     return async (param) => {
         const res = await orchestrator.command(pipeineName, type+'RevertLoad', param);
-        updateComponentKey('Summary');
         updateComponentKey('Todo');
         return res;
     }
@@ -90,7 +87,6 @@ const generateRevertLoad = (pipeineName, type='single') => {
 const generateTodoCancelLoad = (type='single') => {
     return async (param) => {
         const res = await orchestrator.command('Todo', type+'CancelLoad', param);
-        updateComponentKey('Summary');
         updateComponentKey('Cancel');
         return res;
     }
@@ -98,7 +94,6 @@ const generateTodoCancelLoad = (type='single') => {
 const generateTodoDoneLoad = (type='single') => {
     return async (param) => {
         const res = await orchestrator.command('Todo', type+'DoneLoad', param);
-        updateComponentKey('Summary');
         updateComponentKey('Done');
         return res;
     }

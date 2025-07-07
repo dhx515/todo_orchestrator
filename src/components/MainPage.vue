@@ -18,8 +18,10 @@ import SectionJobContents from './SectionJobContents/SectionJobContents.vue';
 
 import { TaskOrchestratorConfig } from '@/logic/core/task/orchestrator/config';
 
+const summaryState = ref({});
+provide('summaryState', summaryState);
 
-const orchestrator = TaskOrchestratorConfig();
+const orchestrator = TaskOrchestratorConfig(summaryState);
 provide('orchestrator', orchestrator);
 
 const componentKey = ref({
