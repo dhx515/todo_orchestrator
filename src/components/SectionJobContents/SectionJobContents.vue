@@ -3,15 +3,6 @@
     <v-row>
         <v-col cols="12" sm="6" md="4">
             <TodoContents
-                :loadData = "generateLoadData('Todo')"
-                :createLoad = "generateCreateLoad('Todo')"
-                :batchCreateLoad = "generateCreateLoad('Todo', 'batch')"
-                :deleteLoad = "generateDeleteLoad('Todo')"
-                :batchDeleteLoad = "generateDeleteLoad('Todo', 'batch')"
-                :cancelLoad = "generateTodoCancelLoad()"
-                :batchCancelLoad = "generateTodoCancelLoad('batch')"
-                :doneLoad =  "generateTodoDoneLoad()"
-                :batchDoneLoad = "generateTodoDoneLoad('batch')"
                 class="pa-0 ma-0"
                 :key = "componentKey['Todo']"
             />
@@ -81,20 +72,6 @@ const generateRevertLoad = (pipeineName, type='single') => {
     return async (param) => {
         const res = await orchestrator.command(pipeineName, type+'RevertLoad', param);
         updateComponentKey('Todo');
-        return res;
-    }
-};
-const generateTodoCancelLoad = (type='single') => {
-    return async (param) => {
-        const res = await orchestrator.command('Todo', type+'CancelLoad', param);
-        updateComponentKey('Cancel');
-        return res;
-    }
-};
-const generateTodoDoneLoad = (type='single') => {
-    return async (param) => {
-        const res = await orchestrator.command('Todo', type+'DoneLoad', param);
-        updateComponentKey('Done');
         return res;
     }
 };
