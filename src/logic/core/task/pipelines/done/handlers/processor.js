@@ -7,43 +7,43 @@ import {
 } from '@/logic/api/done/api';
 
 
-export async function fetchDone(dataStorage, param) {
+export async function fetchDone(state, param) {
     const doneList = await fetchDoneData(param) || [];
     
-    dataStorage.setDoneList(doneList);
+    state.value = [...doneList];
 }
 
-export async function singleCreateDone(dataStorage, param) {
+export async function singleCreateDone(state, param) {
     try {
         const doneList = await singleCreateDoneData(param)
-        dataStorage.setDoneList(doneList);
+        state.value = [...doneList];
     } catch (error) {
         return new Error(`Error creating Done Data: ${error.message}`);
     }
 }
 
-export async function batchCreateDone(dataStorage, param) {
+export async function batchCreateDone(state, param) {
     try {
         const doneList = await batchCreateDoneData(param);
-        dataStorage.setDoneList(doneList);
+        state.value = [...doneList];
     } catch (error) {
         return new Error(`Error creating Done Data: ${error.message}`);
     }
 }
 
-export async function singleDeleteDone(dataStorage, param) {
+export async function singleDeleteDone(state, param) {
     try {
         const doneList = await singleDeleteDoneData(param);
-        dataStorage.setDoneList(doneList);
+        state.value = [...doneList];
     } catch (error) {
         return new Error(`Error deleting Done Data: ${error.message}`);
     }
 }
 
-export async function batchDeleteDone(dataStorage, param) {
+export async function batchDeleteDone(state, param) {
     try {
         const doneList = await batchDeleteDoneData(param);
-        dataStorage.setDoneList(doneList);
+        state.value = [...doneList];
     } catch (error) {
         return new Error(`Error deleting Done Data: ${error.message}`);
     }

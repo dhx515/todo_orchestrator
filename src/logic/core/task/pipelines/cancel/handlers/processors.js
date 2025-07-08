@@ -7,43 +7,42 @@ import {
 } from '@/logic/api/cancel/api';
 
 
-export async function fetchCancel(dataStorage, param) {
+export async function fetchCancel(state, param) {
     const cancelList = await fetchCancelData(param) || [];
-    
-    dataStorage.setCancelList(cancelList);
+    state.value = [...cancelList];
 }
 
-export async function singleCreateCancel(dataStorage, param) {
+export async function singleCreateCancel(state, param) {
     try {
         const cancelList = await singleCreateCancelData(param)
-        dataStorage.setCancelList(cancelList);
+        state.value = [...cancelList];
     } catch (error) {
         return new Error(`Error creating Cancel Data: ${error.message}`);
     }
 }
 
-export async function batchCreateCancel(dataStorage, param) {
+export async function batchCreateCancel(state, param) {
     try {
         const cancelList = await batchCreateCancelData(param);
-        dataStorage.setCancelList(cancelList);
+        state.value = [...cancelList];
     } catch (error) {
         return new Error(`Error creating Cancel Data: ${error.message}`);
     }
 }
 
-export async function singleDeleteCancel(dataStorage, param) {
+export async function singleDeleteCancel(state, param) {
     try {
         const cancelList = await singleDeleteCancelData(param);
-        dataStorage.setCancelList(cancelList);
+        state.value = [...cancelList];
     } catch (error) {
         return new Error(`Error deleting Cancel Data: ${error.message}`);
     }
 }
 
-export async function batchDeleteCancel(dataStorage, param) {
+export async function batchDeleteCancel(state, param) {
     try {
         const cancelList = await batchDeleteCancelData(param);
-        dataStorage.setCancelList(cancelList);
+        state.value = [...cancelList];
     } catch (error) {
         return new Error(`Error deleting Cancel Data: ${error.message}`);
     }

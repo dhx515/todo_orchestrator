@@ -13,11 +13,11 @@ import { SummaryDataPipelineConfig } from '../pipelines/summary/config';
 import CustomEventDispatcher from './CustomEventDispatcher';
 import { subscriptions } from './subscriptions';
 
-export function TaskOrchestratorConfig() {
-    const todoDataPipeline = TodoDataPipelineConfig();
-    const doneDataPipeline = DoneDataPipelineConfig();
-    const cancelDataPipeline = CancelDataPipelineConfig();
-    const summaryDataPipeline = SummaryDataPipelineConfig();
+export function TaskOrchestratorConfig(todoState, doneState, cancelState, summaryState) {
+    const todoDataPipeline = TodoDataPipelineConfig(todoState);
+    const doneDataPipeline = DoneDataPipelineConfig(doneState);
+    const cancelDataPipeline = CancelDataPipelineConfig(cancelState);
+    const summaryDataPipeline = SummaryDataPipelineConfig(summaryState);
 
     const orchestratorBuilder = new OrchestratorBuilder()
         .addPipeline('Todo', todoDataPipeline)

@@ -19,7 +19,7 @@
         <v-divider/>
         
         <v-list>
-            <v-list-item v-for="(item, index) in todoItems" :key="index">
+            <v-list-item v-for="(item, index) in todoState" :key="index">
                 <v-list-item-title 
                     class="d-flex justify-space-between align-center rounded-lg pa-2"
                     style="background-color: #f9f9f9;"
@@ -97,17 +97,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, inject, onMounted } from 'vue';
 import AddTodoModal from './AddTodoModal.vue';
 
 
-const props = defineProps(['loadData'
-    , 'createLoad', 'batchCreateLoad'
-    , 'deleteLoad', 'batchDeleteLoad'
-    , 'cancelLoad', 'batchCancelLoad'
-    , 'doneLoad', 'batchDoneLoad']);
+const orchestrator = inject('orchestrator');
+const todoState = inject('todoState');
 
-const todoItems = ref([]);
 const selectedItems = ref([]);
 const snackbar = ref(false);
 const snackbarMessage = ref('');
@@ -124,43 +120,43 @@ const createTodo = async (target) => {
     if (typeof target === 'string' && target.includes(',')) {
         // 쉼표로 구분된 문자열을 배열로 변환하고, 각 항목의 공백을 제거
         const tasks = target.split(',').map(task => task.trim()).filter(task => task.length > 0);
-        todoItems.value = await props.batchCreateLoad(tasks);
+        await orchestrator.command('Todo', 'batchCreate', tasks);
     } else {
         // 단일 문자열 또는 다른 타입의 항목은 그대로 사용
-        todoItems.value = await props.createLoad(target);
+        await orchestrator.command('Todo', 'singleCreate', target);
     }
 };
 const deleteTodo = async (task) => {
-    todoItems.value = await props.deleteLoad(task);
+    await orchestrator.command('Todo', 'singleDelete', task);
     selectedItems.value = [];
 };
 const batchDeleteTodo = async () => {
     if (checkSelectedItems('delete') === false) return;
     
-    const itemsToDelete = selectedItems.value.map(index => todoItems.value[index]);
-    todoItems.value = await props.batchDeleteLoad(itemsToDelete);
+    const itemsToDelete = selectedItems.value.map(index => todoState.value[index]);
+    await orchestrator.command('Todo', 'batchDelete', itemsToDelete);
     selectedItems.value = [];
 };
 const cancelTodo = async (item) => {
-    todoItems.value = await props.cancelLoad(item);
+    await orchestrator.command('Todo', 'singleCancel', item);
     selectedItems.value = [];
 };
 const batchCancelTodo = async () => {
     if (checkSelectedItems('cancel') === false) return;
     
-    const itemsToCancel = selectedItems.value.map(index => todoItems.value[index]);
-    todoItems.value = await props.batchCancelLoad(itemsToCancel);
+    const itemsToCancel = selectedItems.value.map(index => todoState.value[index]);
+    await orchestrator.command('Todo', 'batchCancel', itemsToCancel);
     selectedItems.value = [];
 };
 const doneTodo = async (item) => {
-    todoItems.value = await props.doneLoad(item);
+    await orchestrator.command('Todo', 'singleDone', item);
     selectedItems.value = [];
 };
 const batchDoneTodo = async () => {
     if (checkSelectedItems('done') === false) return;
     
-    const itemsToDone = selectedItems.value.map(index => todoItems.value[index]);
-    todoItems.value = await props.batchDoneLoad(itemsToDone);
+    const itemsToDone = selectedItems.value.map(index => todoState.value[index]);
+    await orchestrator.command('Todo', 'batchDone', itemsToDone);
     selectedItems.value = [];
 };
 const checkSelectedItems = (type) => {
@@ -175,7 +171,7 @@ const checkSelectedItems = (type) => {
 onMounted(async () => {
     console.log("onMounted: TodoContents");
 
-    todoItems.value = await props.loadData();
+    orchestrator.command('Todo', 'loadData', {});
 });
 </script>
 

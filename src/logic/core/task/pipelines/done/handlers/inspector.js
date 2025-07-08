@@ -1,19 +1,17 @@
 
 
-export async function inspectEmpty(dataStorage) {
-    const doneList = dataStorage.getDoneList();
+export async function inspectEmpty(state) {
+    const doneList = state.value;
 
-    if (doneList === null || !Array.isArray(doneList)) {
+    if (doneList === null || 
+        !Array.isArray(doneList) 
+        || Array.isArray(doneList) && doneList.length === 0) {
         return true;
     }
     return false;
 };
 
-export async function inspectInitialized(dataStorage) {
-    const doneList = dataStorage.getDoneList();
-
-    if (doneList === null || !Array.isArray(doneList)) {
-        return false;
-    }
-    return true;
+export async function inspectInitialized(state) {
+    const isEmpty = await inspectEmpty(state);
+    return !isEmpty;
 };

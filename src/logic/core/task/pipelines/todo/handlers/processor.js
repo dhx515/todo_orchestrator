@@ -7,43 +7,43 @@ import {
 } from '@/logic/api/todo/api';
 
 
-export async function fetchTodo(dataStorage, param) {
+export async function fetchTodo(state, param) {
     const todoList = await fetchTodoData(param) || [];
     
-    dataStorage.setTodoList(todoList);
+    state.value = todoList;
 };
 
-export async function singleCreateTodo(dataStorage, param) {
+export async function singleCreateTodo(state, param) {
     try {
         const todoList = await singleCreateTodoData(param);
-        dataStorage.setTodo(todoList);
+        state.value = [...todoList];
     } catch (error) {
         return new Error(`Error creating Todo Data: ${error.message}`);
     }
 };
 
-export async function batchCreateTodo(dataStorage, param) {
+export async function batchCreateTodo(state, param) {
     try {
         const todoList = await batchCreateTodoData(param);
-        dataStorage.setTodo(todoList);
+        state.value = [...todoList];
     } catch (error) {
         return new Error(`Error creating Todo Data: ${error.message}`);
     }
 };
 
-export async function singleDeleteTodo(dataStorage, param) {
+export async function singleDeleteTodo(state, param) {
     try {
         const todoList = await singleDeleteTodoData(param);
-        dataStorage.setTodo(todoList);
+        state.value = [...todoList];
     } catch (error) {
         return new Error(`Error deleting Todo Data: ${error.message}`);
     }
 };
 
-export async function batchDeleteTodo(dataStorage, param) {
+export async function batchDeleteTodo(state, param) {
     try {
         const todoList = await batchDeleteTodoData(param);
-        dataStorage.setTodo(todoList);
+        state.value = [...todoList];
     } catch (error) {
         return new Error(`Error deleting Todo Data: ${error.message}`);
     }

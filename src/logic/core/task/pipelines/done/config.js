@@ -5,58 +5,42 @@
  * and returns a fully constructed data pipeline.
  */
 import PipelineBuilder from '../../../../shared/pipeline/PipelineBuilder';
-import DataStorage from './dataStorage/DoneDataStorage';
 
 import Processor from '@/logic/shared/hanlder/Processor';
 import { fetchDone, singleCreateDone, batchCreateDone, singleDeleteDone, batchDeleteDone } from './handlers/processor';
-
-import Transporter from '@/logic/shared/hanlder/Transporter';
-import { transportDone } from './handlers/transporter';
 
 import Inspector from '@/logic/shared/hanlder/Inspector';
 import { inspectEmpty, inspectInitialized } from './handlers/inspector';
 
 import ValidatedProcessUseCase from '@/logic/shared/usecase/ValidatedProcessUseCase';
-import ValidatedProcessLoadUseCase from '@/logic/shared/usecase/ValidatedProcessLoadUseCase';
-import ConditionalProcessLoadUseCase from '@/logic/shared/usecase/ConditionalProcessLoadUseCase';
+import ConditionalProcessUseCase from '@/logic/shared/usecase/ConditionalProcessUseCase';
 
-export function DoneDataPipelineConfig() {
-    const dataStorage = new DataStorage();
+export function DoneDataPipelineConfig(state) {
 
-    const fetchProcessor = new Processor(dataStorage, fetchDone);
-    const singleCreateProcessor = new Processor(dataStorage, singleCreateDone);
-    const batchCreateProcessor = new Processor(dataStorage, batchCreateDone);
-    const singleDeleteProcessor = new Processor(dataStorage, singleDeleteDone);
-    const batchDeleteProcessor = new Processor(dataStorage, batchDeleteDone);
+    const fetchProcessor = new Processor(state, fetchDone);
+    const singleCreateProcessor = new Processor(state, singleCreateDone);
+    const batchCreateProcessor = new Processor(state, batchCreateDone);
+    const singleDeleteProcessor = new Processor(state, singleDeleteDone);
+    const batchDeleteProcessor = new Processor(state, batchDeleteDone);
 
-    const dataTransporter = new Transporter(dataStorage, transportDone);
+    const initialInspector = new Inspector(state, inspectInitialized);
+    const emptyInspector = new Inspector(state, inspectEmpty);
 
-    const initialInspector = new Inspector(dataStorage, inspectInitialized);
-    const emptyInspector = new Inspector(dataStorage, inspectEmpty);
-
-    const cacheFirstLoadUseCase = new ConditionalProcessLoadUseCase(emptyInspector, fetchProcessor, dataTransporter);
-    const singleCreateLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, singleCreateProcessor, dataTransporter);
-    const batchCreateLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, batchCreateProcessor, dataTransporter);
+    const cacheFirstLoadUseCase = new ConditionalProcessUseCase(emptyInspector, fetchProcessor);
     const singleCreateDataUseCase = new ValidatedProcessUseCase(initialInspector, singleCreateProcessor);
     const batchCreateDataUseCase = new ValidatedProcessUseCase(initialInspector, batchCreateProcessor);
-    const singleDeleteLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, singleDeleteProcessor, dataTransporter);
-    const batchDeleteLoadUseCase = new ValidatedProcessLoadUseCase(initialInspector, batchDeleteProcessor, dataTransporter);
     const singleDeleteDataUseCase = new ValidatedProcessUseCase(initialInspector, singleDeleteProcessor);
     const batchDeleteDataUseCase = new ValidatedProcessUseCase(initialInspector, batchDeleteProcessor);
 
     return new PipelineBuilder()
         .addUseCase('loadData', cacheFirstLoadUseCase)
 
-        .addUseCase('singleCreateLoad', singleCreateLoadUseCase)
-        .addUseCase('singleCreateData', singleCreateDataUseCase)
-        .addUseCase('singleDeleteLoad', singleDeleteLoadUseCase)
-        .addUseCase('singleRevertLoad', singleDeleteLoadUseCase)
-        .addUseCase('singleDeleteData', singleDeleteDataUseCase)
+        .addUseCase('singleCreate', singleCreateDataUseCase)
+        .addUseCase('singleRevert', singleDeleteDataUseCase)
+        .addUseCase('singleDelete', singleDeleteDataUseCase)
 
-        .addUseCase('batchCreateLoad', batchCreateLoadUseCase)
-        .addUseCase('batchCreateData', batchCreateDataUseCase)
-        .addUseCase('batchDeleteLoad', batchDeleteLoadUseCase)
-        .addUseCase('batchRevertLoad', batchDeleteLoadUseCase)
-        .addUseCase('batchDeleteData', batchDeleteDataUseCase)
+        .addUseCase('batchCreate', batchCreateDataUseCase)
+        .addUseCase('batchRevert', batchDeleteDataUseCase)
+        .addUseCase('batchDelete', batchDeleteDataUseCase)
         .build();
 }
