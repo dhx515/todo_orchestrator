@@ -16,7 +16,7 @@ export async function fetchTodo(state, param) {
 export async function singleCreateTodo(state, param) {
     try {
         const todoList = await singleCreateTodoData(param);
-        state.value = todoList;
+        state.value = [...todoList];
     } catch (error) {
         return new Error(`Error creating Todo Data: ${error.message}`);
     }
@@ -25,7 +25,7 @@ export async function singleCreateTodo(state, param) {
 export async function batchCreateTodo(state, param) {
     try {
         const todoList = await batchCreateTodoData(param);
-        state.value = todoList;
+        state.value = [...todoList];
     } catch (error) {
         return new Error(`Error creating Todo Data: ${error.message}`);
     }
@@ -34,7 +34,7 @@ export async function batchCreateTodo(state, param) {
 export async function singleDeleteTodo(state, param) {
     try {
         const todoList = await singleDeleteTodoData(param);
-        state.value = todoList;
+        state.value = [...todoList];
     } catch (error) {
         return new Error(`Error deleting Todo Data: ${error.message}`);
     }
@@ -43,7 +43,7 @@ export async function singleDeleteTodo(state, param) {
 export async function batchDeleteTodo(state, param) {
     try {
         const todoList = await batchDeleteTodoData(param);
-        state.value = todoList;
+        state.value = [...todoList];
     } catch (error) {
         return new Error(`Error deleting Todo Data: ${error.message}`);
     }
