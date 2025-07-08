@@ -7,17 +7,19 @@ import { ref } from 'vue';
 describe('TodoDataPipeline', () => {
     let orchestrator;
     let summaryState = ref({});
-    let todoState = ref({});
+    let todoState = ref([]);
     let doneState = ref([]);
+    let cancelState = ref([]);
 
     beforeEach(async () => {
         resetTodoMock();
         resetCancelMock();
         resetDoneMock();
         summaryState.value = {};
-        todoState.value = {};
+        todoState.value = [];
         doneState.value = [];
-        orchestrator = TaskOrchestratorConfig(todoState, doneState, summaryState);
+        cancelState.value = [];
+        orchestrator = TaskOrchestratorConfig(todoState, doneState, cancelState, summaryState);
         await orchestrator.command('Todo', 'loadData', {});
         await orchestrator.command('Done', 'loadData', {});
         await orchestrator.command('Cancel', 'loadData', {});
@@ -53,8 +55,7 @@ describe('TodoDataPipeline', () => {
         await orchestrator.command('Todo', 'singleCancel', '개인업무');
         expect(todoState.value).toStrictEqual(['팀업무', '타팀자료요청']);
 
-        const result2 = await orchestrator.command('Cancel', 'loadData', {});
-        expect(result2).toStrictEqual(['팀행사준비', '독후감작성', '오전반차', '개인업무']);
+        expect(cancelState.value).toStrictEqual(['팀행사준비', '독후감작성', '오전반차', '개인업무']);
 
         expect(summaryState.value).toStrictEqual({
             Todo: 2,
@@ -68,8 +69,7 @@ describe('TodoDataPipeline', () => {
         await orchestrator.command('Todo', 'batchCancel', ['개인업무', '타팀자료요청']);
         expect(todoState.value).toStrictEqual(['팀업무']);
 
-        const result2 = await orchestrator.command('Cancel', 'loadData', {});
-        expect(result2).toStrictEqual(['팀행사준비', '독후감작성', '오전반차', '개인업무', '타팀자료요청']);
+        expect(cancelState.value).toStrictEqual(['팀행사준비', '독후감작성', '오전반차', '개인업무', '타팀자료요청']);
 
         expect(summaryState.value).toStrictEqual({
             Todo: 1,
@@ -131,9 +131,9 @@ describe('TodoDataPipeline', () => {
     });
 
     // Cancel Single 삭제 -> Summary: Cancel-1
-    it('Cancel:SingleDeleteData & Summary:loadData ', async() => {
-        const result1 = await orchestrator.command('Cancel', 'singleDeleteLoad', '팀행사준비');
-        expect(result1).toStrictEqual(['독후감작성', '오전반차']);
+    it('Cancel:SingleDelete & Summary:loadData ', async() => {
+        await orchestrator.command('Cancel', 'singleDelete', '팀행사준비');
+        expect(cancelState.value).toStrictEqual(['독후감작성', '오전반차']);
 
         expect(summaryState.value).toStrictEqual({
             Todo: 3,
@@ -143,9 +143,9 @@ describe('TodoDataPipeline', () => {
     });
 
     // Cancel Batch 삭제 -> Summary: Cancel-2
-    it('Cancel:BatchDeleteData & Summary:loadData ', async() => {
-        const result1 = await orchestrator.command('Cancel', 'batchDeleteLoad', ['독후감작성', '팀행사준비']);
-        expect(result1).toStrictEqual(['오전반차']);
+    it('Cancel:BatchDelete & Summary:loadData ', async() => {
+        await orchestrator.command('Cancel', 'batchDelete', ['독후감작성', '팀행사준비']);
+        expect(cancelState.value).toStrictEqual(['오전반차']);
 
         expect(summaryState.value).toStrictEqual({
             Todo: 3,
@@ -155,9 +155,9 @@ describe('TodoDataPipeline', () => {
     });
 
     // Cancel Single 복원 -> Summary: Cancel-1 -> Todo: Single 추가 -> Summary: Todo+1
-    it('Cancel:SingleRevertData & Todo:SingleCreate & Summary:loadData ', async() => {
-        const result1 = await orchestrator.command('Cancel', 'singleRevertLoad', '독후감작성');
-        expect(result1).toStrictEqual(['팀행사준비', '오전반차']);
+    it('Cancel:SingleRevert & Todo:SingleCreate & Summary:loadData ', async() => {
+        await orchestrator.command('Cancel', 'singleRevert', '독후감작성');
+        expect(cancelState.value).toStrictEqual(['팀행사준비', '오전반차']);
 
         expect(todoState.value).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '독후감작성']);
 
@@ -169,9 +169,9 @@ describe('TodoDataPipeline', () => {
     });
 
     // Cancel Batch 복원 -> Summary: Cancel-1 -> Todo: Single 추가 -> Summary: Todo+1
-    it('Cancel:BatchRevertData & Todo:BatchCreate & Summary:loadData ', async() => {
-        const result1 = await orchestrator.command('Cancel', 'batchRevertLoad', ['독후감작성', '오전반차']);
-        expect(result1).toStrictEqual(['팀행사준비']);
+    it('Cancel:BatchRevert & Todo:BatchCreate & Summary:loadData ', async() => {
+        await orchestrator.command('Cancel', 'batchRevert', ['독후감작성', '오전반차']);
+        expect(cancelState.value).toStrictEqual(['팀행사준비']);
 
         expect(todoState.value).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '독후감작성', '오전반차']);
 
