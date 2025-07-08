@@ -8,6 +8,7 @@ describe('TodoDataPipeline', () => {
     let orchestrator;
     let summaryState = ref({});
     let todoState = ref({});
+    let doneState = ref([]);
 
     beforeEach(async () => {
         resetTodoMock();
@@ -15,7 +16,8 @@ describe('TodoDataPipeline', () => {
         resetDoneMock();
         summaryState.value = {};
         todoState.value = {};
-        orchestrator = TaskOrchestratorConfig(todoState, summaryState);
+        doneState.value = [];
+        orchestrator = TaskOrchestratorConfig(todoState, doneState, summaryState);
         await orchestrator.command('Todo', 'loadData', {});
         await orchestrator.command('Done', 'loadData', {});
         await orchestrator.command('Cancel', 'loadData', {});
@@ -81,8 +83,7 @@ describe('TodoDataPipeline', () => {
         await orchestrator.command('Todo', 'singleDone', '개인업무');
         expect(todoState.value).toStrictEqual(['팀업무', '타팀자료요청']);
 
-        const result2 = await orchestrator.command('Done', 'loadData', {});
-        expect(result2).toStrictEqual(['분기계획작성', '운영인수인계', '화상회의', '개인업무']);
+        expect(doneState.value).toStrictEqual(['분기계획작성', '운영인수인계', '화상회의', '개인업무']);
 
         expect(summaryState.value).toStrictEqual({
             Todo: 2,
@@ -96,8 +97,7 @@ describe('TodoDataPipeline', () => {
         await orchestrator.command('Todo', 'batchDone', ['개인업무', '팀업무', '타팀자료요청']);
         expect(todoState.value).toStrictEqual([]);
 
-        const result2 = await orchestrator.command('Done', 'loadData', {});
-        expect(result2).toStrictEqual(['분기계획작성', '운영인수인계', '화상회의', '개인업무', '팀업무', '타팀자료요청']);
+        expect(doneState.value).toStrictEqual(['분기계획작성', '운영인수인계', '화상회의', '개인업무', '팀업무', '타팀자료요청']);
 
         expect(summaryState.value).toStrictEqual({
             Todo: 0,
@@ -183,9 +183,9 @@ describe('TodoDataPipeline', () => {
     });
 
     // Done Single 삭제 -> Summary: Done-1
-    it('Done:SingleDeleteData & Summary:loadData ', async() => {
-        const result1 = await orchestrator.command('Done', 'singleDeleteLoad', '운영인수인계');
-        expect(result1).toStrictEqual(['분기계획작성', '화상회의']);
+    it('Done:SingleDelete & Summary:loadData ', async() => {
+        await orchestrator.command('Done', 'singleDelete', '운영인수인계');
+        expect(doneState.value).toStrictEqual(['분기계획작성', '화상회의']);
 
         expect(summaryState.value).toStrictEqual({
             Todo: 3,
@@ -195,9 +195,9 @@ describe('TodoDataPipeline', () => {
     });
 
     // Done Batch 삭제 -> Summary: Done-1
-    it('Done:BatchDeleteData & Summary:loadData ', async() => {
-        const result1 = await orchestrator.command('Done', 'batchDeleteLoad', ['운영인수인계', '화상회의']);
-        expect(result1).toStrictEqual(['분기계획작성']);
+    it('Done:BatchDelete & Summary:loadData ', async() => {
+        await orchestrator.command('Done', 'batchDelete', ['운영인수인계', '화상회의']);
+        expect(doneState.value).toStrictEqual(['분기계획작성']);
 
         expect(summaryState.value).toStrictEqual({
             Todo: 3,
@@ -207,9 +207,9 @@ describe('TodoDataPipeline', () => {
     });
 
     // Done Single 복원 -> Summary: Done-1 -> Todo: Single 추가 -> Summary: Todo+1
-    it('Done:SingleRevertData & Todo:CreateData & Summary:loadData ', async() => {
-        const result1 = await orchestrator.command('Done', 'singleRevertLoad', '분기계획작성');
-        expect(result1).toStrictEqual(['운영인수인계', '화상회의']);
+    it('Done:SingleRevert & Todo:CreateData & Summary:loadData ', async() => {
+        await orchestrator.command('Done', 'singleRevert', '분기계획작성');
+        expect(doneState.value).toStrictEqual(['운영인수인계', '화상회의']);
 
         expect(todoState.value).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '분기계획작성']);
 
@@ -221,9 +221,9 @@ describe('TodoDataPipeline', () => {
     });
 
     // Done Batch 복원 -> Summary: Done-1 -> Todo: Batch 추가 -> Summary: Todo+1
-    it('Done:SingleRevertData & Todo:CreateData & Summary:loadData ', async() => {
-        const result1 = await orchestrator.command('Done', 'batchRevertLoad', ['분기계획작성',  '화상회의']);
-        expect(result1).toStrictEqual(['운영인수인계']);
+    it('Done:SingleRevert & Todo:CreateData & Summary:loadData ', async() => {
+        await orchestrator.command('Done', 'batchRevert', ['분기계획작성',  '화상회의']);
+        expect(doneState.value).toStrictEqual(['운영인수인계']);
 
         expect(todoState.value).toStrictEqual(['팀업무', '개인업무', '타팀자료요청', '분기계획작성', '화상회의']);
 

@@ -20,7 +20,7 @@ export const subscriptions = [
     // Todo Data Pipeline - Single Actions
     { event: 'Todo:singleCreate', handler: 'Summary:loadData',    priority: 10 },
     { event: 'Todo:singleCancel', handler: 'Cancel:singleCreateData', priority: 5 },
-    { event: 'Todo:singleDone',   handler: 'Done:singleCreateData',   priority: 5 },
+    { event: 'Todo:singleDone',   handler: 'Done:singleCreate',   priority: 5 },
     { event: 'Todo:singleDelete', handler: 'Summary:loadData',    priority: 5 },
 
     // Todo Data Pipeline - Batch Actions
@@ -28,7 +28,7 @@ export const subscriptions = [
     { event: 'Todo:batchCancel', handler: 'Summary:loadData',    priority: 5 },
     { event: 'Todo:batchCancel', handler: 'Cancel:batchCreateData', priority: 10 },
     { event: 'Todo:batchDone',   handler: 'Summary:loadData',    priority: 5 },
-    { event: 'Todo:batchDone',   handler: 'Done:batchCreateData',   priority: 10 },
+    { event: 'Todo:batchDone',   handler: 'Done:batchCreate',   priority: 10 },
     { event: 'Todo:batchDelete', handler: 'Summary:loadData',    priority: 5 },
 
     // Cancel Data Pipeline - Single Actions
@@ -46,16 +46,14 @@ export const subscriptions = [
     { event: 'Cancel:batchRevertLoad', handler: 'Todo:batchCreate', priority: 10 },
     
     // Done Data Pipeline - Single Actions
-    { event: 'Done:singleCreateLoad', handler: 'Summary:loadData',  priority: 5 },
-    { event: 'Done:singleCreateData', handler: 'Summary:loadData',  priority: 5 },
-    { event: 'Done:singleDeleteLoad', handler: 'Summary:loadData',  priority: 5 },
-    { event: 'Done:singleRevertLoad', handler: 'Summary:loadData',  priority: 5 },
-    { event: 'Done:singleRevertLoad', handler: 'Todo:singleCreate', priority: 10 },
+    { event: 'Done:singleCreate', handler: 'Summary:loadData',  priority: 5 },
+    { event: 'Done:singleDelete', handler: 'Summary:loadData',  priority: 5 },
+    { event: 'Done:singleRevert', handler: 'Summary:loadData',  priority: 5 },
+    { event: 'Done:singleRevert', handler: 'Todo:singleCreate', priority: 10 },
 
     // Done Data Pipeline - Batch Actions
-    { event: 'Done:batchCreateLoad', handler: 'Summary:loadData',  priority: 5 },
-    { event: 'Done:batchCreateData', handler: 'Summary:loadData',  priority: 5 },
-    { event: 'Done:batchDeleteLoad', handler: 'Summary:loadData',  priority: 5 },
-    { event: 'Done:batchRevertLoad', handler: 'Summary:loadData',  priority: 5 },
-    { event: 'Done:batchRevertLoad', handler: 'Todo:batchCreate',  priority: 10 },
+    { event: 'Done:batchCreate', handler: 'Summary:loadData',  priority: 5 },
+    { event: 'Done:batchDelete', handler: 'Summary:loadData',  priority: 5 },
+    { event: 'Done:batchRevert', handler: 'Summary:loadData',  priority: 5 },
+    { event: 'Done:batchRevert', handler: 'Todo:batchCreate',  priority: 10 },
 ];
