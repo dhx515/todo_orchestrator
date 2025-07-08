@@ -85,16 +85,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, inject, onMounted } from 'vue';
 import AddTaskModal from './AddTaskModal.vue';
 
-const props = defineProps(['domain', 'color'
-    , 'loadData'
-    , 'createLoad', 'batchCreateLoad'
-    , 'deleteLoad', 'batchDeleteLoad'
-    , 'revertLoad', 'batchRevertLoad']);
+const props = defineProps(['domain', 'color']);
 
-const taskItems = ref([]);
+const orchestrator = inject('orchestrator');
+
+const domain = props.domain || 'Tasks';
+const lowerFirst = str => str.charAt(0).toLowerCase() + str.slice(1);
+const domainStateName = lowerFirst(domain + 'State');
+const taskItems = inject(domainStateName);
+
 const selectedItems = ref([]);
 const snackbar = ref(false);
 const snackbarMessage = ref('');
@@ -111,15 +113,15 @@ const createTask = async (item) => {
     if (typeof item === 'string' && item.includes(',')) {
         // 쉼표로 구분된 문자열을 배열로 변환하고, 각 항목의 공백을 제거
         const tasks = item.split(',').map(task => task.trim()).filter(task => task.length > 0);
-        taskItems.value = await props.batchCreateLoad(tasks);
+        await orchestrator.command(domain, 'batchCreate', tasks);
     } else {
         // 단일 문자열 또는 다른 타입의 항목은 그대로 사용
-        taskItems.value = await props.createLoad(item);
+        await orchestrator.command(domain, 'singleCreate', tasks);
     }
 };
 
 const deleteTask = async (item) => {
-    taskItems.value = await props.deleteLoad(item);
+    await orchestrator.command(domain, 'singleDelete', item);
     selectedItems.value = [];
 };
 
@@ -131,12 +133,12 @@ const batchDeleteTask = async () => {
     }
     
     const itemsToDelete = selectedItems.value.map(index => taskItems.value[index]);
-    taskItems.value = await props.batchDeleteLoad(itemsToDelete);
+    await orchestrator.command(domain, 'batchDelete', itemsToDelete);
     selectedItems.value = [];
 };
 
 const revertTask = async (item) => {
-    taskItems.value = await props.revertLoad(item);
+    await orchestrator.command(domain, 'singleRevert', item);
     selectedItems.value = [];
 };
 
@@ -148,14 +150,14 @@ const batchRevertTask = async () => {
     }
     
     const itemsToRevert = selectedItems.value.map(index => taskItems.value[index]);
-    taskItems.value = await props.batchRevertLoad(itemsToRevert);
+    await orchestrator.command(domain, 'batchRevert', itemsToRevert);
     selectedItems.value = [];
 };
 
 onMounted(async () => {
     console.log(`onMounted: ${props.domain}Contents`);
 
-    taskItems.value = await props.loadData();
+    await orchestrator.command(domain, 'loadData', {});
 });
 </script>
 

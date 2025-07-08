@@ -12,5 +12,7 @@ module.exports = {
       vars: 'all'   // 변수는 여전히 체크
     }],
     "no-extra-semi": "off",
+    // "no-undef": "off", // 정의되지 않은 변수 사용 허용
+    // "no-unused-vars": "off", // 사용되지 않는 표현식 허용
   }
 };

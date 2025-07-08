@@ -21,10 +21,16 @@ import { TaskOrchestratorConfig } from '@/logic/core/task/orchestrator/config';
 const summaryState = ref({});
 provide('summaryState', summaryState);
 
-const todoState = ref({});
+const todoState = ref([]);
 provide('todoState', todoState);
 
-const orchestrator = TaskOrchestratorConfig(todoState, summaryState);
+const doneState = ref([]);
+provide('doneState', doneState);
+
+const cancelState = ref([]);
+provide('cancelState', cancelState);
+
+const orchestrator = TaskOrchestratorConfig(todoState, doneState, cancelState, summaryState);
 provide('orchestrator', orchestrator);
 
 const componentKey = ref({

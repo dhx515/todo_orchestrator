@@ -19,7 +19,7 @@
         <v-divider/>
         
         <v-list>
-            <v-list-item v-for="(item, index) in todoItems" :key="index">
+            <v-list-item v-for="(item, index) in todoState" :key="index">
                 <v-list-item-title 
                     class="d-flex justify-space-between align-center rounded-lg pa-2"
                     style="background-color: #f9f9f9;"
@@ -102,8 +102,7 @@ import AddTodoModal from './AddTodoModal.vue';
 
 
 const orchestrator = inject('orchestrator');
-const todoItems = inject('todoState', ref([]));
-const updateComponentKey = inject('updateComponentKey');
+const todoState = inject('todoState');
 
 const selectedItems = ref([]);
 const snackbar = ref(false);
@@ -134,34 +133,30 @@ const deleteTodo = async (task) => {
 const batchDeleteTodo = async () => {
     if (checkSelectedItems('delete') === false) return;
     
-    const itemsToDelete = selectedItems.value.map(index => todoItems.value[index]);
+    const itemsToDelete = selectedItems.value.map(index => todoState.value[index]);
     await orchestrator.command('Todo', 'batchDelete', itemsToDelete);
     selectedItems.value = [];
 };
 const cancelTodo = async (item) => {
     await orchestrator.command('Todo', 'singleCancel', item);
-    updateComponentKey('Cancel');
     selectedItems.value = [];
 };
 const batchCancelTodo = async () => {
     if (checkSelectedItems('cancel') === false) return;
     
-    const itemsToCancel = selectedItems.value.map(index => todoItems.value[index]);
+    const itemsToCancel = selectedItems.value.map(index => todoState.value[index]);
     await orchestrator.command('Todo', 'batchCancel', itemsToCancel);
-    updateComponentKey('Cancel');
     selectedItems.value = [];
 };
 const doneTodo = async (item) => {
     await orchestrator.command('Todo', 'singleDone', item);
-    updateComponentKey('Done');
     selectedItems.value = [];
 };
 const batchDoneTodo = async () => {
     if (checkSelectedItems('done') === false) return;
     
-    const itemsToDone = selectedItems.value.map(index => todoItems.value[index]);
+    const itemsToDone = selectedItems.value.map(index => todoState.value[index]);
     await orchestrator.command('Todo', 'batchDone', itemsToDone);
-    updateComponentKey('Done');
     selectedItems.value = [];
 };
 const checkSelectedItems = (type) => {
