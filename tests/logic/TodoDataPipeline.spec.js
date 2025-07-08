@@ -4,11 +4,11 @@ import { ref } from 'vue';
 
 describe('TodoDataPipeline', () => {
     let todoDataPipeline;
-    let todoState = ref({});
+    let todoState = ref([]);
 
     beforeEach(async () => {
         await resetTodoMock();
-        todoState.value = {};
+        todoState.value = [];
         todoDataPipeline = TodoDataPipelineConfig(todoState);
         await todoDataPipeline.command('loadData', {});
     });
