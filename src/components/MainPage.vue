@@ -1,7 +1,6 @@
 <template>
 <v-container>
   <SectionSummary
-    :key="componentKey['Summary']"
     class="pa-0 ma-0"
   />
 
@@ -32,19 +31,6 @@ provide('cancelState', cancelState);
 
 const orchestrator = TaskOrchestratorConfig(todoState, doneState, cancelState, summaryState);
 provide('orchestrator', orchestrator);
-
-const componentKey = ref({
-  'Todo': 0,
-  'Done': 0,
-  'Cancel': 0,
-  'Summary': 0
-});
-provide('componentKey', componentKey);
-
-const updateComponentKey = (target) => {
-  componentKey.value[target] += 1;
-};
-provide('updateComponentKey', updateComponentKey);
 
 onMounted(async () => {
   console.log('onMounted: MainPage')
